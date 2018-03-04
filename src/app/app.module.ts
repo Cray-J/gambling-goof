@@ -12,6 +12,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { BetsComponent } from './bets/bets.component';
 import { StatsComponent } from './stats/stats.component';
+import { NewBetComponent } from './bets/new-bet/new-bet.component';
+import { BetService } from './bets/bet.service';
+import { BetsOverviewComponent } from './bets/bets-overview/bets-overview.component';
 
 
 
@@ -22,7 +25,9 @@ import { StatsComponent } from './stats/stats.component';
     WelcomeComponent,
     SidenavListComponent,
     BetsComponent,
-    StatsComponent
+    StatsComponent,
+    NewBetComponent,
+    BetsOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,7 @@ import { StatsComponent } from './stats/stats.component';
     AppRoutingModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [BetService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

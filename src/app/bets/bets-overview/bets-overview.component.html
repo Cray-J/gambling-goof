@@ -1,0 +1,20 @@
+<div fxLayoutAlign="center center">
+  <mat-form-field fxFlex="40%">
+    <input matInput type="text" (keyUp)="doFilter($event.target.value)" placeholder="filter">
+  </mat-form-field>
+</div>
+
+<mat-table [dataSource]="dataSource" matSort>
+  <ng-container matColumnDef="match">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Match</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.match }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="selection">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.selection }}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./bets-overview.component.css']
 })
 export class BetsOverviewComponent implements OnInit {
-  displayedColumns = ['match', 'selection'];
+  displayedColumns = ['match', 'selection', 'return'];
   dataSource = new MatTableDataSource<Bet>();
   private exChangedSubscription: Subscription;
 
@@ -31,6 +31,15 @@ export class BetsOverviewComponent implements OnInit {
 
   doFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  setStyle() {
+    return '"background-color:" "green"';
+
+//    if (bet.outcome === 'win') {
+   // } else if (bet.outcome === 'loss') {
+     // return 'red';
+   // }
   }
 
 }

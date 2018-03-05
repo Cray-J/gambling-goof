@@ -17,6 +17,7 @@ export class NewBetComponent implements OnInit {
     {value: 'daily_double', viewValue: 'Daily Double'},
     {value: 'daily_treble', viewValue: 'Daily Treble'},
     {value: 'daily_fivefold', viewValue: 'Daily Fivefold'},
+    {value: 'eerste_divisie', viewValue: 'Eerste Divisie'},
 
   ];
 
@@ -34,6 +35,15 @@ export class NewBetComponent implements OnInit {
     {value: 'push', viewValue: 'Push'},
     {value: 'half_loss', viewValue: 'Half Loss'},
     {value: 'loss', viewValue: 'Loss'}
+  ];
+
+  bookies = [
+    {value: 'bet365', viewValue: 'Bet365'},
+    {value: 'unibet', viewValue: 'Unibet'},
+    {value: 'coolbet', viewValue: 'CoolBet'},
+    {value: 'paddypower', viewValue: 'PaddyPower'},
+    {value: 'betfair', viewValue: 'Betfair'},
+    {value: 'pinnacle', viewValue: 'Pinnacle'}
   ];
 
   @ViewChild(MatSort) sort: MatSort;

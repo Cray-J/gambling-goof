@@ -18,6 +18,13 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
 
+            <mat-form-field>
+              <mat-select placeholder="Bookie"  ngModel name="bookie" required>
+                <mat-option *ngFor="let bookie of bookies" [value]="bookie.value">
+                  {{bookie.viewValue}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
         </div>
         <div fxLayout="row">
         <mat-form-field class="numberInput">

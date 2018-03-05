@@ -15,7 +15,12 @@ import { StatsComponent } from './stats/stats.component';
 import { NewBetComponent } from './bets/new-bet/new-bet.component';
 import { BetService } from './bets/bet.service';
 import { BetsOverviewComponent } from './bets/bets-overview/bets-overview.component';
-
+import {DatePipe} from '@angular/common';
+import {EersteDivisieOverviewComponent} from './bets/eerste-divisie-overview/eerste-divisie-overview.component';
+import {AngularFireModule} from 'angularfire2';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -27,16 +32,20 @@ import { BetsOverviewComponent } from './bets/bets-overview/bets-overview.compon
     BetsComponent,
     StatsComponent,
     NewBetComponent,
-    BetsOverviewComponent
+    BetsOverviewComponent,
+    EersteDivisieOverviewComponent
   ],
   imports: [
     BrowserModule,
     MaterialModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
-  providers: [BetService],
+  providers: [BetService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

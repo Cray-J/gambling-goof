@@ -14,13 +14,13 @@ export class StatsComponent implements OnInit {
   }
 
   getNumberOfBets() {
-    return this.betService.getBets().length;
+    return this.betService.getDailyBets().length;
   }
 
   getTotal() {
     let total = 0;
 
-    for (const bet of this.betService.getBets()) {
+    for (const bet of this.betService.getDailyBets()) {
       total += bet.valueReturn;
     }
     return total;

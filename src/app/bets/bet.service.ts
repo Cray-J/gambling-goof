@@ -7,9 +7,11 @@ import { BetType } from './bet-type.enum';
 
 @Injectable()
 export class BetService {
-  private dailyBets: Bet[] = [];
+  private dailySingles: Bet[] = [];
+  private dailyWebSingles: Bet[] = [];
   private eersteBets: Bet[] = [];
-  dailyBetsChanged = new Subject<Bet[]>();
+  dailySinglesChanged = new Subject<Bet[]>();
+  dailyWebSinglesChanged = new Subject<Bet[]>();
   eersteBetsChanged = new Subject<Bet[]>();
   private fbSubs: Subscription[] = [];
 
@@ -25,15 +27,24 @@ export class BetService {
         this.eersteBetsChanged.next(this.eersteBets);
         break;
       case BetType.dailySingle:
-        this.db.collection('dailySingles').add(bet);
-        this.dailyBets.push(bet);
-        this.dailyBetsChanged.next(this.dailyBets);
+        this.db.collection('dailySingle').add(bet);
+        this.dailySingles.push(bet);
+        this.dailySinglesChanged.next(this.dailySingles);
+        break;
+      case BetType.dailyWebSingle:
+        this.db.collection('dailyWebSingle').add(bet);
+        this.dailyWebSingles.push(bet);
+        this.dailyWebSinglesChanged.next(this.dailyWebSingles);
         break;
     }
   }
 
   public getDailyBets(): Bet[] {
-    return this.dailyBets.slice();
+    return this.dailySingles.slice();
+  }
+
+  public getDailyWebBets(): Bet[] {
+    return this.dailyWebSingles.slice();
   }
 
   public fetchEersteBets(): Bet[] {
@@ -58,9 +69,32 @@ export class BetService {
         this.eersteBets = exercises;
         this.eersteBetsChanged.next([...this.eersteBets]);
       }));
+    return this.eersteBets.slice();
+  }
 
 
-
+  public fetchDailyWebBets(): Bet[] {
+    this.fbSubs.push(this.db
+      .collection('dailyWebSingle')
+      .snapshotChanges()
+      .map(docArray => {
+        return docArray.map(doc => {
+          return {
+            //id: doc.payload.doc.id,
+            match: doc.payload.doc.data().match,
+            selection: doc.payload.doc.data().selection,
+            bookie: doc.payload.doc.data().bookie,
+            stake: doc.payload.doc.data().stake,
+            odds: doc.payload.doc.data().odds,
+            date: doc.payload.doc.data().date,
+            outcome: doc.payload.doc.data().outcome,
+            valueReturn: doc.payload.doc.data().valueReturn
+          };
+        });
+      }).subscribe((bets: Bet[]) => {
+        this.dailyWebSingles = bets;
+        this.dailyWebSinglesChanged.next([...this.dailyWebSingles]);
+      }));
     return this.eersteBets.slice();
   }
 }

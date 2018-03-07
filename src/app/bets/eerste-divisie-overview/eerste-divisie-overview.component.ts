@@ -18,7 +18,6 @@ export class EersteDivisieOverviewComponent implements OnInit, OnDestroy {
   bets: Bet[];
 
   outcomes: Outcome;
-  outcomes1 = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'outcome', 'return'];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -31,9 +30,6 @@ export class EersteDivisieOverviewComponent implements OnInit, OnDestroy {
       }
     );
     this.betService.fetchEersteBets();
-    // this.dataSource.data = this.betService.getBets();
-    console.log('hey');
-    console.log(this.dataSource.data);
   }
 
   ngOnDestroy() {

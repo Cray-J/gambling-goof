@@ -12,4 +12,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  recalculate() {
+    console.log("recalculating");
+  }
+
 }

@@ -52,7 +52,21 @@ export class NewBetComponent implements OnInit {
   }
 
   getProjectedReturns(form: NgForm) {
-    return form.value.odds * form.value.stake;
+    const outcome = form.value.outcome;
+    const odds = form.value.odds;
+    const stake = form.value.stake;
+    if (outcome === 'win' ) {
+      return odds * stake - stake;
+    } else if (outcome === 'halfWin') {
+      return (odds * stake - stake) / 2;
+    } else if (outcome === 'halfLoss') {
+      return -stake / 2;
+    } else if (outcome === 'loss') {
+      return -stake;
+    }
+
+
+    return 0;
 
   }
 

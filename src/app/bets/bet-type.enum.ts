@@ -1,6 +1,6 @@
 export enum BetType {
+  dailyWebSingle = 'Daily Web Single',
   dailySingle = 'Daily Single',
-  superSingle = 'Super Single',
   dailyDouble = 'Daily Double',
   dailyTreble = 'Daily Treble',
   dailyFiveFold = 'Daily Fivefold',

@@ -5,6 +5,9 @@
     </button>
   </div>
   <div><a routerLink="/">Gambling Goof</a></div>
+  <div class="recalculate-button">
+    <button mat-raised-button color="accent" (click)="recalculate()">Recalculate</button>
+  </div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
       <li><a routerLink="/bets">Bets</a></li>

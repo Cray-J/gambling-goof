@@ -20,3 +20,7 @@ a:active {
   display: inline-block;
   padding-left: 6px;
 }
+
+.recalculate-button {
+  padding-left:200px;
+}

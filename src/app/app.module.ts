@@ -15,6 +15,7 @@ import { StatsComponent } from './stats/stats.component';
 import { NewBetComponent } from './bets/new-bet/new-bet.component';
 import { BetService } from './bets/bet.service';
 import { BetsOverviewComponent } from './bets/bets-overview/bets-overview.component';
+import { KeysPipe } from './keys.pipe';
 
 
 
@@ -27,7 +28,8 @@ import { BetsOverviewComponent } from './bets/bets-overview/bets-overview.compon
     BetsComponent,
     StatsComponent,
     NewBetComponent,
-    BetsOverviewComponent
+    BetsOverviewComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,

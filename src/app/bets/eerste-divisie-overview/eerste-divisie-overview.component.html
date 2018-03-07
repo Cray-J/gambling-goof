@@ -20,6 +20,27 @@
     <mat-cell *matCellDef="let element">{{ element.selection }}</mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="stake">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Stake</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.stake }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="bookie">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Bookie</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.bookie }}</mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="odds">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Odds</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.odds }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="outcome">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Outcome</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.outcome }}</mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="return" >
     <mat-header-cell *matHeaderCellDef mat-sort-header>Return</mat-header-cell>
     <mat-cell *matCellDef="let element" [ngStyle]="{'color': element.outcome === 'win' ? 'lawnGreen' : 'red'}">{{ element.valueReturn }}</mat-cell>

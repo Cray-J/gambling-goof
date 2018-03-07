@@ -1,8 +1,9 @@
 export enum BetType {
-  'Daily Single',
-  'Super Single',
-  'Daily Double',
-  'Daily Treble',
-  'Daily Fivefold',
-  'Minor Play'
+  dailySingle = 'Daily Single',
+  superSingle = 'Super Single',
+  dailyDouble = 'Daily Double',
+  dailyTreble = 'Daily Treble',
+  dailyFiveFold = 'Daily Fivefold',
+  eersteDivisie = 'Eerste Divisie',
+  minorPlay = 'Minor Play'
 }

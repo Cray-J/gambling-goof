@@ -20,8 +20,8 @@
 
             <mat-form-field>
               <mat-select placeholder="Bookie"  ngModel name="bookie" required>
-                <mat-option *ngFor="let bookie of bookies" [value]="bookie.value">
-                  {{bookie.viewValue}}
+                <mat-option *ngFor="let bookie of bookies | appKeys" [value]="bookie.key">
+                  {{bookie.value}}
                 </mat-option>
               </mat-select>
           </mat-form-field>
@@ -40,16 +40,16 @@
         <div fxLayout="row">
           <mat-form-field>
             <mat-select placeholder="Type of Bet"  ngModel name="betType" required>
-              <mat-option *ngFor="let betType of betTypes" [value]="betType.value">
-                {{betType.viewValue}}
+              <mat-option *ngFor="let betType of betTypes | appKeys" [value]="betType.key">
+                {{betType.value}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
             <mat-form-field>
               <mat-select placeholder="Outcome"  ngModel name="outcome" >
-                <mat-option *ngFor="let outcome of outcomes" [value]="outcome.value">
-                  {{outcome.viewValue}}
+                <mat-option *ngFor="let outcome of outcomes | appKeys" [value]="outcome.key">
+                  {{outcome.value}}
                 </mat-option>
               </mat-select>
             </mat-form-field>

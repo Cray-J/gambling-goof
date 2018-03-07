@@ -3,6 +3,7 @@ import { Subject } from 'rxjs/Subject';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Injectable} from "@angular/core";
 import {Subscription} from "rxjs/Subscription";
+import { BetType } from './bet-type.enum';
 
 @Injectable()
 export class BetService {
@@ -16,14 +17,18 @@ export class BetService {
   constructor(private db: AngularFirestore) {}
 
   public addBet(bet: Bet) {
-    if (bet.betType === 'eerste_divisie') {
-      this.db.collection('eersteDivisieBets').add(bet);
-      this.eersteBets.push(bet);
-      this.eersteBetsChanged.next(this.eersteBets);
-    } else if (bet.betType === 'daily_single') {
-      this.db.collection('daily_single').add(bet);
-      this.dailyBets.push(bet);
-      this.dailyBetsChanged.next(this.dailyBets);
+
+    switch (BetType[bet.betType]) {
+      case BetType.eersteDivisie:
+        this.db.collection('eersteDivisieBets').add(bet);
+        this.eersteBets.push(bet);
+        this.eersteBetsChanged.next(this.eersteBets);
+        break;
+      case BetType.dailySingle:
+        this.db.collection('dailySingles').add(bet);
+        this.dailyBets.push(bet);
+        this.dailyBetsChanged.next(this.dailyBets);
+        break;
     }
   }
 

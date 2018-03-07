@@ -1,3 +1,16 @@
+<section class="stats" fxLayoutAlign="center center">
+<mat-card  fxFlex="40%">
+  <mat-card-header fxLayoutAlign="center center">Eerste Divisie stats</mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>Number of bets: {{ dataSource.data.length }}</mat-list-item>
+      <mat-list-item>Number of wins: </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
+</section>
+
+
 <div fxLayoutAlign="center center">
   <mat-form-field fxFlex="40%">
     <input matInput type="text" (keyUp)="doFilter($event.target.value)" placeholder="filter">
@@ -38,7 +51,14 @@
 
   <ng-container matColumnDef="outcome">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Outcome</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.outcome }}</mat-cell>
+    <mat-cell *matCellDef="let element">
+      <mat-select>
+        <mat-option *ngFor="let outcome of outcomes | appKeys"
+          [value]="outcome.key">
+          {{ outcome.value }}
+        </mat-option>
+      </mat-select>
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="return" >

@@ -3,6 +3,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 import { Bet } from '../bet.model';
 import { BetService } from '../bet.service';
 import { Subscription } from 'rxjs/Subscription';
+import { Outcome } from '../outcome.enum';
 
 @Component({
   selector: 'app-eerste-divisie-overview',
@@ -15,6 +16,9 @@ export class EersteDivisieOverviewComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Bet>();
   private exChangedSubscription: Subscription;
   bets: Bet[];
+
+  outcomes: Outcome;
+  outcomes1 = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'outcome', 'return'];
 
   @ViewChild(MatSort) sort: MatSort;
 

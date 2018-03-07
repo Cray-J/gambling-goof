@@ -29,7 +29,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatSnackBarModule
   ],
   exports: [
     MatButtonModule,

@@ -10,9 +10,11 @@ export class BetService {
   private dailySingles: Bet[] = [];
   private dailyWebSingles: Bet[] = [];
   private eersteBets: Bet[] = [];
+  public currentSelectedBetType: string;
   dailySinglesChanged = new Subject<Bet[]>();
   dailyWebSinglesChanged = new Subject<Bet[]>();
   eersteBetsChanged = new Subject<Bet[]>();
+  currentSelectedBetTypeChanged = new Subject<string>();
   private fbSubs: Subscription[] = [];
 
 

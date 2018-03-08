@@ -4,7 +4,10 @@
     <mat-card-content>
       <mat-list>
         <mat-list-item>Number of bets: {{ dataSource.data.length }}</mat-list-item>
-        <mat-list-item>Number of wins: </mat-list-item>
+        <mat-list-item *ngIf="total > 0">Total return : +{{ total }}</mat-list-item>
+        <mat-list-item *ngIf="total <= 0">Total return : {{ total }}</mat-list-item>
+        <mat-list-item>Number of wins: {{ totalWins }}</mat-list-item>
+        <mat-list-item>Number of losses: {{ totalLoss }}</mat-list-item>
       </mat-list>
     </mat-card-content>
   </mat-card>
@@ -63,7 +66,7 @@
 
   <ng-container matColumnDef="return" >
     <mat-header-cell *matHeaderCellDef mat-sort-header>Return</mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngStyle]="{'color': element.outcome === 'win' ? 'lawnGreen' : 'red'}">{{ element.valueReturn }}</mat-cell>
+    <mat-cell *matCellDef="let element" [ngStyle]="{'color': element.outcome === 'win' ? 'lawnGreen' : 'red'}" >{{ element.valueReturn }}</mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

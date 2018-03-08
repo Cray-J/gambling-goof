@@ -2,7 +2,7 @@
   <mat-tab label="New Bet">
     <app-new-bet></app-new-bet>
   </mat-tab>
-  <mat-tab label="Daily Web Single">
+  <mat-tab label="Daily Web Single" (click)="updateSelectedBet('dailywebSingle')">
     <app-bets-overview></app-bets-overview>
   </mat-tab>
   <mat-tab label="Eerste Divisie">
@@ -11,7 +11,7 @@
   <mat-tab label="Daily Single">
 
   </mat-tab>
-  <mat-tab label="Daily Double">
+  <mat-tab label="Daily Double" (click)="updateSelectedBet('dailyDouble')">
 
   </mat-tab>
   <mat-tab label="Minor Plays">

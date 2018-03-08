@@ -2,6 +2,15 @@
   padding: 30px;
 }
 
+.mat-list-item {
+  font-size: 14px;
+  padding: -10px;
+}
+
+.mat-card-header {
+  font-size: 22px;
+}
+
 .mat-card {
-  background-color: cornflowerblue;
+  background-color: lightblue;
 }

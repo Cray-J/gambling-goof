@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {BetService} from "./bet.service";
 
 @Component({
   selector: 'app-bets',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BetsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private betservice: BetService) { }
 
   ngOnInit() {
+  }
+
+  updateSelectedBet(betType: string){
+  console.log("inside updateSelected");
+    this.betservice.currentSelectedBetType = betType;
+    this.betservice.currentSelectedBetTypeChanged.next(this.betservice.currentSelectedBetType);
   }
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Bet } from '../bet.model';
 import { BetService } from '../bet.service';
-import { MatPaginator, MatSort } from '@angular/material';
+import {MatPaginator, MatSnackBar, MatSort} from '@angular/material';
 import { Bookie } from '../bookie.enum';
 import { BetType } from '../bet-type.enum';
 import { Outcome } from '../outcome.enum';
@@ -18,10 +18,12 @@ export class NewBetComponent implements OnInit {
   public betTypes = BetType;
   public outcomes = Outcome;
 
+
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private betService: BetService) { }
+  constructor(private betService: BetService,
+              private snackbar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -32,6 +34,9 @@ export class NewBetComponent implements OnInit {
     this.betService.addBet(form.value);
     //console.log(this.betService.getBets());
     form.reset();
+    this.snackbar.open('New bet registered!', null, {
+      duration: 3000
+    });
   }
 
   determineReturnVal(form: NgForm) {

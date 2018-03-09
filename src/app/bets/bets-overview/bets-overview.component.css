@@ -16,6 +16,41 @@
 }
 
 
-.mat-column-return {
-  text-align: right;
+.mat-table {
 }
+
+.mat-form-field {
+  max-width: 100px;
+}
+
+.mat-column-return {
+  flex: 1;
+  /*text-align: right;*/
+}
+
+.mat-column-match {
+  flex: 3;
+}
+
+.mat-column-selection {
+  flex: 2;
+}
+
+.mat-column-bookie {
+  flex: 1;
+}
+
+.mat-column-stake {
+  flex: 1;
+  /*text-align: right;*/
+}
+
+.mat-column-odds {
+  flex: 1;
+}
+
+.mat-column-outcome {
+  flex: 1;
+}
+
+

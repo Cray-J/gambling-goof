@@ -16,6 +16,7 @@ export class BetService {
   eersteBetsChanged = new Subject<Bet[]>();
   currentSelectedBetTypeChanged = new Subject<string>();
   private fbSubs: Subscription[] = [];
+  public currentTab = new Subject<string>();
 
 
   constructor(private db: AngularFirestore) {}

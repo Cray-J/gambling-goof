@@ -55,12 +55,16 @@
   <ng-container matColumnDef="outcome">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Outcome</mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <mat-select>
+      <mat-form-field>
+      <mat-select [ngModel]="element.outcome"
+                  (ngModelChange)="element.outcome = $event"
+                   (change)="updateBet(element)">
         <mat-option *ngFor="let outcome of outcomes | appKeys"
                     [value]="outcome.key">
           {{ outcome.value }}
         </mat-option>
       </mat-select>
+      </mat-form-field>
     </mat-cell>
   </ng-container>
 

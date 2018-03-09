@@ -1,11 +1,9 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
-import { Bet } from '../bet.model';
-import { BetService } from '../bet.service';
-import { Subscription } from 'rxjs/Subscription';
+import {MatSort, MatTableDataSource} from '@angular/material';
+import {Bet} from '../bet.model';
+import {BetService} from '../bet.service';
+import {Subscription} from 'rxjs/Subscription';
 import {Outcome} from '../outcome.enum';
-import {isDefined} from "@angular/compiler/src/util";
-import {BetType} from "../bet-type.enum";
 
 @Component({
   selector: 'app-bets-overview',
@@ -22,7 +20,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   totalWins = 0;
   totalLoss = 0;
 
-  outcomes: Outcome;
+  outcomes = Outcome;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -49,9 +47,20 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     );
     this.betService.fetchDailyWebBets();
 
+    this.betService.currentTab.subscribe(
+      (tab: string) => {
+        console.log('GOT NEW TAB: ' + tab);
+      }
+    );
+
     this.currentBetType = this.betService.currentSelectedBetTypeChanged.subscribe((typeSelected: string) => {
       console.log('bettype changed to: ' + typeSelected);
     });
+  }
+
+  updateBet(bet: Bet) {
+    console.log("Updating bet");
+    console.log(bet.id);
   }
 
   ngOnDestroy() {

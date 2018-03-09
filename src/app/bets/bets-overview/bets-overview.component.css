@@ -14,3 +14,8 @@
 .mat-card {
   background-color: lightblue;
 }
+
+
+.mat-column-return {
+  text-align: right;
+}

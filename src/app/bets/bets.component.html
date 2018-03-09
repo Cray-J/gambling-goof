@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
   <mat-tab label="New Bet">
     <app-new-bet></app-new-bet>
   </mat-tab>
@@ -6,7 +6,7 @@
     <app-bets-overview></app-bets-overview>
   </mat-tab>
   <mat-tab label="Eerste Divisie">
-    <app-eerste-divisie-overview></app-eerste-divisie-overview>
+    <app-eerste-divisie-overview ></app-eerste-divisie-overview>
   </mat-tab>
   <mat-tab label="Daily Single">
 

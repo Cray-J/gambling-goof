@@ -4,6 +4,7 @@ import {Bet} from '../bet.model';
 import {BetService} from '../bet.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Outcome} from '../outcome.enum';
+import {BetType} from "../bet-type.enum";
 
 @Component({
   selector: 'app-bets-overview',
@@ -71,13 +72,16 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  setStyle() {
-    return '"background-color:" "green"';
+  setStyle(bet: Bet) {
+    if (Outcome[bet.outcome] === Outcome.win || Outcome[bet.outcome] === Outcome.halfWin) {
+      return 'lawngreen';
+    } else if (Outcome[bet.outcome] === Outcome.loss || Outcome[bet.outcome] === Outcome.halfLoss) {
+      return 'red';
+    } else if (Outcome[bet.outcome] === Outcome.push || Outcome[bet.outcome] === Outcome.void) {
+      return 'grey';
+    }
 
-//    if (bet.outcome === 'win') {
-    // } else if (bet.outcome === 'loss') {
-    // return 'red';
-    // }
   }
+
 
 }

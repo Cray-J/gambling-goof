@@ -22,6 +22,7 @@ import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { KeysPipe } from './keys.pipe';
+import {MinorPlaysComponent} from './bets/minor-plays/minor-plays.component';
 
 
 
@@ -36,7 +37,8 @@ import { KeysPipe } from './keys.pipe';
     NewBetComponent,
     BetsOverviewComponent,
     EersteDivisieOverviewComponent,
-    KeysPipe
+    KeysPipe,
+    MinorPlaysComponent
   ],
   imports: [
     BrowserModule,

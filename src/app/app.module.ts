@@ -23,6 +23,7 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { KeysPipe } from './keys.pipe';
 import {MinorPlaysComponent} from './bets/minor-plays/minor-plays.component';
+import { CalculationsService } from './bets/calculations.service';
 
 
 
@@ -50,7 +51,7 @@ import {MinorPlaysComponent} from './bets/minor-plays/minor-plays.component';
     AngularFirestoreModule,
     AngularFireAuthModule
   ],
-  providers: [BetService, DatePipe],
+  providers: [BetService, DatePipe, CalculationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

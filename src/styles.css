@@ -14,3 +14,10 @@ html, body {
 body{
   margin: 0;
 }
+
+.redCard, .missedPen {
+  font-size: 16px !important;
+  height: 16px;
+  width: 16px;
+  color: red;
+}

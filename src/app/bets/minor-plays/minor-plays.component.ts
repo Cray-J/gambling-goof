@@ -1,16 +1,17 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Bet } from '../bet.model';
 import { Subscription } from 'rxjs/Subscription';
 import { Outcome } from '../outcome.enum';
 import { BetService } from '../bet.service';
+import { CalculationsService } from '../calculations.service';
 
 @Component({
   selector: 'app-minor-plays',
   templateUrl: './minor-plays.component.html',
   styleUrls: ['./minor-plays.component.css']
 })
-export class MinorPlaysComponent implements OnInit, OnDestroy {
+export class MinorPlaysComponent implements OnInit, OnDestroy, AfterViewInit {
 
   displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'events', 'outcome', 'return'];
   dataSource = new MatTableDataSource<Bet>();
@@ -25,7 +26,9 @@ export class MinorPlaysComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private betService: BetService) { }
+  constructor(private betService: BetService,
+              private calculationService: CalculationsService) {
+  }
 
   ngOnInit() {
     this.exChangedSubscription = this.betService.minorPlaysChanged.subscribe(
@@ -61,9 +64,15 @@ export class MinorPlaysComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
   updateBet(bet: Bet) {
-    console.log("Updating bet");
-    console.log(bet.id);
+    console.log('Updating bet');
+    this.calculationService.determineReturns(bet);
+    console.log(bet.outcome);
+    this.betService.updateBet(bet);
   }
 
   ngOnDestroy() {
@@ -72,15 +81,6 @@ export class MinorPlaysComponent implements OnInit, OnDestroy {
 
   doFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  setStyle() {
-    return '"background-color:" "green"';
-
-//    if (bet.outcome === 'win') {
-    // } else if (bet.outcome === 'loss') {
-    // return 'red';
-    // }
   }
 
 }

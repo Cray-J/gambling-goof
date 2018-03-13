@@ -123,4 +123,7 @@ export class BetService {
       }));
     return this.minorPlays.slice();
   }
+
+  updateBet(bet: Bet) {
+  }
 }

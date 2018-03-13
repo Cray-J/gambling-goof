@@ -8,7 +8,7 @@ export interface Bet {
   stake: number;
   odds: number;
   outcome: Outcome;
-  betType: string;
+  betType: BetType;
   bookie: Bookie;
   date: Date;
   valueReturn: number;

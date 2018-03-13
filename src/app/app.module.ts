@@ -23,6 +23,8 @@ import { environment } from '../environments/environment';
 import { KeysPipe } from './keys.pipe';
 import {NewDoubleComponent} from "./bets/new-double/new-double.component";
 import {NewBetDialogComponent} from "./bets/new-bet-dialog/new-bet-dialog.component";
+import {MinorPlaysComponent} from './bets/minor-plays/minor-plays.component';
+import { CalculationsService } from './bets/calculations.service';
 
 
 
@@ -39,6 +41,8 @@ import {NewBetDialogComponent} from "./bets/new-bet-dialog/new-bet-dialog.compon
     KeysPipe,
     NewDoubleComponent,
     NewBetDialogComponent
+    EersteDivisieOverviewComponent,
+    MinorPlaysComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,7 @@ import {NewBetDialogComponent} from "./bets/new-bet-dialog/new-bet-dialog.compon
     AngularFirestoreModule,
     AngularFireAuthModule
   ],
-  providers: [BetService, DatePipe],
+  providers: [BetService, DatePipe, CalculationsService],
   bootstrap: [AppComponent],
   entryComponents: [NewBetDialogComponent],
 })

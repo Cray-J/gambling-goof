@@ -18,7 +18,6 @@ export class NewBetComponent implements OnInit {
   public betTypes = BetType;
   public outcomes = Outcome;
 
-
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -32,7 +31,6 @@ export class NewBetComponent implements OnInit {
     console.log(form.value);
     this.determineReturnVal(form);
     this.betService.addBet(form.value);
-    //console.log(this.betService.getBets());
     form.reset();
     this.snackbar.open('New bet registered!', null, {
       duration: 3000

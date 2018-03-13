@@ -15,10 +15,9 @@
   </mat-card>
 </section>
 
-
-<div fxLayoutAlign="center center">
+<div class="mat-elevation-z8" fxLayoutAlign="center center">
   <mat-form-field fxFlex="40%">
-    <input matInput type="text" placeholder="filter">
+    <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="filter">
   </mat-form-field>
 </div>
 

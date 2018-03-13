@@ -33,6 +33,12 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
               public dialog: MatDialog) {
   }
 
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
   ngOnInit() {
    /* this.dailyWebSinglesSub = this.betService.dailyWebSinglesChanged.subscribe(
       (bets: Bet[]) => {

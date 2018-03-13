@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatSort, MatTableDataSource} from '@angular/material';
+import {MatSort, MatTableDataSource, Sort, MatDialog} from '@angular/material';
 import {Bet} from '../bet.model';
 import {BetService} from '../bet.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Outcome} from '../outcome.enum';
-import {BetType} from "../bet-type.enum";
+import {BetType} from '../bet-type.enum';
+import {NewBetDialogComponent} from "../new-bet-dialog/new-bet-dialog.component";
 
 @Component({
   selector: 'app-bets-overview',
@@ -12,29 +13,56 @@ import {BetType} from "../bet-type.enum";
   styleUrls: ['./bets-overview.component.css']
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
-  displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'outcome', 'return'];
+  displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'events', 'outcome', 'return'];
   dataSource = new MatTableDataSource<Bet>();
-  private exChangedSubscription: Subscription;
-  private currentBetType: Subscription;
-  bets: Bet[];
+  private subscriptions: Subscription = new Subscription();
+
+ // dailySingles: Bet[];
+ // dailyWebSingles: Bet[];
   total = 0;
   totalWins = 0;
   totalLoss = 0;
-
   outcomes = Outcome;
+
+  animal: string;
+  name: string;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private betService: BetService) { }
+  constructor(private betService: BetService,
+              public dialog: MatDialog) {
+  }
 
   ngOnInit() {
-    this.exChangedSubscription = this.betService.dailyWebSinglesChanged.subscribe(
+   /* this.dailyWebSinglesSub = this.betService.dailyWebSinglesChanged.subscribe(
       (bets: Bet[]) => {
-        this.dataSource.data = bets;
+//        let dataBets = bets.slice();
+        //      dataBets.sort(betDateComparator());
+        // this.sortedData = dataBets.slice();
+        //this.dailyWebSingles = bets;
+      }
+    );
+    this.dailySinglesSub = this.betService.dailySinglesChanged.subscribe(
+      (bets: Bet[]) => {
+        //this.dailySingles = bets;
+      }
+    );*/
+    this.betService.fetchDailyWebBets();
+    this.betService.fetchDailyBets();
+
+    this.subscriptions.add(this.betService.currentTab.subscribe(
+      (tab: string) => {
+        if (tab === 'Daily Web Single') {
+          this.dataSource.data = this.betService.getDailyWebBets();
+        } else if (tab === 'Daily Single') {
+          this.dataSource.data = this.betService.getDailyBets();
+        }
+
         this.total = 0;
         this.totalLoss = 0;
         this.totalWins = 0;
-        bets.forEach(bet => {
+
+        this.dataSource.data.forEach((bet => {
           if (bet.valueReturn != null) {
             this.total += bet.valueReturn;
           }
@@ -43,35 +71,42 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
           } else if (Outcome[bet.outcome] === Outcome.loss) {
             this.totalLoss += 1;
           }
-        });
+        }));
       }
-    );
-    this.betService.fetchDailyWebBets();
+    ));
+  }
 
-    this.betService.currentTab.subscribe(
-      (tab: string) => {
-        console.log('GOT NEW TAB: ' + tab);
-      }
-    );
+  updateValue() {
+    console.log('updating value');
+  }
 
-    this.currentBetType = this.betService.currentSelectedBetTypeChanged.subscribe((typeSelected: string) => {
-      console.log('bettype changed to: ' + typeSelected);
+
+  openDialog(): void {
+    let dialogRef = this.dialog.open(NewBetDialogComponent, {
+      width: '250px',
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+      console.log(this.animal);
     });
   }
 
-  updateBet(bet: Bet) {
-    console.log("Updating bet");
-    console.log(bet.id);
-  }
-
-  ngOnDestroy() {
-    this.exChangedSubscription.unsubscribe();
-  }
-
-  doFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
+/*
+    updateBet(bet: Bet) {
+      console.log(bet.id);
+    }
+*/
+    ngOnDestroy() {
+      this.subscriptions.unsubscribe();
+    }
+/*
+    doFilter(filterValue: string) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+*/
   setStyle(bet: Bet) {
     if (Outcome[bet.outcome] === Outcome.win || Outcome[bet.outcome] === Outcome.halfWin) {
       return 'lawngreen';
@@ -82,6 +117,4 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     }
 
   }
-
-
 }

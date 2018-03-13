@@ -1,20 +1,19 @@
 import { Bet } from './bet.model';
 import { Subject } from 'rxjs/Subject';
 import {AngularFirestore} from 'angularfire2/firestore';
-import {Injectable} from "@angular/core";
-import {Subscription} from "rxjs/Subscription";
+import {Injectable} from '@angular/core';
+import {Subscription} from 'rxjs/Subscription';
 import { BetType } from './bet-type.enum';
+import {DoubleBet} from './doubleBet.model';
 
 @Injectable()
 export class BetService {
   private dailySingles: Bet[] = [];
   private dailyWebSingles: Bet[] = [];
   private eersteBets: Bet[] = [];
-  public currentSelectedBetType: string;
   dailySinglesChanged = new Subject<Bet[]>();
   dailyWebSinglesChanged = new Subject<Bet[]>();
   eersteBetsChanged = new Subject<Bet[]>();
-  currentSelectedBetTypeChanged = new Subject<string>();
   private fbSubs: Subscription[] = [];
   public currentTab = new Subject<string>();
 
@@ -40,6 +39,10 @@ export class BetService {
         this.dailyWebSinglesChanged.next(this.dailyWebSingles);
         break;
     }
+  }
+
+  public addDouble(bet: DoubleBet) {
+    this.db.collection(BetType.dailyDouble).add(bet);
   }
 
   public getDailyBets(): Bet[] {
@@ -76,7 +79,7 @@ export class BetService {
   }
 
 
-  public fetchDailyWebBets(): Bet[] {
+  public fetchDailyWebBets(): void {
     this.fbSubs.push(this.db
       .collection('dailyWebSingle')
       .snapshotChanges()
@@ -98,6 +101,31 @@ export class BetService {
         this.dailyWebSingles = bets;
         this.dailyWebSinglesChanged.next([...this.dailyWebSingles]);
       }));
-    return this.eersteBets.slice();
+  }
+
+  public fetchDailyBets(): void {
+    this.fbSubs.push(this.db
+      .collection('dailySingle')
+      .snapshotChanges()
+      .map(docArray => {
+        return docArray.map(doc => {
+          return {
+            //id: doc.payload.doc.id,
+            match: doc.payload.doc.data().match,
+            selection: doc.payload.doc.data().selection,
+            bookie: doc.payload.doc.data().bookie,
+            stake: doc.payload.doc.data().stake,
+            odds: doc.payload.doc.data().odds,
+            date: doc.payload.doc.data().date,
+            outcome: doc.payload.doc.data().outcome,
+            valueReturn: doc.payload.doc.data().valueReturn,
+            missedPen: doc.payload.doc.data().missedPen,
+            redCard: doc.payload.doc.data().redCard
+          };
+        });
+      }).subscribe((bets: Bet[]) => {
+        this.dailySingles = bets;
+        this.dailySinglesChanged.next([...this.dailySingles]);
+      }));
   }
 }

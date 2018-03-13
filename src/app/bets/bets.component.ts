@@ -8,8 +8,6 @@ import {BetService} from './bet.service';
   styleUrls: ['./bets.component.css']
 })
 export class BetsComponent implements OnInit, AfterViewInit {
-  @Output() betTypeSelected = new EventEmitter<void>();
-
 
   @ViewChild('tabGroup') tabGroup;
 
@@ -19,20 +17,10 @@ export class BetsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log('afterViewInit => ', this.tabGroup.selectedIndex);
   }
 
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
-    console.log('tabChangeEvent => ', tabChangeEvent);
-    console.log('index => ', tabChangeEvent.index);
-    console.log(tabChangeEvent.tab.textLabel);
     this.betService.currentTab.next(tabChangeEvent.tab.textLabel);
-  }
-
-  updateSelectedBet(betType: string) {
-    console.log('inside updateSelected');
-    this.betService.currentSelectedBetType = betType;
-    this.betService.currentSelectedBetTypeChanged.next(this.betService.currentSelectedBetType);
   }
 
 }

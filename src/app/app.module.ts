@@ -16,12 +16,13 @@ import { NewBetComponent } from './bets/new-bet/new-bet.component';
 import { BetService } from './bets/bet.service';
 import { BetsOverviewComponent } from './bets/bets-overview/bets-overview.component';
 import {DatePipe} from '@angular/common';
-import {EersteDivisieOverviewComponent} from './bets/eerste-divisie-overview/eerste-divisie-overview.component';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { KeysPipe } from './keys.pipe';
+import {NewDoubleComponent} from "./bets/new-double/new-double.component";
+import {NewBetDialogComponent} from "./bets/new-bet-dialog/new-bet-dialog.component";
 
 
 
@@ -35,8 +36,9 @@ import { KeysPipe } from './keys.pipe';
     StatsComponent,
     NewBetComponent,
     BetsOverviewComponent,
-    EersteDivisieOverviewComponent,
-    KeysPipe
+    KeysPipe,
+    NewDoubleComponent,
+    NewBetDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,7 @@ import { KeysPipe } from './keys.pipe';
     AngularFireAuthModule
   ],
   providers: [BetService, DatePipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [NewBetDialogComponent],
 })
 export class AppModule { }

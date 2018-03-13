@@ -1,5 +1,5 @@
-import {Outcome} from "./outcome.enum";
-import {Bookie} from "./bookie.enum";
+import {Outcome} from './outcome.enum';
+import {Bookie} from './bookie.enum';
 
 export interface Bet {
   id: string;
@@ -12,4 +12,6 @@ export interface Bet {
   bookie: Bookie;
   date: Date;
   valueReturn: number;
+  redCard: boolean;
+  missedPen: boolean;
 }

@@ -35,11 +35,6 @@
   flex: 1;
 }
 
-.mat-icon {
-  color: red;
-  align-content: right;
-}
-
 .mat-column-events {
   align-content: right;
   align-items: right;

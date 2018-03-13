@@ -57,9 +57,9 @@
   <ng-container matColumnDef="events">
     <mat-header-cell *matHeaderCellDef>Events</mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <mat-icon *ngIf="element.redCard === true">warning</mat-icon>
-      <mat-icon *ngIf="element.missedPen">error</mat-icon>
-      <mat-icon (click)="openDialog()">border_color</mat-icon>
+      <mat-icon *ngIf="element.redCard" class="redCard">warning</mat-icon>
+      <mat-icon *ngIf="element.missedPen" class="missedPen">error</mat-icon>
+      <mat-icon (click)="openDialog()" class="editIcon">border_color</mat-icon>
     </mat-cell>
   </ng-container>
 

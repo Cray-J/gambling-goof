@@ -40,8 +40,7 @@ import { CalculationsService } from './bets/calculations.service';
     BetsOverviewComponent,
     KeysPipe,
     NewDoubleComponent,
-    NewBetDialogComponent
-    EersteDivisieOverviewComponent,
+    NewBetDialogComponent,
     MinorPlaysComponent
   ],
   imports: [

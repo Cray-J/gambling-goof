@@ -21,3 +21,11 @@ body{
   width: 16px;
   color: red;
 }
+
+
+.editIcon {
+  font-size: 16px !important;
+  height: 16px;
+  width: 16px;
+  color: dodgerblue;
+}

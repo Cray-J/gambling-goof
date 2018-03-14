@@ -1,11 +1,10 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatSort, MatTableDataSource, Sort, MatDialog} from '@angular/material';
-import {Bet} from '../bet.model';
-import {BetService} from '../bet.service';
-import {Subscription} from 'rxjs/Subscription';
-import {Outcome} from '../outcome.enum';
-import {BetType} from '../bet-type.enum';
-import {NewBetDialogComponent} from "../new-bet-dialog/new-bet-dialog.component";
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { Bet } from '../bet.model';
+import { BetService } from '../bet.service';
+import { Subscription } from 'rxjs/Subscription';
+import { Outcome } from '../outcome.enum';
+import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 
 @Component({
   selector: 'app-bets-overview',
@@ -33,10 +32,8 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
               public dialog: MatDialog) {
   }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+  doFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit() {

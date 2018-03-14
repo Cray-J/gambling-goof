@@ -19,6 +19,8 @@ export class BetService {
   eersteBetsChanged = new Subject<Bet[]>();
   private fbSubs: Subscription[] = [];
   public currentTab = new Subject<string>();
+  private doubleBets: DoubleBet[] = [];
+  dailyDoublesChanged = new Subject<DoubleBet[]>();
 
 
   constructor(private db: AngularFirestore) {}
@@ -61,25 +63,13 @@ export class BetService {
     return this.dailyWebSingles.slice();
   }
 
-  public fetchEersteBets(): Bet[] {
-    this.fbSubs.push(this.db
-      .collection('eersteDivisieBets')
-      .snapshotChanges()
-      .map(docArray => {
-        return docArray.map(doc => {
-          return this.mapToBet(doc);
-        });
-      }).subscribe((exercises: Bet[]) => {
-        this.eersteBets = exercises;
-        this.eersteBetsChanged.next([...this.eersteBets]);
-      }));
-    return this.eersteBets.slice();
+  public getDailyDoubles(): DoubleBet[] {
+    return this.doubleBets.slice();
   }
-
 
   private mapToBet(doc) {
     return {
-      //id: doc.payload.doc.id,
+      // id: doc.payload.doc.id,
       match: doc.payload.doc.data().match,
       selection: doc.payload.doc.data().selection,
       bookie: doc.payload.doc.data().bookie,
@@ -92,7 +82,19 @@ export class BetService {
     };
   }
 
-  public fetchDailyWebBets(): Bet[] {
+  private mapToDouble(doc) {
+    console.log(doc.payload.doc.data());
+    return {
+      bets: {},
+      date: doc.payload.doc.data().date,
+      bookie: doc.payload.doc.data().bookie,
+      stake: doc.payload.doc.data().stake,
+      odds: doc.payload.doc.data().odds,
+      valueReturn: doc.payload.doc.data().valueReturn
+    };
+  }
+
+  public fetchDailyWebBets(): void {
     this.fbSubs.push(this.db
       .collection('dailyWebSingle')
       .snapshotChanges()
@@ -113,7 +115,7 @@ export class BetService {
       .map(docArray => {
         return docArray.map(doc => {
           return {
-            //id: doc.payload.doc.id,
+            // id: doc.payload.doc.id,
             match: doc.payload.doc.data().match,
             selection: doc.payload.doc.data().selection,
             bookie: doc.payload.doc.data().bookie,
@@ -137,7 +139,7 @@ export class BetService {
       .collection('minorPlay')
       .snapshotChanges()
       .map(docArray => {
-        console.log("Fetching from " + BetType.minorPlay);
+        console.log('Fetching from ' + BetType.minorPlay);
         return docArray.map(doc => {
           return this.mapToBet(doc);
         });
@@ -146,6 +148,37 @@ export class BetService {
         this.minorPlaysChanged.next([...this.minorPlays]);
       }));
     return this.minorPlays.slice();
+  }
+
+
+  public fetchDoubles(): DoubleBet[] {
+    this.fbSubs.push(this.db
+      .collection(BetType.dailyDouble)
+      .snapshotChanges()
+      .map(docArray => {
+        return docArray.map(doc => {
+          return this.mapToDouble(doc);
+        });
+      }).subscribe((bets: DoubleBet[]) => {
+        this.doubleBets = bets;
+        this.dailyDoublesChanged.next([...this.doubleBets]);
+      }));
+    return this.doubleBets.slice();
+
+    // console.log('fetching : ' + BetType.dailyDouble);
+    // this.fbSubs.push(this.db
+    //   .collection(BetType.dailyDouble)
+    //   .snapshotChanges()
+    //   .map(docArray => {
+    //     console.log('mapping ' + docArray);
+    //     return docArray.map(doc => {
+    //       this.mapToDouble(doc);
+    //     });
+    //   }).subscribe((betsz: DoubleBet[]) => {
+    //     this.doubleBets = betsz;
+    //     this.dailyDoublesChanged.next([...this.doubleBets]);
+    //   }));
+    // return this.doubleBets.slice();
   }
 
   updateBet(bet: Bet) {

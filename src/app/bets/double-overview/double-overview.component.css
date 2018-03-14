@@ -1,0 +1,53 @@
+.stats {
+  padding: 30px;
+}
+
+.mat-list-item {
+  font-size: 14px;
+  padding: -10px;
+}
+
+.mat-card-header {
+  font-size: 22px;
+}
+
+.mat-card {
+  background-color: lightblue;
+}
+
+.mat-column-selection {
+  flex: 2;
+}
+
+.mat-column-bookie {
+  flex: 1;
+}
+
+.mat-column-stake {
+  flex: 1;
+}
+
+.mat-column-odds {
+  flex: 1;
+}
+
+.mat-column-outcome {
+  flex: 1;
+}
+
+.mat-column-events {
+  align-content: right;
+  align-items: right;
+}
+
+.mat-form-field {
+  max-width: 100px;
+}
+
+.mat-column-return {
+  flex: 1;
+}
+
+.mat-column-match {
+  flex: 3;
+}

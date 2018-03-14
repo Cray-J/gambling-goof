@@ -59,9 +59,9 @@ export class MinorPlaysComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
 
-    this.currentBetType = this.betService.currentSelectedBetTypeChanged.subscribe((typeSelected: string) => {
-      console.log('bettype changed to: ' + typeSelected);
-    });
+    // this.currentBetType = this.betService.currentSelectedBetTypeChanged.subscribe((typeSelected: string) => {
+    //   console.log('bettype changed to: ' + typeSelected);
+    // });
   }
 
   ngAfterViewInit() {

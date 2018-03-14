@@ -25,6 +25,7 @@ import {NewDoubleComponent} from "./bets/new-double/new-double.component";
 import {NewBetDialogComponent} from "./bets/new-bet-dialog/new-bet-dialog.component";
 import {MinorPlaysComponent} from './bets/minor-plays/minor-plays.component';
 import { CalculationsService } from './bets/calculations.service';
+import { DoubleOverviewComponent } from './bets/double-overview/double-overview.component';
 
 
 
@@ -41,7 +42,8 @@ import { CalculationsService } from './bets/calculations.service';
     KeysPipe,
     NewDoubleComponent,
     NewBetDialogComponent,
-    MinorPlaysComponent
+    MinorPlaysComponent,
+    DoubleOverviewComponent
   ],
   imports: [
     BrowserModule,

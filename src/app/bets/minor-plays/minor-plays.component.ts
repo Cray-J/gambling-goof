@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Outcome } from '../outcome.enum';
 import { BetService } from '../bet.service';
 import { CalculationsService } from '../calculations.service';
+import { DoubleBet } from '../doubleBet.model';
 
 @Component({
   selector: 'app-minor-plays',

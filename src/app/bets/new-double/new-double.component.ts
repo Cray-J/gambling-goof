@@ -82,6 +82,7 @@ export class NewDoubleComponent implements OnInit {
       return stake * outcome1 / 2 * outcome2 / 2;
     } else if (outcome1 === 'halfWin' && outcome2 === 'win') {
     }
+    return 0;
   }
 
 }

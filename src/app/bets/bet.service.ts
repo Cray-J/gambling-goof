@@ -10,13 +10,11 @@ import {DoubleBet} from './doubleBet.model';
 export class BetService {
   private dailySingles: Bet[] = [];
   private dailyWebSingles: Bet[] = [];
-  private eersteBets: Bet[] = [];
   private minorPlays: Bet[] = [];
   public currentSelectedBetType: string;
   dailySinglesChanged = new Subject<Bet[]>();
   dailyWebSinglesChanged = new Subject<Bet[]>();
   minorPlaysChanged = new Subject<Bet[]>();
-  eersteBetsChanged = new Subject<Bet[]>();
   private fbSubs: Subscription[] = [];
   public currentTab = new Subject<string>();
   private doubleBets: DoubleBet[] = [];
@@ -28,11 +26,6 @@ export class BetService {
   public addBet(bet: Bet) {
 
     switch (BetType[bet.betType]) {
-      case BetType.eersteDivisie:
-        this.db.collection('eersteDivisieBets').add(bet);
-        this.eersteBets.push(bet);
-        this.eersteBetsChanged.next(this.eersteBets);
-        break;
       case BetType.dailySingle:
         this.db.collection('dailySingle').add(bet);
         this.dailySingles.push(bet);
@@ -85,7 +78,7 @@ export class BetService {
   private mapToDouble(doc) {
     console.log(doc.payload.doc.data());
     return {
-      bets: {},
+      bets: doc.payload.doc.data().bets,
       date: doc.payload.doc.data().date,
       bookie: doc.payload.doc.data().bookie,
       stake: doc.payload.doc.data().stake,

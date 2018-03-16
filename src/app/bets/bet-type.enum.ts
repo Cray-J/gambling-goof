@@ -4,6 +4,7 @@ export enum BetType {
   dailyDouble = 'Daily Double',
   dailyTreble = 'Daily Treble',
   dailyFiveFold = 'Daily Fivefold',
-  eersteDivisie = 'Eerste Divisie',
-  minorPlay = 'Minor Play'
+  unitSystem = 'Unit System',
+  minorPlay = 'Minor Play',
+  seasonPlay = 'Season Play'
 }

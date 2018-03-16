@@ -33,6 +33,10 @@
         <mat-form-field class="numberInput">
           <input matInput type="number" placeholder="Odds" ngModel name="odds" required>
         </mat-form-field>
+          <div>
+            <mat-checkbox ngModel name="redCard">Red card</mat-checkbox>
+            <mat-checkbox ngModel name="missedPen">Missed penalty</mat-checkbox>
+          </div>
         </div>
         <div fxLayout="row">
           <mat-form-field>
@@ -44,7 +48,7 @@
           </mat-form-field>
 
             <mat-form-field>
-              <mat-select placeholder="Outcome"  ngModel name="outcome" >
+              <mat-select placeholder="Outcome"  ngModel name="outcome">
                 <mat-option *ngFor="let outcome of outcomes | appKeys" [value]="outcome.key">
                   {{outcome.value}}
                 </mat-option>

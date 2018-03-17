@@ -14,17 +14,19 @@ export class HeaderComponent implements OnInit {
   animal: string;
   name: string;
 
+  bet: Bet;
+
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
     let dialogRef = this.dialog.open(NewBetDialogComponent, {
-      width: '250px',
-      data: {name: this.name, animal: this.animal}
+      data: {name: this.name, animal: this.animal, bet: this.bet}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
+      this.bet = result;
+      console.log(result);
       console.log(this.animal);
     });
   }
@@ -34,7 +36,7 @@ export class HeaderComponent implements OnInit {
   }
 
   recalculate() {
-    console.log("recalculating");
+    console.log('recalculating');
   }
 
 }

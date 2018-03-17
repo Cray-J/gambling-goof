@@ -1,0 +1,17 @@
+.mat-dialog-container {
+  background-color: #000;
+  height: 250px
+}
+
+.new-bet {
+  padding: 30px;
+}
+
+.mat-form-field {
+  padding: 20px;
+  width: 200px;
+}
+
+.numberInput {
+  width: 50px;
+}

@@ -1,9 +1,36 @@
-<p>
-  stats works!
-</p>
 <div>
   NUMBER OF BETS: {{ getNumberOfBets()}}
 </div>
 <div>
   TOTAL: {{getTotal()}}
+</div>
+
+
+<h1 >Outcome of Bets</h1>
+
+<div style="display: block">
+  <canvas baseChart
+          [data]="doughnutChartData"
+          [labels]="doughnutChartLabels"
+          [chartType]="doughnutChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"
+          ></canvas>
+</div>
+
+
+
+
+<div>
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+  <button (click)="randomize()">Update</button>
 </div>

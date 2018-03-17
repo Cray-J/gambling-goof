@@ -21,12 +21,13 @@ import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { KeysPipe } from './keys.pipe';
-import {NewDoubleComponent} from "./bets/new-double/new-double.component";
-import {NewBetDialogComponent} from "./bets/new-bet-dialog/new-bet-dialog.component";
+import {NewDoubleComponent} from './bets/new-double/new-double.component';
+import {NewBetDialogComponent} from './bets/new-bet-dialog/new-bet-dialog.component';
 import {MinorPlaysComponent} from './bets/minor-plays/minor-plays.component';
 import { CalculationsService } from './bets/calculations.service';
 import { DoubleOverviewComponent } from './bets/double-overview/double-overview.component';
-
+import {HttpClientModule} from '@angular/common/http';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -53,7 +54,9 @@ import { DoubleOverviewComponent } from './bets/double-overview/double-overview.
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule,
+    ChartsModule
   ],
   providers: [BetService, DatePipe, CalculationsService],
   bootstrap: [AppComponent],

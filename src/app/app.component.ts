@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {BetService} from './bets/bet.service';
 
 
 @Component({
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  constructor(private betService: BetService) {}
+
+  ngOnInit() {
+    this.betService.fetchMinorPlays();
+    this.betService.fetchDailyWebBets();
+    this.betService.fetchDailyBets();
+    this.betService.fetchDoubles();
+    this.betService.fetchSeasonBets();
+    this.betService.fetchUnitBets();
+  }
 }

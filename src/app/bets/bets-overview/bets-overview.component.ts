@@ -5,6 +5,7 @@ import { BetService } from '../bet.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Outcome } from '../outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
+import { CalculationsService } from "../calculations.service";
 
 @Component({
   selector: 'app-bets-overview',
@@ -16,8 +17,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Bet>();
   private subscriptions: Subscription = new Subscription();
 
- // dailySingles: Bet[];
- // dailyWebSingles: Bet[];
   total = 0;
   totalWins = 0;
   totalLoss = 0;
@@ -29,36 +28,27 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private betService: BetService,
+              private calculationService: CalculationsService,
               public dialog: MatDialog) {
   }
 
-  doFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 
   ngOnInit() {
-   /* this.dailyWebSinglesSub = this.betService.dailyWebSinglesChanged.subscribe(
-      (bets: Bet[]) => {
-//        let dataBets = bets.slice();
-        //      dataBets.sort(betDateComparator());
-        // this.sortedData = dataBets.slice();
-        //this.dailyWebSingles = bets;
-      }
-    );
-    this.dailySinglesSub = this.betService.dailySinglesChanged.subscribe(
-      (bets: Bet[]) => {
-        //this.dailySingles = bets;
-      }
-    );*/
-    this.betService.fetchDailyWebBets();
-    this.betService.fetchDailyBets();
-
     this.subscriptions.add(this.betService.currentTab.subscribe(
       (tab: string) => {
         if (tab === 'Daily Web Single') {
           this.dataSource.data = this.betService.getDailyWebBets();
         } else if (tab === 'Daily Single') {
           this.dataSource.data = this.betService.getDailyBets();
+        } else if (tab === 'Season Bets') {
+          this.dataSource.data = this.betService.getSeasonBets();
+        } else if (tab === 'Unit Bets') {
+          this.dataSource.data = this.betService.getUnitBets();
         }
 
         this.total = 0;
@@ -79,44 +69,34 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     ));
   }
 
-  updateValue() {
-    console.log('updating value');
+  updateValue(bet: Bet) {
+    this.calculationService.determineReturns(bet);
+    this.betService.updateBet(bet);
   }
 
 
   openDialog(): void {
-    let dialogRef = this.dialog.open(NewBetDialogComponent, {
+    const dialogRef = this.dialog.open(NewBetDialogComponent, {
       width: '250px',
       data: {name: this.name, animal: this.animal}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       this.animal = result;
-      console.log(this.animal);
     });
   }
 
-/*
-    updateBet(bet: Bet) {
-      console.log(bet.id);
-    }
-*/
-    ngOnDestroy() {
-      this.subscriptions.unsubscribe();
-    }
-/*
-    doFilter(filterValue: string) {
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-*/
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   setStyle(bet: Bet) {
     if (Outcome[bet.outcome] === Outcome.win || Outcome[bet.outcome] === Outcome.halfWin) {
       return 'lawngreen';
     } else if (Outcome[bet.outcome] === Outcome.loss || Outcome[bet.outcome] === Outcome.halfLoss) {
       return 'red';
     } else if (Outcome[bet.outcome] === Outcome.push || Outcome[bet.outcome] === Outcome.void) {
-      return 'grey';
+      return 'blue';
     }
 
   }

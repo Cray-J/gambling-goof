@@ -12,7 +12,6 @@ export class NewBetDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<NewBetDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-   console.log('inside dialogg');
   }
 
   onNoClick(): void {

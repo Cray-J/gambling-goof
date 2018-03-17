@@ -6,6 +6,7 @@ import { Outcome } from '../outcome.enum';
 import { Bookie } from '../bookie.enum';
 import { Bet } from '../bet.model';
 import { DoubleBet } from '../doubleBet.model';
+import { CalculationsService } from "../calculations.service";
 
 @Component({
   selector: 'app-new-double',
@@ -19,16 +20,16 @@ export class NewDoubleComponent implements OnInit {
   public outcomes = Outcome;
 
   constructor(private betService: BetService,
+              private calculationService: CalculationsService,
               private snackbar: MatSnackBar) { }
 
   ngOnInit() {
   }
 
   onNewBet(form: NgForm) {
-    console.log(form.value);
 
     const bet: DoubleBet = {
-      valueReturn: this.getProjectedReturns(form),
+      valueReturn: 0,
       bookie: form.value.bookie,
       stake: form.value.stake,
       odds: form.value.odds1 * form.value.odds2,
@@ -52,7 +53,7 @@ export class NewDoubleComponent implements OnInit {
         }
       ]
     };
-    console.log(bet);
+    bet.valueReturn = this.calculationService.determineReturnsFromDouble(bet);
 
     this.betService.addDouble(bet);
     form.reset();
@@ -61,28 +62,10 @@ export class NewDoubleComponent implements OnInit {
     });
   }
 
-  getProjectedReturns(form: NgForm) {
-    const outcome1 = form.value.outcome1;
-    const outcome2 = form.value.outcome2;
-    const odds1 = form.value.odds1;
-    const odds2 = form.value.odds2;
-    const stake = form.value.stake;
-
-    if (outcome1 === 'loss' || outcome2 === 'loss') {
-      return -stake;
-    } else if (outcome1 === 'win') {
-      if (outcome2 === 'win') {
-          return stake * odds1 * odds2;
-      } else if (outcome2 === 'halfWin') {
-        return stake * odds1 + (stake * odds2 / 2);
-      } else if (outcome2 === 'void' || outcome2 === 'push') {
-        return stake * odds1;
-      }
-    } else if (outcome1 === 'halfWin' && outcome2 === 'halfWin') {
-      return stake * outcome1 / 2 * outcome2 / 2;
-    } else if (outcome1 === 'halfWin' && outcome2 === 'win') {
-    }
-    return 0;
+  getOdds(form: NgForm) {
+    return form.value.odds1 * form.value.odds2;
   }
+
+
 
 }

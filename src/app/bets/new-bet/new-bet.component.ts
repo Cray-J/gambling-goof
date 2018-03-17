@@ -23,7 +23,6 @@ export class NewBetComponent {
               private snackbar: MatSnackBar) { }
 
   onNewBet(form: NgForm) {
-    console.log(form.value);
     this.calculationService.determineReturns(form.value);
     this.betService.addBet(form.value);
     form.reset();

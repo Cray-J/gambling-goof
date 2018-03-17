@@ -20,7 +20,7 @@
 
   <div fxLayoutAlign="center center">
     <mat-form-field fxFlex="40%">
-      <input matInput type="text" (keyUp)="doFilter($event.target.value)" placeholder="filter">
+      <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="filter">
     </mat-form-field>
   </div>
 

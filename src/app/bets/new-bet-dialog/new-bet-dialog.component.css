@@ -1,3 +1,6 @@
+div.my-modal > div.modal-dialog {
+  width: 1000px !important;
+}
 .mat-dialog-container {
   background-color: #000;
   height: 250px

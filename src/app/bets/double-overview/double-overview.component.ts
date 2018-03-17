@@ -35,11 +35,9 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnInit() {
-    this.betService.fetchDoubles();
-    console.log(this.betService.getDailyDoubles());
     this.subscriptions.add(this.betService.dailyDoublesChanged.subscribe(
       (bets: DoubleBet[]) => {
-          this.dataSource.data = this.betService.getDailyDoubles();
+          this.dataSource.data = bets;
 
         this.total = 0;
         this.totalLoss = 0;

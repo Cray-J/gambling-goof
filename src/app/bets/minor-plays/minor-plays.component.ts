@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { Outcome } from '../outcome.enum';
 import { BetService } from '../bet.service';
 import { CalculationsService } from '../calculations.service';
-import { DoubleBet } from '../doubleBet.model';
 
 @Component({
   selector: 'app-minor-plays',
@@ -17,7 +16,6 @@ export class MinorPlaysComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'events', 'outcome', 'return'];
   dataSource = new MatTableDataSource<Bet>();
   private exChangedSubscription: Subscription;
-  private currentBetType: Subscription;
   bets: Bet[];
   total = 0;
   totalWins = 0;
@@ -48,21 +46,8 @@ export class MinorPlaysComponent implements OnInit, OnDestroy, AfterViewInit {
             this.totalLoss += 1;
           }
         });
-        console.log(bets);
-
       }
     );
-    this.betService.fetchMinorPlays();
-
-    this.betService.currentTab.subscribe(
-      (tab: string) => {
-        console.log('GOT NEW TAB: ' + tab);
-      }
-    );
-
-    // this.currentBetType = this.betService.currentSelectedBetTypeChanged.subscribe((typeSelected: string) => {
-    //   console.log('bettype changed to: ' + typeSelected);
-    // });
   }
 
   ngAfterViewInit() {
@@ -70,18 +55,18 @@ export class MinorPlaysComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   updateBet(bet: Bet) {
-    console.log('Updating bet');
     this.calculationService.determineReturns(bet);
-    console.log(bet.outcome);
-    this.betService.updateBet(bet);
+    this.betService.updateMinorPlay(bet);
   }
 
   ngOnDestroy() {
     this.exChangedSubscription.unsubscribe();
   }
 
-  doFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 
 }

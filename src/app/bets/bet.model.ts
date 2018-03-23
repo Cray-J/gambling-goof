@@ -15,4 +15,5 @@ export interface Bet {
   valueReturn: number;
   redCard: boolean;
   missedPen: boolean;
+  finalScore: string;
 }

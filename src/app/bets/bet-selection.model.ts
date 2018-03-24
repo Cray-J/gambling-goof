@@ -1,6 +1,6 @@
 import {Outcome} from './outcome.enum';
 
-export interface MultiBetPart {
+export interface BetSelection {
   id: string;
   redCard: boolean;
   missedPen: boolean;
@@ -8,5 +8,5 @@ export interface MultiBetPart {
   selection: string;
   odds: number;
   outcome: Outcome;
-
+  finalScore: string;
 }

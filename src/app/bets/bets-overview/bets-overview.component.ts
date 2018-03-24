@@ -5,7 +5,7 @@ import { BetService } from '../bet.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Outcome } from '../outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
-import { CalculationsService } from "../calculations.service";
+import { CalculationsService } from '../calculations.service';
 
 @Component({
   selector: 'app-bets-overview',
@@ -59,11 +59,11 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
           if (bet.valueReturn != null) {
             this.total += bet.valueReturn;
           }
-          if (Outcome[bet.outcome] === Outcome.win) {
+       /*   if (Outcome[bet.outcome] === Outcome.win) {
             this.totalWins += 1;
           } else if (Outcome[bet.outcome] === Outcome.loss) {
             this.totalLoss += 1;
-          }
+          }*/
         }));
       }
     ));
@@ -91,13 +91,13 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   setStyle(bet: Bet) {
-    if (Outcome[bet.outcome] === Outcome.win || Outcome[bet.outcome] === Outcome.halfWin) {
+   /* if (Outcome[bet.outcome] === Outcome.win || Outcome[bet.outcome] === Outcome.halfWin) {
       return 'lawngreen';
     } else if (Outcome[bet.outcome] === Outcome.loss || Outcome[bet.outcome] === Outcome.halfLoss) {
       return 'red';
     } else if (Outcome[bet.outcome] === Outcome.push || Outcome[bet.outcome] === Outcome.void) {
       return 'blue';
-    }
+    }*/
 
   }
 }

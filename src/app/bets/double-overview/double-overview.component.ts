@@ -2,10 +2,8 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Outcome } from '../outcome.enum';
 import { BetService } from '../bet.service';
-import { Bet } from '../bet.model';
 import { Subscription } from 'rxjs/Subscription';
-import { DoubleBet } from '../doubleBet.model';
-import { MultiBetPart } from '../multi-bet-part.model';
+import { Bet } from '../bet.model';
 
 @Component({
   selector: 'app-double-overview',
@@ -15,7 +13,7 @@ import { MultiBetPart } from '../multi-bet-part.model';
 export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   displayedColumns = ['date', 'match', 'bookie', 'stake', 'odds', 'events', 'return'];
-  dataSource = new MatTableDataSource<DoubleBet>();
+  dataSource = new MatTableDataSource<Bet>();
   private subscriptions: Subscription = new Subscription();
 
   total = 0;
@@ -36,7 +34,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
 
   ngOnInit() {
     this.subscriptions.add(this.betService.dailyDoublesChanged.subscribe(
-      (bets: DoubleBet[]) => {
+      (bets: Bet[]) => {
           this.dataSource.data = bets;
 
         this.total = 0;
@@ -63,20 +61,23 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   setStyle(bet: Bet) {
-    if (Outcome[bet.outcome] === Outcome.win || Outcome[bet.outcome] === Outcome.halfWin) {
+  /*  if (Outcome[bet.outcome] === Outcome.win || Outcome[bet.outcome] === Outcome.halfWin) {
       return 'lawngreen';
     } else if (Outcome[bet.outcome] === Outcome.loss || Outcome[bet.outcome] === Outcome.halfLoss) {
       return 'red';
     } else if (Outcome[bet.outcome] === Outcome.push || Outcome[bet.outcome] === Outcome.void) {
       return 'grey';
-    }
+    }*/
   }
 
-  getMatch(bet: DoubleBet) {
-    const bet1: MultiBetPart = bet.bets[0];
-    const bet2: MultiBetPart = bet.bets[1];
+  getMatch(bet: Bet) {
+    let testString = '';
 
-    return bet1.match + ' - ' + bet1.selection + ' , ' + bet2.match + ' - ' +  bet2.selection;
+    for (const temp of bet.bets) {
+      testString += temp.match + ' - ' + temp.selection + ', ';
+    }
+    return testString.slice(0, testString.length - 2);
+
   }
 
   ngAfterViewInit() {

@@ -36,7 +36,7 @@ export class MinorPlaysComponent implements OnInit, OnDestroy, AfterViewInit {
         this.total = 0;
         this.totalLoss = 0;
         this.totalWins = 0;
-        bets.forEach(bet => {
+       /* bets.forEach(bet => {
           if (bet.valueReturn != null) {
             this.total += bet.valueReturn;
           }
@@ -45,7 +45,7 @@ export class MinorPlaysComponent implements OnInit, OnDestroy, AfterViewInit {
           } else if (Outcome[bet.outcome] === Outcome.loss) {
             this.totalLoss += 1;
           }
-        });
+        });*/
       }
     );
   }

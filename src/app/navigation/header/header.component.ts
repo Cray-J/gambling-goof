@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {NewBetDialogComponent} from '../../bets/new-bet-dialog/new-bet-dialog.component';
-import {Bet} from "../../bets/bet.model";
+import {Bet} from '../../bets/bet.model';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
-    let dialogRef = this.dialog.open(NewBetDialogComponent, {
+    const dialogRef = this.dialog.open(NewBetDialogComponent, {
       data: {name: this.name, animal: this.animal, bet: this.bet}
     });
 

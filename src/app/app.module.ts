@@ -12,7 +12,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { BetsComponent } from './bets/bets.component';
 import { StatsComponent } from './stats/stats.component';
-import { NewBetComponent } from './bets/new-bet/new-bet.component';
 import { BetService } from './bets/bet.service';
 import { BetsOverviewComponent } from './bets/bets-overview/bets-overview.component';
 import {DatePipe} from '@angular/common';
@@ -21,7 +20,7 @@ import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { KeysPipe } from './keys.pipe';
-import {NewDoubleComponent} from './bets/new-double/new-double.component';
+import {NewBetComponent} from './bets/new-bet/new-bet.component';
 import {NewBetDialogComponent} from './bets/new-bet-dialog/new-bet-dialog.component';
 import {MinorPlaysComponent} from './bets/minor-plays/minor-plays.component';
 import { CalculationsService } from './bets/calculations.service';
@@ -38,10 +37,9 @@ import { ChartsModule } from 'ng2-charts';
     SidenavListComponent,
     BetsComponent,
     StatsComponent,
-    NewBetComponent,
     BetsOverviewComponent,
     KeysPipe,
-    NewDoubleComponent,
+    NewBetComponent,
     NewBetDialogComponent,
     MinorPlaysComponent,
     DoubleOverviewComponent

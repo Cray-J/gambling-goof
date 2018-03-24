@@ -1,13 +1,13 @@
 import { Outcome } from './outcome.enum';
 import { Bet } from './bet.model';
-import { DoubleBet } from "./doubleBet.model";
+import {NgForm} from '@angular/forms';
 
 export class CalculationsService {
 
 
 
   determineReturns(bet: Bet) {
-    switch (Outcome[bet.outcome]) {
+   /* switch (Outcome[bet.outcome]) {
       case Outcome.win:
         bet.valueReturn = bet.stake * bet.odds - bet.stake;
         break;
@@ -22,11 +22,27 @@ export class CalculationsService {
         break;
       default:
         bet.valueReturn = 0;
+    }*/
+  }
+
+  getProjectedReturns(form: NgForm) {
+    const outcome = form.value.outcome;
+    const odds = form.value.odds;
+    const stake = form.value.stake;
+    if (outcome === 'win' ) {
+      return odds * stake - stake;
+    } else if (outcome === 'halfWin') {
+      return (odds * stake - stake) / 2;
+    } else if (outcome === 'halfLoss') {
+      return -stake / 2;
+    } else if (outcome === 'loss') {
+      return -stake;
     }
+    return 0;
   }
 
 
-  public determineReturnsFromDouble(bet: DoubleBet) {
+  public determineReturnsFromDouble(bet: Bet) {
     let odds = 1;
 
     for (const currBet of bet.bets) {
@@ -34,7 +50,7 @@ export class CalculationsService {
       if (Outcome[currBet.outcome] === Outcome.loss) {
         return -bet.stake;
       } else if (Outcome[currBet.outcome] === Outcome.win) {
-        console.log("matched on win");
+        console.log('matched on win');
         odds *= currBet.odds;
       } else if (Outcome[currBet.outcome] === Outcome.halfWin) {
         return currBet.odds / 2;

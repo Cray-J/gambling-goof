@@ -1,47 +1,44 @@
 <section class="new-bet" fxLayout fxLayoutAlign="center">
   <form (ngSubmit)="onNewBet(f)" #f="ngForm">
     <mat-card fxFlex.xs="100%" fxFlex="1000px">
-      <mat-card-title fxLayoutAlign="center">Add a new Double</mat-card-title>
+      <mat-card-title fxLayoutAlign="center">Add a new Bet!</mat-card-title>
       <mat-card-content fxLayoutAlign="center" fxLayout="column">
 
         <div fxLayout="row">
           <mat-form-field>
-            <input matInput placeholder="Match" ngModel name="match1" required>
+            <mat-select  ngModel name="numberOfBets" (change)="setNumber($event)">
+              <mat-option *ngFor="let numbah of [0 , 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" [value]="numbah">
+                {{numbah}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Selection" ngModel name="selection1" required>
-          </mat-form-field>
-          <mat-form-field class="numberInput">
-            <input matInput type="number" placeholder="Odds" ngModel name="odds1" required>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-select placeholder="Outcome"  ngModel name="outcome1" >
-              <mat-option *ngFor="let outcome of outcomes | appKeys" [value]="outcome.key">
-                {{outcome.value}}
+            <mat-select placeholder="Type of Bet"  ngModel name="betType" required>
+              <mat-option *ngFor="let betType of betTypes | appKeys" [value]="betType.key">
+                {{betType.value}}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-
-        <div fxLayout="row">
-          <mat-form-field>
-            <input matInput placeholder="Match" ngModel name="match2" required>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Selection" ngModel name="selection2" required>
-          </mat-form-field>
-          <mat-form-field class="numberInput">
-            <input matInput type="number" placeholder="Odds" ngModel name="odds2" required>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-select placeholder="Outcome"  ngModel name="outcome2" >
-              <mat-option *ngFor="let outcome of outcomes | appKeys" [value]="outcome.key">
-                {{outcome.value}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <div  fxLayout="row" *ngFor="let bet of betPart; let i = index">
+            <mat-form-field>
+              <input matInput placeholder="Match"  [(ngModel)]="betPart[i].match" name="match"  required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Selection" [(ngModel)]="betPart[i].selection" name="selection" required>
+            </mat-form-field>
+            <mat-form-field class="numberInput">
+              <input matInput type="number" placeholder="Odds" [(ngModel)]="betPart[i].odds" name="odds" required>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Outcome"  [(ngModel)]="betPart[i].outcome" name="outcome" >
+                <mat-option *ngFor="let outcome of outcomes | appKeys" [value]="outcome.key">
+                  {{outcome.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          <mat-divider></mat-divider>
         </div>
-
 
         <div fxLayout="row">
           <mat-form-field>

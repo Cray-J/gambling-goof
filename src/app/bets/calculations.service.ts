@@ -27,30 +27,23 @@ export class CalculationsService {
 
 
   public determineReturnsFromDouble(bet: DoubleBet) {
-    const bet1 = bet.bets[0];
-    const bet2 = bet.bets[1];
+    let odds = 1;
 
-    const outcome1 = bet1.outcome;
-    const outcome2 = bet2.outcome;
-    const odds1 = bet1.odds;
-    const odds2 = bet2.odds;
-    const stake = bet.stake;
-
-    if (outcome1 === Outcome.loss || outcome2 === Outcome.loss) {
-      return -stake;
-    } else if (outcome1 === Outcome.win) {
-      if (outcome2 === Outcome.win) {
-        return stake * odds1 * odds2;
-      } else if (outcome2 === Outcome.halfWin) {
-        return stake * odds1 + (stake * odds2 / 2);
-      } else if (outcome2 === Outcome.void || outcome2 === Outcome.push) {
-        return stake * odds1;
+    for (const currBet of bet.bets) {
+      console.log(currBet.outcome);
+      if (Outcome[currBet.outcome] === Outcome.loss) {
+        return -bet.stake;
+      } else if (Outcome[currBet.outcome] === Outcome.win) {
+        console.log("matched on win");
+        odds *= currBet.odds;
+      } else if (Outcome[currBet.outcome] === Outcome.halfWin) {
+        return currBet.odds / 2;
+      } else if (Outcome[currBet.outcome] === Outcome.halfLoss) {
+        return odds - currBet.odds / 2;
       }
-    } else if (outcome1 === Outcome.halfWin && outcome2 === Outcome.halfWin) {
-      return stake * odds1 / 2 * odds2 / 2;
-    } else if (outcome1 === Outcome.halfWin && outcome2 === Outcome.win) {
     }
-    return 0;
+
+    return bet.stake * odds;
   }
 
 }

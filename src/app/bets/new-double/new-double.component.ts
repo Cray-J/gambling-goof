@@ -7,6 +7,8 @@ import { Bookie } from '../bookie.enum';
 import { Bet } from '../bet.model';
 import { DoubleBet } from '../doubleBet.model';
 import { CalculationsService } from "../calculations.service";
+import {BetType} from "../bet-type.enum";
+import {MultiBetPart} from "../multi-bet-part.model";
 
 @Component({
   selector: 'app-new-double',
@@ -15,9 +17,13 @@ import { CalculationsService } from "../calculations.service";
 })
 export class NewDoubleComponent implements OnInit {
 
-  bets: Bet[] = [];
+  // bets: Bet[] = [];
   public bookies = Bookie;
   public outcomes = Outcome;
+  public betTypes = BetType;
+  public betPart: MultiBetPart[] = [];
+  Arr = Array; // Array type captured in a variable
+  num = 1;
 
   constructor(private betService: BetService,
               private calculationService: CalculationsService,
@@ -26,33 +32,35 @@ export class NewDoubleComponent implements OnInit {
   ngOnInit() {
   }
 
-  onNewBet(form: NgForm) {
+  setNumber(val: any) {
+    console.log(val.value);
+    this.num = val.value;
+    let num1: number;
 
+    for (num1 = 0 ; num1 < this.num; num1++) {
+      console.log(num1);
+      this.betPart[num1] = {
+        id: '',
+        redCard: false,
+        missedPen: false,
+        match: '',
+        selection: '',
+        odds: 0,
+        outcome: Outcome.awaiting
+      };
+    }
+  }
+
+  onNewBet(form: NgForm) {
     const bet: DoubleBet = {
       valueReturn: 0,
       bookie: form.value.bookie,
       stake: form.value.stake,
-      odds: form.value.odds1 * form.value.odds2,
+      odds: this.getOdds(form),
       date: form.value.date,
-      bets: [{id: null,
-        redCard: false,
-        missedPen: false,
-        match: form.value.match1,
-        selection: form.value.selection1,
-        odds: form.value.odds1,
-        outcome: form.value.outcome1
-      },
-        {
-          id: null,
-          redCard: false,
-          missedPen: false,
-          match: form.value.match2,
-          selection: form.value.selection2,
-          odds: form.value.odds2,
-          outcome: form.value.outcome2
-        }
-      ]
+      bets: this.betPart
     };
+
     bet.valueReturn = this.calculationService.determineReturnsFromDouble(bet);
 
     this.betService.addDouble(bet);
@@ -63,7 +71,11 @@ export class NewDoubleComponent implements OnInit {
   }
 
   getOdds(form: NgForm) {
-    return form.value.odds1 * form.value.odds2;
+    let odds = 1;
+    for( let bet of this.betPart) {
+      odds *=  bet.odds;
+    }
+    return odds;
   }
 
 

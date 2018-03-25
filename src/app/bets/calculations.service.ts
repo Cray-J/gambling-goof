@@ -46,7 +46,7 @@ export class CalculationsService {
     let odds = 1;
 
     for (const currBet of bet.bets) {
-      console.log(currBet.outcome);
+      //console.log(currBet.outcome);
       if (Outcome[currBet.outcome] === Outcome.loss) {
         return -bet.stake;
       } else if (Outcome[currBet.outcome] === Outcome.win) {

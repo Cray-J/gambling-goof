@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { Outcome } from '../outcome.enum';
 import { BetService } from '../bet.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -26,8 +26,13 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
   private subscriptions: Subscription = new Subscription();
   outcomes = Outcome;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
   expandedElement: any;
   isExpansionDetailRow = (i, row) => row.hasOwnProperty('detailRow');
+
+
 
   constructor(private betService: BetService) {
   }
@@ -42,7 +47,6 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
     this.subscriptions.add(this.betService.dailyDoublesChanged.subscribe(
       (bets: Bet[]) => {
           this.dataSource.data = bets;
-          console.log(bets);
       }
     ));
   }
@@ -66,7 +70,6 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
     let testString = '';
 
     for (const temp of bet.bets) {
-      console.log(temp);
       testString += temp.match + ', ';
     }
     return testString.slice(0, testString.length - 2);
@@ -75,5 +78,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-  }
+  this.dataSource.paginator = this.paginator;
+
+}
 }

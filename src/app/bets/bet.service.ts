@@ -185,7 +185,6 @@ export class BetService {
           return tempBet;
         });
       }).subscribe((bets: Bet[]) => {
-      console.log(bets);
         bets.sort(betDateComparator());
         this.doubleBets = bets;
         this.dailyDoublesChanged.next([...this.doubleBets]);

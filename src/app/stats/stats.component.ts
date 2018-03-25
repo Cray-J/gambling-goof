@@ -41,7 +41,6 @@ export class StatsComponent {
   getOutcomes(bets: Bet[], outcome: string) {
     let betOutcomes = 0;
     bets.forEach(bet => {
-      console.log( bet);
      /* if (bet.outcome === outcome) {
         betOutcomes ++;
       }*/

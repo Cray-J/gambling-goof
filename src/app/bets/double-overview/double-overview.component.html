@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" class="example-container mat-elevation-z8">
   <div class="mat-elevation-z8" fxLayoutAlign="center center">
     <mat-form-field fxFlex="40%">
       <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="filter">
@@ -49,4 +49,10 @@
 
     <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
   </mat-table>
+
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[2, 5, 10, 20]"
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
 </div>

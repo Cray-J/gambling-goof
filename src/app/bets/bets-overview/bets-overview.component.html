@@ -29,7 +29,7 @@
 
   <ng-container matColumnDef="match">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Match</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.match }}</mat-cell>
+    <mat-cell *matCellDef="let element">{{  getMatch(element) }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="selection">

@@ -26,9 +26,8 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
   private subscriptions: Subscription = new Subscription();
   outcomes = Outcome;
   @ViewChild(MatSort) sort: MatSort;
-
-  isExpansionDetailRow = (i, row) => row.hasOwnProperty('detailRow');
   expandedElement: any;
+  isExpansionDetailRow = (i, row) => row.hasOwnProperty('detailRow');
 
   constructor(private betService: BetService) {
   }
@@ -54,13 +53,13 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
 
 
   setStyle(bet: Bet) {
-  /*  if (Outcome[bet.outcome] === Outcome.win || Outcome[bet.outcome] === Outcome.halfWin) {
+    if (bet.valueReturn > 0) {
       return 'lawngreen';
-    } else if (Outcome[bet.outcome] === Outcome.loss || Outcome[bet.outcome] === Outcome.halfLoss) {
+    } else if (bet.valueReturn < 0) {
       return 'red';
-    } else if (Outcome[bet.outcome] === Outcome.push || Outcome[bet.outcome] === Outcome.void) {
+    } else if (bet.valueReturn === 0) {
       return 'grey';
-    }*/
+    }
   }
 
   getMatch(bet: Bet) {
@@ -68,7 +67,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
 
     for (const temp of bet.bets) {
       console.log(temp);
-      testString += temp.match + ' - ' + temp.selection + ', ';
+      testString += temp.match + ', ';
     }
     return testString.slice(0, testString.length - 2);
 

@@ -34,7 +34,8 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   animal: string;
   name: string;
 
-  isExpansionDetailRow = (i, row) => row.hasOwnProperty('detailRow');
+  // isExpansionDetailRow = (i, row) => row.hasOwnProperty('detailRow');
+  isExpansionDetailRow = true;
   expandedElement: any;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -61,6 +62,8 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
           this.dataSource.data = this.betService.getSeasonBets();
         } else if (tab === 'Unit Bets') {
           this.dataSource.data = this.betService.getUnitBets();
+        } else if (tab === 'Minor Plays') {
+          this.dataSource.data = this.betService.getMinorBets();
         }
 
         this.total = 0;
@@ -102,14 +105,23 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  setStyle(bet: Bet) {
-   /* if (Outcome[bet.outcome] === Outcome.win || Outcome[bet.outcome] === Outcome.halfWin) {
-      return 'lawngreen';
-    } else if (Outcome[bet.outcome] === Outcome.loss || Outcome[bet.outcome] === Outcome.halfLoss) {
-      return 'red';
-    } else if (Outcome[bet.outcome] === Outcome.push || Outcome[bet.outcome] === Outcome.void) {
-      return 'blue';
-    }*/
+  getMatch(bet: Bet) {
+    let testString = '';
 
+    for (const temp of bet.bets) {
+      testString += temp.match + ', ';
+    }
+    return testString.slice(0, testString.length - 2);
   }
+
+  setStyle(bet: Bet) {
+    if (bet.valueReturn > 0) {
+      return 'lawngreen';
+    } else if (bet.valueReturn < 0) {
+      return 'red';
+    } else if (bet.valueReturn === 0) {
+      return 'grey';
+    }
+  }
+
 }

@@ -22,11 +22,11 @@ import { environment } from '../environments/environment';
 import { KeysPipe } from './keys.pipe';
 import {NewBetComponent} from './bets/new-bet/new-bet.component';
 import {NewBetDialogComponent} from './bets/new-bet-dialog/new-bet-dialog.component';
-import {MinorPlaysComponent} from './bets/minor-plays/minor-plays.component';
 import { CalculationsService } from './bets/calculations.service';
 import { DoubleOverviewComponent } from './bets/double-overview/double-overview.component';
 import {HttpClientModule} from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
+import { TableBasicExample } from './test/table-basic-example';
 
 
 @NgModule({
@@ -41,8 +41,8 @@ import { ChartsModule } from 'ng2-charts';
     KeysPipe,
     NewBetComponent,
     NewBetDialogComponent,
-    MinorPlaysComponent,
-    DoubleOverviewComponent
+    DoubleOverviewComponent,
+    TableBasicExample
   ],
   imports: [
     BrowserModule,

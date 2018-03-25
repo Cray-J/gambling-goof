@@ -79,15 +79,8 @@ export class BetService {
     return this.unitBets.slice();
   }
 
-  private mapToDouble(doc) {
-    return {
-      bets: doc.payload.doc.data().bets,
-      date: doc.payload.doc.data().date,
-      bookie: doc.payload.doc.data().bookie,
-      stake: doc.payload.doc.data().stake,
-      odds: doc.payload.doc.data().odds,
-      valueReturn: doc.payload.doc.data().valueReturn
-    };
+  public getMinorBets(): Bet[] {
+    return this.minorPlays.slice();
   }
 
   public fetchDailyWebBets(): void {
@@ -183,12 +176,13 @@ export class BetService {
 
   public fetchDoubles(): Bet[] {
     this.fbSubs.push(this.db
-      .collection(BetType.dailyDouble)
+      .collection('dailyDouble')
       .snapshotChanges()
       .map(docArray => {
         return docArray.map(doc => {
-          console.log(doc);
-          return this.mapToDouble(doc);
+          const tempBet = doc.payload.doc.data() as Bet;
+          tempBet.id = doc.payload.doc.id;
+          return tempBet;
         });
       }).subscribe((bets: Bet[]) => {
       console.log(bets);
@@ -205,10 +199,5 @@ export class BetService {
 
   updateMinorPlay(bet: Bet) {
     this.db.collection('minorPlay').doc(bet.id).update(bet);
-  }
-
-
-  updateUnitBet(bet: Bet) {
-    this.db.collection('unitBet').doc(bet.id).update(bet);
   }
 }

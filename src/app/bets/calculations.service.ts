@@ -6,7 +6,7 @@ export class CalculationsService {
 
 
 
-  determineReturns(bet: Bet) {
+  // determineReturns(bet: Bet) {
    /* switch (Outcome[bet.outcome]) {
       case Outcome.win:
         bet.valueReturn = bet.stake * bet.odds - bet.stake;
@@ -23,7 +23,7 @@ export class CalculationsService {
       default:
         bet.valueReturn = 0;
     }*/
-  }
+  // }
 
   getProjectedReturns(form: NgForm) {
     const outcome = form.value.outcome;
@@ -42,7 +42,7 @@ export class CalculationsService {
   }
 
 
-  public determineReturnsFromDouble(bet: Bet) {
+  public determineReturns(bet: Bet) {
     let odds = 1;
 
     for (const currBet of bet.bets) {
@@ -59,7 +59,7 @@ export class CalculationsService {
       }
     }
 
-    return bet.stake * odds;
+    return bet.stake * odds - bet.stake;
   }
 
 }

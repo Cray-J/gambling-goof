@@ -62,7 +62,7 @@ export class NewBetComponent implements OnInit {
       bets: this.betPart
     };
 
-    bet.valueReturn = this.calculationService.determineReturnsFromDouble(bet);
+    bet.valueReturn = this.calculationService.determineReturns(bet);
 
     console.log(bet);
     this.betService.addBet(bet);
@@ -78,6 +78,10 @@ export class NewBetComponent implements OnInit {
       odds *=  bet.odds;
     }
     return odds;
+  }
+
+  getReturns(form: NgForm) {
+    return this.calculationService.determineReturns(form.value as Bet);
   }
 
 

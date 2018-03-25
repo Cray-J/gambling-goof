@@ -6,11 +6,20 @@ import { Subscription } from 'rxjs/Subscription';
 import { Outcome } from '../outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { CalculationsService } from '../calculations.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-bets-overview',
   templateUrl: './bets-overview.component.html',
-  styleUrls: ['./bets-overview.component.css']
+  styleUrls: ['./bets-overview.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
+      state('expanded', style({ height: '*', visibility: 'visible' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
   displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'events', 'outcome', 'return'];
@@ -24,6 +33,9 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
 
   animal: string;
   name: string;
+
+  isExpansionDetailRow = (i, row) => row.hasOwnProperty('detailRow');
+  expandedElement: any;
 
   @ViewChild(MatSort) sort: MatSort;
 

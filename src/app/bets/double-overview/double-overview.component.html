@@ -1,20 +1,4 @@
 <div fxLayout="column">
-
-  <section class="stats" fxLayoutAlign="center center">
-    <mat-card  fxFlex="40%">
-      <mat-card-header fxLayoutAlign="center center">Daily Web Single</mat-card-header>
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item>Number of bets: {{ dataSource.data.length }}</mat-list-item>
-          <mat-list-item *ngIf="total > 0">Total return : +{{ total }}</mat-list-item>
-          <mat-list-item *ngIf="total <= 0">Total return : {{ total }}</mat-list-item>
-          <mat-list-item>Number of wins: {{ totalWins }}</mat-list-item>
-          <mat-list-item>Number of losses: {{ totalLoss }}</mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
-  </section>
-
   <div class="mat-elevation-z8" fxLayoutAlign="center center">
     <mat-form-field fxFlex="40%">
       <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="filter">
@@ -26,7 +10,6 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.date | date:'dd/MM-yyyy'}}</mat-cell>
     </ng-container>
-
     <ng-container matColumnDef="match">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Match</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ getMatch(element) }}</mat-cell>
@@ -61,7 +44,9 @@
       <mat-cell *matCellDef="let element" [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn }}</mat-cell>
     </ng-container>
 
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
     <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
   </mat-table>
 </div>

@@ -64,6 +64,7 @@ export class NewBetComponent implements OnInit {
 
     bet.valueReturn = this.calculationService.determineReturnsFromDouble(bet);
 
+    console.log(bet);
     this.betService.addBet(bet);
     form.reset();
     this.snackbar.open('New bet registered!', null, {

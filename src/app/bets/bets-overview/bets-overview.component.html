@@ -83,7 +83,21 @@
     <mat-cell *matCellDef="let element" [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn }}</mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="expandedDetail">
+    <mat-cell *matCellDef="let detail">
+      The symbol for {{element.valueReturn}} is AWESOME!
+    </mat-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"
+           matRipple
+           class="element-row"
+           [class.expanded]="expandedElement == row"
+           (click)="expandedElement = row"></mat-row>
+  <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+           [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"
+           style="overflow: hidden">
+  </mat-row>
 </mat-table>
 </div>

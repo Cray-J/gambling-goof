@@ -35,6 +35,11 @@ export class BetService {
         this.dailySingles.push(bet);
         this.dailySinglesChanged.next(this.dailySingles);
         break;
+      case BetType.dailyDouble:
+        this.db.collection(bet.betType).add(bet);
+        this.doubleBets.push(bet);
+        this.dailyDoublesChanged.next(this.doubleBets);
+        break;
       case BetType.dailyWebSingle:
         this.db.collection(bet.betType).add(bet);
         this.dailyWebSingles.push(bet);
@@ -182,9 +187,11 @@ export class BetService {
       .snapshotChanges()
       .map(docArray => {
         return docArray.map(doc => {
+          console.log(doc);
           return this.mapToDouble(doc);
         });
       }).subscribe((bets: Bet[]) => {
+      console.log(bets);
         bets.sort(betDateComparator());
         this.doubleBets = bets;
         this.dailyDoublesChanged.next([...this.doubleBets]);

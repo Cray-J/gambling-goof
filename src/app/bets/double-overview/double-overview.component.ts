@@ -4,24 +4,31 @@ import { Outcome } from '../outcome.enum';
 import { BetService } from '../bet.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Bet } from '../bet.model';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-double-overview',
   templateUrl: './double-overview.component.html',
-  styleUrls: ['./double-overview.component.css']
+  styleUrls: ['./double-overview.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
+      state('expanded', style({ height: '*', visibility: 'visible' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   displayedColumns = ['date', 'match', 'bookie', 'stake', 'odds', 'events', 'return'];
   dataSource = new MatTableDataSource<Bet>();
   private subscriptions: Subscription = new Subscription();
-
-  total = 0;
-  totalWins = 0;
-  totalLoss = 0;
   outcomes = Outcome;
-
   @ViewChild(MatSort) sort: MatSort;
+
+  isExpansionDetailRow = (i, row) => row.hasOwnProperty('detailRow');
+  expandedElement: any;
 
   constructor(private betService: BetService) {
   }
@@ -36,21 +43,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
     this.subscriptions.add(this.betService.dailyDoublesChanged.subscribe(
       (bets: Bet[]) => {
           this.dataSource.data = bets;
-
-        this.total = 0;
-        this.totalLoss = 0;
-        this.totalWins = 0;
-
-        // this.dataSource.data.forEach((bet => {
-        //   if (bet.valueReturn != null) {
-        //     this.total += bet.valueReturn;
-        //   }
-        //   if (Outcome[bet.outcome] === Outcome.win) {
-        //     this.totalWins += 1;
-        //   } else if (Outcome[bet.outcome] === Outcome.loss) {
-        //     this.totalLoss += 1;
-        //   }
-        // }));
+          console.log(bets);
       }
     ));
   }
@@ -74,6 +67,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
     let testString = '';
 
     for (const temp of bet.bets) {
+      console.log(temp);
       testString += temp.match + ' - ' + temp.selection + ', ';
     }
     return testString.slice(0, testString.length - 2);

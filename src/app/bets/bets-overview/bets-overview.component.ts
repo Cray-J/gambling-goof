@@ -34,8 +34,8 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   animal: string;
   name: string;
 
-  // isExpansionDetailRow = (i, row) => row.hasOwnProperty('detailRow');
-  isExpansionDetailRow = true;
+  isExpansionDetailRow = (i, row) => row.hasOwnProperty('detailRow');
+  //isExpansionDetailRow = true;
   expandedElement: any;
 
   @ViewChild(MatSort) sort: MatSort;

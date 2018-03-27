@@ -1,5 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {NewBetDialogComponent} from '../../bets/new-bet-dialog/new-bet-dialog.component';
 import {Bet} from '../../bets/bet.model';
 

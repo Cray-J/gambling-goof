@@ -15,7 +15,12 @@
     </ng-container>
     <ng-container matColumnDef="match">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Match</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ getMatch(element) }}</mat-cell>
+      <mat-cell *matCellDef="let element"> {{ getMatch(element) }}
+
+        <div *ngFor="let el of element.betPart">
+          {{ el.match}}
+        </div>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="stake">
@@ -47,7 +52,6 @@
       <mat-cell *matCellDef="let element" [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn }}</mat-cell>
     </ng-container>
 
-
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
     <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
@@ -55,7 +59,7 @@
 
   <mat-paginator #paginator
                  [pageSize]="10"
-                 [pageSizeOptions]="[2, 5, 10, 20]"
+                 [pageSizeOptions]="[5, 10, 20]"
                  [showFirstLastButtons]="true">
   </mat-paginator>
 </div>

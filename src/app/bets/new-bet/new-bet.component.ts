@@ -75,13 +75,33 @@ export class NewBetComponent implements OnInit {
   getOdds() {
     let odds = 1;
     for (const bet of this.betPart) {
-      odds *=  bet.odds;
+      if (bet.odds != null) {
+        odds *=  bet.odds;
+      }
     }
     return odds;
   }
 
   getReturns(form: NgForm) {
-    return this.calculationService.determineReturns(form.value as Bet);
+    let odds = 1;
+    const stake = form.value.stake;
+    console.log(stake);
+
+    for (const currBet of this.betPart) {
+      console.log(currBet.outcome);
+      if (Outcome[currBet.outcome] === Outcome.loss) {
+        return -stake;
+      } else if (Outcome[currBet.outcome] === Outcome.win) {
+        console.log('matched on win');
+        odds *= currBet.odds;
+      } else if (Outcome[currBet.outcome] === Outcome.halfWin) {
+        odds *=  ((currBet.odds - 1) / 2) + 1;
+      } else if (Outcome[currBet.outcome] === Outcome.halfLoss) {
+        odds *=   - (((currBet.odds - 1) / 2)) ;
+      }
+    }
+
+    return stake * odds - stake;
   }
 
 

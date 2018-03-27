@@ -14,20 +14,21 @@ import { BetsComponent } from './bets/bets.component';
 import { StatsComponent } from './stats/stats.component';
 import { BetService } from './bets/bet.service';
 import { BetsOverviewComponent } from './bets/bets-overview/bets-overview.component';
-import {DatePipe} from '@angular/common';
-import {AngularFireModule} from 'angularfire2';
-import {AngularFirestoreModule} from 'angularfire2/firestore';
-import {AngularFireAuthModule} from 'angularfire2/auth';
+import { DatePipe } from '@angular/common';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { KeysPipe } from './keys.pipe';
-import {NewBetComponent} from './bets/new-bet/new-bet.component';
-import {NewBetDialogComponent} from './bets/new-bet-dialog/new-bet-dialog.component';
+import { NewBetComponent } from './bets/new-bet/new-bet.component';
+import { NewBetDialogComponent } from './bets/new-bet-dialog/new-bet-dialog.component';
 import { CalculationsService } from './bets/calculations.service';
 import { DoubleOverviewComponent } from './bets/double-overview/double-overview.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { TableBasicExample } from './test/table-basic-example';
-
+import { BankComponent } from './bank/bank.component';
+import { BankService } from './bank.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { TableBasicExample } from './test/table-basic-example';
     NewBetComponent,
     NewBetDialogComponent,
     DoubleOverviewComponent,
-    TableBasicExample
+    TableBasicExample,
+    BankComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,7 @@ import { TableBasicExample } from './test/table-basic-example';
     HttpClientModule,
     ChartsModule
   ],
-  providers: [BetService, DatePipe, CalculationsService],
+  providers: [BetService, DatePipe, CalculationsService, BankService],
   bootstrap: [AppComponent],
   entryComponents: [NewBetDialogComponent],
 })

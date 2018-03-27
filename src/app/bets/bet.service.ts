@@ -138,7 +138,7 @@ export class BetService {
 
   public fetchSeasonBets(): Bet[] {
     this.fbSubs.push(this.db
-      .collection(BetType.seasonBet)
+      .collection('seasonBet')
       .snapshotChanges()
       .map(docArray => {
         return docArray.map(doc => {

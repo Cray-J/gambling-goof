@@ -1,0 +1,21 @@
+div {
+  background-color: lightgray;
+  max-height: 300px;
+  min-height: 100px;
+}
+
+mat-list-item {
+  font-size: 14px !important;
+  padding: 0 !important;
+}
+
+.list .mat-list .mat-list-item .mat-list-item-content {
+  padding: 0 !important; /* try to use !important if doesn't work */
+}
+
+.list .mat-list {
+  padding-top: 0; /* .mat-list also has an additional padding top  */
+}
+.list .mat-list .mat-list-item {
+  height: auto !important; /* To avoid calculated height from mat-line-x classes */
+}

@@ -57,6 +57,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
         if (tab === 'Daily Web Single') {
           this.dataSource.data = this.betService.getDailyWebBets();
         } else if (tab === 'Daily Single') {
+          console.log("getting daily singels");
           this.dataSource.data = this.betService.getDailyBets();
         } else if (tab === 'Season Bets') {
           this.dataSource.data = this.betService.getSeasonBets();

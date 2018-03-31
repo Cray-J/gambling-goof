@@ -36,7 +36,7 @@
 
     <ng-container matColumnDef="odds">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Odds</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.odds }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.odds | number : '1.2-2'}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="events">
@@ -49,7 +49,7 @@
 
     <ng-container matColumnDef="return" >
       <mat-header-cell *matHeaderCellDef mat-sort-header>Return</mat-header-cell>
-      <mat-cell *matCellDef="let element" [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn }}</mat-cell>
+      <mat-cell *matCellDef="let element" [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

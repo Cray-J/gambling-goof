@@ -21,15 +21,6 @@ import {
   MatTooltipModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {ScrollDispatchModule} from "@angular/cdk/scrolling";
-import {PlatformModule} from "@angular/cdk/platform";
-import {OverlayModule} from '@angular/cdk/overlay';
-import {ObserversModule} from "@angular/cdk/observers";
-import {BidiModule} from '@angular/cdk/bidi';
-import {A11yModule} from "@angular/cdk/a11y";
-import {PortalModule} from '@angular/cdk/portal';
-import {CdkStepperModule} from "@angular/cdk/stepper";
-import {CdkTableModule} from "@angular/cdk/table";
 
 @NgModule({
   imports: [
@@ -80,16 +71,7 @@ import {CdkTableModule} from "@angular/cdk/table";
     MatSnackBarModule,
     MatDialogModule,
     MatTooltipModule,
-    MatExpansionModule,
-    A11yModule,
-    BidiModule,
-    ObserversModule,
-    OverlayModule,
-    PlatformModule,
-    PortalModule,
-    ScrollDispatchModule,
-    CdkStepperModule,
-    CdkTableModule,
+    MatExpansionModule
   ]
 })
 export class MaterialModule {}

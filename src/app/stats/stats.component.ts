@@ -46,7 +46,6 @@ export class StatsComponent {
       }*/
     });
 
-    console.log(betOutcomes);
     return betOutcomes;
   }
 

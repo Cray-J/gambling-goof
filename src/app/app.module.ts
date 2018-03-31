@@ -26,7 +26,6 @@ import { CalculationsService } from './bets/calculations.service';
 import { DoubleOverviewComponent } from './bets/double-overview/double-overview.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
-import { TableBasicExample } from './test/table-basic-example';
 import { BankComponent } from './bank/bank.component';
 import { BankService } from './bank.service';
 
@@ -43,7 +42,6 @@ import { BankService } from './bank.service';
     NewBetComponent,
     NewBetDialogComponent,
     DoubleOverviewComponent,
-    TableBasicExample,
     BankComponent
   ],
   imports: [

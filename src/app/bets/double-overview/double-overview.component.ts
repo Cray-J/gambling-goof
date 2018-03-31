@@ -56,6 +56,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
 
+
   setStyle(bet: Bet) {
     if (bet.valueReturn > 0) {
       return 'lawngreen';

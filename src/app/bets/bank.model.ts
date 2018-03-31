@@ -13,3 +13,4 @@ export interface Bank {
   initialBankroll: number;
   currentBankroll: number;
 }
+

@@ -6,8 +6,8 @@
     <mat-card-content>
       <mat-list>
         <mat-list-item>Number of bets: {{ dataSource.data.length }}</mat-list-item>
-        <mat-list-item *ngIf="total > 0">Total return : +{{ total }}</mat-list-item>
-        <mat-list-item *ngIf="total <= 0">Total return : {{ total }}</mat-list-item>
+        <mat-list-item *ngIf="total > 0">Total return : +{{ total | number : '1.2-2'}}</mat-list-item>
+        <mat-list-item *ngIf="total <= 0">Total return : {{ total | number : '1.2-2'}}</mat-list-item>
         <mat-list-item>Number of wins: {{ totalWins }}</mat-list-item>
         <mat-list-item>Number of losses: {{ totalLoss }}</mat-list-item>
       </mat-list>
@@ -34,7 +34,7 @@
 
   <ng-container matColumnDef="selection">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.selection }}</mat-cell>
+    <mat-cell *matCellDef="let element">{{ getSelection(element) }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="stake">
@@ -50,7 +50,7 @@
 
   <ng-container matColumnDef="odds">
     <mat-header-cell *matHeaderCellDef>Odds</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.odds }}</mat-cell>
+    <mat-cell *matCellDef="let element">{{ element.odds | number : '1.2-2' }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="events">
@@ -80,24 +80,10 @@
 
   <ng-container matColumnDef="return" >
     <mat-header-cell *matHeaderCellDef>Return</mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn }}</mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="expandedDetail">
-    <mat-cell *matCellDef="let detail">
-      The symbol for {{element.valueReturn}} is AWESOME!
-    </mat-cell>
+    <mat-cell *matCellDef="let element" [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"
-           matRipple
-           class="element-row"
-           [class.expanded]="expandedElement == row"
-           (click)="expandedElement = row"></mat-row>
-  <!--<mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"-->
-           <!--[@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"-->
-           <!--style="overflow: hidden">-->
-  <!--</mat-row>-->
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 </div>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BankService } from '../bank.service';
 import { Bank } from '../bets/bank.model';
+import {Bookie} from "../bets/bookie.enum";
+import {BetService} from "../bets/bet.service";
+import {Bet} from "../bets/bet.model";
 
 @Component({
   selector: 'app-bank',
@@ -9,15 +12,38 @@ import { Bank } from '../bets/bank.model';
 })
 export class BankComponent implements OnInit {
   bank: Bank;
+  doubles: Bet[];
 
-  constructor(private bankService: BankService) { }
+  constructor(private bankService: BankService, private betService: BetService) { }
 
   ngOnInit() {
+    this.bank = this.bankService.getBookies();
+    this.doubles = this.betService.fetchDoubles();
+
   }
 
   getBookies() {
-    console.log(this.bankService.getBookies());
-    return this.bankService.getBookies().bookies;
+    return this.bank.bookies;
+  }
+
+  getWins(bookie: Bookie) {
+   // this.bank.bookies.find(bookie)
+  }
+
+  getLosses() {
+
+  }
+
+  getRefunds() {
+
+  }
+
+  getDailyWins() {
+    let wins = 0;
+    for (const double of this.doubles) {
+      wins += double.valueReturn;
+    }
+    return wins;
   }
 
 }

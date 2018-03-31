@@ -42,5 +42,4 @@ export class BankService {
   getBookies(): Bank {
     return this.bank;
   }
-
 }

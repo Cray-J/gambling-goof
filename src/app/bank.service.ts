@@ -42,22 +42,4 @@ export class BankService {
 
     return bank;
   }
-
-  // public fetchDailyWebBets(): void {
-  //   this.fbSubs.push(this.db
-  //     .collection('dailyWebSingle')
-  //     .snapshotChanges()
-  //     .map(docArray => {
-  //       return docArray.map(doc => {
-  //         const tempBet = doc.payload.doc.data() as Bet;
-  //         tempBet.id = doc.payload.doc.id;
-  //         return tempBet;
-  //       });
-  //     }).subscribe((bets: Bet[]) => {
-  //       bets.sort(betDateComparator());
-  //       this.dailyWebSingles = bets;
-  //       this.dailyWebSinglesChanged.next([...this.dailyWebSingles]);
-  //     }));
-  // }
-  //
 }

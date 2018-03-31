@@ -9,14 +9,12 @@ import { betDateComparator } from './comparators';
 @Injectable()
 export class BetService {
   private dailySingles: Bet[] = [];
-  private dailyWebSingles: Bet[] = [];
   private minorPlays: Bet[] = [];
   private doubleBets: Bet[] = [];
   private seasonBets: Bet[] = [];
   private unitBets: Bet[] = [];
 
   dailySinglesChanged = new Subject<Bet[]>();
-  dailyWebSinglesChanged = new Subject<Bet[]>();
   minorPlaysChanged = new Subject<Bet[]>();
   seasonBetsChanged = new Subject<Bet[]>();
   unitBetsChanged = new Subject<Bet[]>();
@@ -40,12 +38,7 @@ export class BetService {
         this.doubleBets.push(bet);
         this.dailyDoublesChanged.next(this.doubleBets);
         break;
-      case BetType.dailyWebSingle:
-        this.db.collection(bet.betType).add(bet);
-        this.dailyWebSingles.push(bet);
-        this.dailyWebSinglesChanged.next(this.dailyWebSingles);
-        break;
-      case BetType.minorPlay:
+      case BetType.minorBets:
         this.db.collection(bet.betType).add(bet);
         this.minorPlays.push(bet);
         this.minorPlaysChanged.next(this.minorPlays);
@@ -67,10 +60,6 @@ export class BetService {
     return this.dailySingles.slice();
   }
 
-  public getDailyWebBets(): Bet[] {
-    return this.dailyWebSingles.slice();
-  }
-
   public getSeasonBets(): Bet[] {
     return this.seasonBets.slice();
   }
@@ -81,23 +70,6 @@ export class BetService {
 
   public getMinorBets(): Bet[] {
     return this.minorPlays.slice();
-  }
-
-  public fetchDailyWebBets(): void {
-    this.fbSubs.push(this.db
-      .collection('dailyWebSingle')
-      .snapshotChanges()
-      .map(docArray => {
-        return docArray.map(doc => {
-          const tempBet = doc.payload.doc.data() as Bet;
-          tempBet.id = doc.payload.doc.id;
-          return tempBet;
-        });
-      }).subscribe((bets: Bet[]) => {
-        bets.sort(betDateComparator());
-        this.dailyWebSingles = bets;
-        this.dailyWebSinglesChanged.next([...this.dailyWebSingles]);
-      }));
   }
 
   public fetchDailyBets(): void {
@@ -119,7 +91,7 @@ export class BetService {
 
   public fetchMinorPlays(): Bet[] {
     this.fbSubs.push(this.db
-      .collection('minorPlay')
+      .collection('minorBets')
       .snapshotChanges()
       .map(docArray => {
         return docArray.map(doc => {
@@ -197,6 +169,6 @@ export class BetService {
   }
 
   updateMinorPlay(bet: Bet) {
-    this.db.collection('minorPlay').doc(bet.id).update(bet);
+    this.db.collection('minorBets').doc(bet.id).update(bet);
   }
 }

@@ -54,10 +54,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.add(this.betService.currentTab.subscribe(
       (tab: string) => {
-        if (tab === 'Daily Web Single') {
-          this.dataSource.data = this.betService.getDailyWebBets();
-        } else if (tab === 'Daily Single') {
-          console.log("getting daily singels");
+        if (tab === 'Daily Single') {
           this.dataSource.data = this.betService.getDailyBets();
         } else if (tab === 'Season Bets') {
           this.dataSource.data = this.betService.getSeasonBets();

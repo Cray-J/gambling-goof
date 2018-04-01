@@ -11,5 +11,7 @@ export interface Bet {
   stake: number;
   odds: number;
   date: Date;
+  reasoning: string;
+  review: string;
 
 }

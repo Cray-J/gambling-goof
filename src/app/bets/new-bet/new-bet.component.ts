@@ -59,7 +59,9 @@ export class NewBetComponent implements OnInit {
       stake: form.value.stake,
       odds: this.getOdds(),
       date: form.value.date,
-      bets: this.betPart
+      bets: this.betPart,
+      reasoning: '',
+      review: ''
     };
 
     bet.valueReturn = this.calculationService.determineReturns(bet);

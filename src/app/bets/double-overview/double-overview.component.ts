@@ -1,23 +1,18 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Outcome } from '../outcome.enum';
 import { BetService } from '../bet.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Bet } from '../bet.model';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { BetSelection } from '../bet-selection.model';
+import { expandAnimation } from '../expand-animation';
 
 
 @Component({
   selector: 'app-double-overview',
   templateUrl: './double-overview.component.html',
-  styleUrls: ['./double-overview.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
-      state('expanded', style({ height: '*', visibility: 'visible' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  styleUrls: ['./double-overview.component.scss'],
+  animations: [expandAnimation],
 })
 export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -28,11 +23,8 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-
-  expandedElement: any;
-  isExpansionDetailRow = (i, row) => row.hasOwnProperty('detailRow');
-
-
+  private expandedBets: Bet[] = [];
+  public isMultiBet = (_, row: Bet) => row.bets.length > 1;
 
   constructor(private betService: BetService) {
   }
@@ -82,4 +74,26 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
   this.dataSource.paginator = this.paginator;
 
 }
+
+  onRowClick(betRow: Bet) {
+    console.log('click event');
+    const index: number = this.expandedBets.indexOf(betRow);
+    if (index > -1) {
+      this.expandedBets.splice(index, 1);
+    } else {
+      this.expandedBets.push(betRow);
+    }
+    console.log(this.expandedBets);
+  }
+
+  isExpanded(betRow: Bet): boolean {
+    // console.log('Checking for expanded row');
+    return this.expandedBets.some(bet => bet === betRow);
+  }
+
+
+  residesInAnExpandedBet(betRow: BetSelection): boolean {
+    // console.log('Checking for resides in expanded bet');
+    return true;
+  }
 }

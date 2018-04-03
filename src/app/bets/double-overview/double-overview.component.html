@@ -54,8 +54,20 @@
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-    <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+      class="bet-row"
+      [class.multibet]="row.bets.length > 1"
+      (click)="onRowClick(row)"
+      [class.expanded]="isExpanded(row)">
+    </mat-row>
+
+    <!--<mat-row *matRowDef="let bet; columns: displayedColumns; when: isMultiBet"-->
+             <!--class="bet-in-multibet"-->
+             <!--[@expand]="residesInAnExpandedBet(bet) ? 'expanded' : 'collapsed'">-->
+    <!--</mat-row>-->
+
   </mat-table>
+
 
   <mat-paginator #paginator
                  [pageSize]="10"

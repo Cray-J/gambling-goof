@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {NewBetDialogComponent} from '../../bets/new-bet-dialog/new-bet-dialog.component';
-import {Bet} from '../../bets/bet.model';
+import { SingleBet } from '../../bets/singlebet.model';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   animal: string;
   name: string;
 
-  bet: Bet;
+  bet: SingleBet;
 
   constructor(public dialog: MatDialog) {}
 

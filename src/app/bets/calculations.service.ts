@@ -1,6 +1,7 @@
 import { Outcome } from './outcome.enum';
-import { Bet } from './bet.model';
 import {NgForm} from '@angular/forms';
+import { MultiBet } from './bet.model';
+import { SingleBet } from './singlebet.model';
 
 export class CalculationsService {
 
@@ -41,8 +42,24 @@ export class CalculationsService {
     return 0;
   }
 
+  public determineReturnsForSingle(bet: SingleBet) {
+    bet.valueReturn = 0;
+    const stake = bet.stake;
+    const odds = bet.odds;
 
-  public determineReturns(bet: Bet) {
+      if (Outcome[bet.outcome] === Outcome.loss) {
+        bet.valueReturn = -stake;
+      } else if (Outcome[bet.outcome] === Outcome.win) {
+        bet.valueReturn = stake * odds - stake;
+      } else if (Outcome[bet.outcome] === Outcome.halfWin) {
+        bet.valueReturn = stake * (odds / 2) - stake;
+      } else if (Outcome[bet.outcome] === Outcome.halfLoss) {
+        bet.valueReturn = stake * (-odds / 2) - stake;
+      }
+      console.log('SINGLE CALC');
+  }
+
+  public determineReturnsForMulti(bet: MultiBet) {
     let odds = 1;
 
     for (const currBet of bet.bets) {

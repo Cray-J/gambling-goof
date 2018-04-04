@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BankService } from '../bank.service';
 import { Bank } from '../bets/bank.model';
-import {Bookie} from "../bets/bookie.enum";
-import {BetService} from "../bets/bet.service";
-import {Bet} from "../bets/bet.model";
+import {Bookie} from '../bets/bookie.enum';
+import {BetService} from '../bets/bet.service';
+import { SingleBet } from '../bets/singlebet.model';
+import { MultiBet } from '../bets/bet.model';
 
 @Component({
   selector: 'app-bank',
@@ -12,7 +13,7 @@ import {Bet} from "../bets/bet.model";
 })
 export class BankComponent implements OnInit {
   bank: Bank;
-  doubles: Bet[];
+  doubles: MultiBet[];
 
   constructor(private bankService: BankService, private betService: BetService) { }
 

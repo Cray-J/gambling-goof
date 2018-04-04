@@ -2,7 +2,7 @@ import {Bookie} from './bookie.enum';
 import {BetType} from './bet-type.enum';
 import {BetSelection} from './bet-selection.model';
 
-export interface Bet {
+export interface MultiBet {
   id: string;
   bets: BetSelection[];
   betType: BetType;

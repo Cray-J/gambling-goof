@@ -3,9 +3,9 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Outcome } from '../outcome.enum';
 import { BetService } from '../bet.service';
 import { Subscription } from 'rxjs/Subscription';
-import { Bet } from '../bet.model';
 import { BetSelection } from '../bet-selection.model';
 import { expandAnimation } from '../expand-animation';
+import { MultiBet } from '../bet.model';
 
 
 @Component({
@@ -17,14 +17,14 @@ import { expandAnimation } from '../expand-animation';
 export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   displayedColumns = ['date', 'match', 'bookie', 'stake', 'odds', 'events', 'return'];
-  dataSource = new MatTableDataSource<Bet>();
+  dataSource = new MatTableDataSource<MultiBet>();
   private subscriptions: Subscription = new Subscription();
   outcomes = Outcome;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  private expandedBets: Bet[] = [];
-  public isMultiBet = (_, row: Bet) => row.bets.length > 1;
+  private expandedBets: MultiBet[] = [];
+  public isMultiBet = (_, row: MultiBet) => row.bets.length > 1;
 
   constructor(private betService: BetService) {
   }
@@ -37,7 +37,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
 
   ngOnInit() {
     this.subscriptions.add(this.betService.dailyDoublesChanged.subscribe(
-      (bets: Bet[]) => {
+      (bets: MultiBet[]) => {
           this.dataSource.data = bets;
       }
     ));
@@ -49,7 +49,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
 
 
 
-  setStyle(bet: Bet) {
+  setStyle(bet: MultiBet) {
     if (bet.valueReturn > 0) {
       return 'lawngreen';
     } else if (bet.valueReturn < 0) {
@@ -59,7 +59,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  getMatch(bet: Bet) {
+  getMatch(bet: MultiBet) {
     let testString = '';
 
     for (const temp of bet.bets) {
@@ -75,7 +75,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
 
 }
 
-  onRowClick(betRow: Bet) {
+  onRowClick(betRow: MultiBet) {
     console.log('click event');
     const index: number = this.expandedBets.indexOf(betRow);
     if (index > -1) {
@@ -86,7 +86,7 @@ export class DoubleOverviewComponent implements OnInit, OnDestroy, AfterViewInit
     console.log(this.expandedBets);
   }
 
-  isExpanded(betRow: Bet): boolean {
+  isExpanded(betRow: MultiBet): boolean {
     // console.log('Checking for expanded row');
     return this.expandedBets.some(bet => bet === betRow);
   }

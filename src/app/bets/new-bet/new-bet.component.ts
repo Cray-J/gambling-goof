@@ -4,10 +4,11 @@ import { BetService } from '../bet.service';
 import { MatSnackBar } from '@angular/material';
 import { Outcome } from '../outcome.enum';
 import { Bookie } from '../bookie.enum';
-import { Bet } from '../bet.model';
 import { CalculationsService } from '../calculations.service';
 import {BetType} from '../bet-type.enum';
 import {BetSelection} from '../bet-selection.model';
+import { MultiBet } from '../bet.model';
+import { SingleBet } from '../singlebet.model';
 
 @Component({
   selector: 'app-new-bet',
@@ -51,23 +52,52 @@ export class NewBetComponent implements OnInit {
   }
 
   onNewBet(form: NgForm) {
-    const bet: Bet = {
-      id: '',
-      valueReturn: 0,
-      bookie: form.value.bookie,
-      betType: form.value.betType,
-      stake: form.value.stake,
-      odds: this.getOdds(),
-      date: form.value.date,
-      bets: this.betPart,
-      reasoning: '',
-      review: ''
-    };
 
-    bet.valueReturn = this.calculationService.determineReturns(bet);
+    if (form.value.betType === BetType.dailyDouble) {
+      const bet: MultiBet = {
+        id: '',
+        valueReturn: 0,
+        bookie: form.value.bookie,
+        betType: form.value.betType,
+        stake: form.value.stake,
+        odds: this.getOdds(),
+        date: form.value.date,
+        bets: this.betPart,
+        reasoning: '',
+        review: ''
+      };
 
-    console.log(bet);
-    this.betService.addBet(bet);
+      bet.valueReturn = this.calculationService.determineReturnsForMulti(bet);
+      console.log(bet);
+      this.betService.addMultiBet(bet);
+
+    } else {
+      const bet: SingleBet = {
+        id: '',
+        valueReturn: 0,
+        match: this.betPart[0].match,
+        selection: this.betPart[0].selection,
+        outcome: this.betPart[0].outcome,
+        redCard: false,
+        missedPen: false,
+        finalScore: '',
+        bookie: form.value.bookie,
+        betType: form.value.betType,
+        stake: form.value.stake,
+        odds: this.getOdds(),
+        date: form.value.date,
+        // bets: this.betPart.,
+        reasoning: '',
+        review: ''
+      };
+
+      this.calculationService.determineReturnsForSingle(bet);
+      console.log(bet);
+      console.log("setting val");
+      console.log(bet.valueReturn);
+      this.betService.addBet(bet);
+    }
+
     form.reset();
     this.snackbar.open('New bet registered!', null, {
       duration: 3000

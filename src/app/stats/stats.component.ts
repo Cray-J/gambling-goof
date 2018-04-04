@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BetService} from '../bets/bet.service';
-import {Bet} from '../bets/bet.model';
+import { SingleBet } from '../bets/singlebet.model';
 
 @Component({
   selector: 'app-stats',
@@ -25,6 +25,30 @@ export class StatsComponent {
     this.getOutcomes(this.betService.getDailyBets(), 'awaiting')];
   public doughnutChartType = 'doughnut';
 
+
+  public barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+//    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 50,
+        right: 0,
+        top: 100,
+        bottom: 0
+      }
+    }
+  };
+
+  public barChartLabels: string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartType = 'bar';
+  public barChartLegend = true;
+
+  public barChartData: any[] = [
+    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
+    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+  ];
+
   // events
   public chartClicked(e: any): void {
     console.log(e);
@@ -38,8 +62,8 @@ export class StatsComponent {
     return this.betService.getDailyBets().length;
   }
 
-  getOutcomes(bets: Bet[], outcome: string) {
-    let betOutcomes = 0;
+  getOutcomes(bets: SingleBet[], outcome: string) {
+    const betOutcomes = 0;
     bets.forEach(bet => {
      /* if (bet.outcome === outcome) {
         betOutcomes ++;
@@ -60,27 +84,8 @@ export class StatsComponent {
 
 
 
-  public barChartOptions: any = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-//    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 50,
-        right: 0,
-        top: 100,
-        bottom: 0
-      }
-    }
-  };
-  public barChartLabels: string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType = 'bar';
-  public barChartLegend = true;
 
-  public barChartData:any[] = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-  ];
+
 
   public randomize(): void {
     // Only Change 3 values

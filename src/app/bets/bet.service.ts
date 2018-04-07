@@ -27,7 +27,6 @@ export class BetService {
   constructor(private db: AngularFirestore) {}
 
   public addBet(bet: SingleBet) {
-
     switch (BetType[bet.betType]) {
       case BetType.dailySingle:
         this.db.collection(bet.betType).add(bet);
@@ -92,8 +91,6 @@ export class BetService {
       }).subscribe((bets: SingleBet[]) => {
         bets.sort(betDateComparator());
         this.dailySingles = bets;
-        console.log("pushing changes");
-        console.log(this.dailySingles);
         this.dailySinglesChanged.next([...this.dailySingles]);
       }));
   }

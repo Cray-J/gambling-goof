@@ -3,7 +3,8 @@ div.my-modal > div.modal-dialog {
 }
 .mat-dialog-container {
   background-color: #000;
-  height: 250px
+  height: 250px;
+  width: 800px;
 }
 
 .new-bet {
@@ -12,9 +13,18 @@ div.my-modal > div.modal-dialog {
 
 .mat-form-field {
   padding: 20px;
-  width: 200px;
+  width: 150px;
+
 }
 
 .numberInput {
-  width: 50px;
+  width: 60px;
+}
+
+.match {
+  width: 250px;
+}
+
+.date {
+  width: 100px;
 }

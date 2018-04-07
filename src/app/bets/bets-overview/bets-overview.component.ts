@@ -23,8 +23,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   totalLoss = 0;
   outcomes = Outcome;
 
-  animal: string;
-  name: string;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -58,11 +56,11 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
           if (bet.valueReturn != null) {
             this.total += bet.valueReturn;
           }
-       /*   if (Outcome[bet.outcome] === Outcome.win) {
+          if (Outcome[bet.outcome] === Outcome.win) {
             this.totalWins += 1;
           } else if (Outcome[bet.outcome] === Outcome.loss) {
             this.totalLoss += 1;
-          }*/
+          }
         }));
       }
     ));
@@ -74,14 +72,13 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
 
-  openDialog(): void {
+  openDialog(element: SingleBet): void {
     const dialogRef = this.dialog.open(NewBetDialogComponent, {
-      width: '250px',
-      data: {name: this.name, animal: this.animal}
+      width: '700',
+      data: {bet: element}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.animal = result;
     });
   }
 

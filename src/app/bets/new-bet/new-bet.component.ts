@@ -32,12 +32,10 @@ export class NewBetComponent implements OnInit {
   }
 
   setNumber(val: any) {
-    console.log(val.value);
     this.num = val.value;
     let num1: number;
 
     for (num1 = 0 ; num1 < this.num; num1++) {
-      console.log(num1);
       this.betPart[num1] = {
         id: '',
         redCard: false,
@@ -92,9 +90,6 @@ export class NewBetComponent implements OnInit {
       };
 
       this.calculationService.determineReturnsForSingle(bet);
-      console.log(bet);
-      console.log("setting val");
-      console.log(bet.valueReturn);
       this.betService.addBet(bet);
     }
 
@@ -115,24 +110,7 @@ export class NewBetComponent implements OnInit {
   }
 
   getReturns(form: NgForm) {
-    let odds = 1;
-    const stake = form.value.stake;
-
-    for (const currBet of this.betPart) {
-      if (Outcome[currBet.outcome] === Outcome.loss) {
-        return -stake;
-      } else if (Outcome[currBet.outcome] === Outcome.win) {
-        odds *= currBet.odds;
-      } else if (Outcome[currBet.outcome] === Outcome.halfWin) {
-        odds *=  ((currBet.odds - 1) / 2) + 1;
-      } else if (Outcome[currBet.outcome] === Outcome.halfLoss) {
-        odds *=   - (((currBet.odds - 1) / 2)) ;
-      }
-    }
-
-    return stake * odds - stake;
+    return this.calculationService.getProjectedReturns(form);
   }
-
-
 
 }

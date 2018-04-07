@@ -27,19 +27,23 @@ export class CalculationsService {
   // }
 
   getProjectedReturns(form: NgForm) {
-    const outcome = form.value.outcome;
-    const odds = form.value.odds;
-    const stake = form.value.stake;
-    if (outcome === 'win' ) {
-      return odds * stake - stake;
-    } else if (outcome === 'halfWin') {
-      return (odds * stake - stake) / 2;
-    } else if (outcome === 'halfLoss') {
-      return -stake / 2;
-    } else if (outcome === 'loss') {
-      return -stake;
+    let valueReturn = 0;
+    const bet = form.value;
+    const stake = bet.stake;
+    const odds = bet.odds;
+
+    if (Outcome[bet.outcome] === Outcome.loss) {
+      valueReturn = -stake;
+    } else if (Outcome[bet.outcome] === Outcome.win) {
+      valueReturn = stake * odds - stake;
+    } else if (Outcome[bet.outcome] === Outcome.halfWin) {
+      const realOdds = ((bet.odds - 1) / 2) + 1;
+      valueReturn = stake * realOdds - stake;
+    } else if (Outcome[bet.outcome] === Outcome.halfLoss) {
+      valueReturn = -stake / 2;
     }
-    return 0;
+    return valueReturn;
+
   }
 
   public determineReturnsForSingle(bet: SingleBet) {
@@ -52,11 +56,12 @@ export class CalculationsService {
       } else if (Outcome[bet.outcome] === Outcome.win) {
         bet.valueReturn = stake * odds - stake;
       } else if (Outcome[bet.outcome] === Outcome.halfWin) {
-        bet.valueReturn = stake * (odds / 2) - stake;
+        console.log(((bet.odds - 1) / 2) + 1);
+        const realOdds = ((bet.odds - 1) / 2) + 1;
+        bet.valueReturn = stake * realOdds - stake;
       } else if (Outcome[bet.outcome] === Outcome.halfLoss) {
-        bet.valueReturn = stake * (-odds / 2) - stake;
+        bet.valueReturn = -stake / 2;
       }
-      console.log('SINGLE CALC');
   }
 
   public determineReturnsForMulti(bet: MultiBet) {

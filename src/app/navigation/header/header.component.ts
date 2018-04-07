@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {NewBetDialogComponent} from '../../bets/new-bet-dialog/new-bet-dialog.component';
 import { SingleBet } from '../../bets/singlebet.model';
+import {BetService} from "../../bets/bet.service";
+import {BetType} from "../../bets/bet-type.enum";
 
 @Component({
   selector: 'app-header',
@@ -10,24 +12,28 @@ import { SingleBet } from '../../bets/singlebet.model';
 })
 export class HeaderComponent implements OnInit {
 
-
-  animal: string;
-  name: string;
-
   bet: SingleBet;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,
+              private betService: BetService) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(NewBetDialogComponent, {
-      data: {name: this.name, animal: this.animal, bet: this.bet}
+      data: { bet: {}}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.bet = result;
-      console.log(result);
-      console.log(this.animal);
+      if (result !== null) {
+        this.bet = result;
+        this.bet.odds = 1.84;
+        console.log(result);
+        console.log(this.bet);
+
+        this.betService.addBet(this.bet);
+
+      }
+
     });
   }
 

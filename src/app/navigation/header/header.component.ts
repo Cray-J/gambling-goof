@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit {
       console.log('The dialog was closed');
       if (result !== null) {
         this.bet = result;
-        this.bet.odds = 1.84;
         console.log(result);
         console.log(this.bet);
 

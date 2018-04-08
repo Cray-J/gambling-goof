@@ -3,5 +3,6 @@ export enum BetType {
   dailyDouble = 'Daily Double',
   multibet = 'Multibet',
   seasonBet = 'Season Bet',
-  unitBet = 'Unit Bet'
+  unitBet = 'Unit Bet',
+  oneADay = 'One-a-Day'
 }

@@ -4,5 +4,6 @@ export enum BetType {
   multibet = 'Multibet',
   seasonBet = 'Season Bet',
   unitBet = 'Unit Bet',
-  eersteDivisie = 'Eerste Divisie'
+  eersteDivisie = 'Eerste Divisie',
+  oneADay = 'One-a-Day'
 }

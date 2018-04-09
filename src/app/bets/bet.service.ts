@@ -14,11 +14,13 @@ export class BetService {
   private doubleBets: MultiBet[] = [];
   private seasonBets: SingleBet[] = [];
   private unitBets: SingleBet[] = [];
+  private eersteDivisie: SingleBet[] = [];
 
   dailySinglesChanged = new Subject<SingleBet[]>();
   multiBetsChanged = new Subject<MultiBet[]>();
   seasonBetsChanged = new Subject<SingleBet[]>();
   unitBetsChanged = new Subject<SingleBet[]>();
+  eersteDivisieChanged = new Subject<SingleBet[]>();
   private fbSubs: Subscription[] = [];
   public currentTab = new Subject<string>();
   dailyDoublesChanged = new Subject<MultiBet[]>();
@@ -42,6 +44,11 @@ export class BetService {
         this.db.collection(bet.betType).add(bet);
         this.unitBets.push(bet);
         this.unitBetsChanged.next(this.unitBets);
+        break;
+      case BetType.eersteDivisie:
+        this.db.collection(bet.betType).add(bet);
+        this.eersteDivisie.push(bet);
+        this.eersteDivisieChanged.next(this.eersteDivisie);
         break;
     }
   }
@@ -72,6 +79,11 @@ export class BetService {
 
   public getUnitBets(): SingleBet[] {
     return this.unitBets.slice();
+  }
+
+  public getEersteDivisie(): SingleBet[] {
+    console.log(this.eersteDivisie);
+    return this.eersteDivisie.slice();
   }
 
   public getMultiBets(): MultiBet[] {
@@ -149,6 +161,25 @@ export class BetService {
         this.unitBetsChanged.next( [...this.unitBets]);
       }));
     return this.unitBets.slice();
+  }
+
+  public fetchEersteDivisie(): SingleBet[] {
+    this.fbSubs.push(this.db
+      .collection('eersteDivisie')
+      .snapshotChanges()
+      .map(docArray => {
+        return docArray.map(doc => {
+          const tempBet = doc.payload.doc.data() as SingleBet;
+          tempBet.id = doc.payload.doc.id;
+          return tempBet;
+
+        });
+      }).subscribe((bets: SingleBet[]) => {
+        bets.sort(betDateComparator());
+        this.eersteDivisie = bets;
+        this.eersteDivisieChanged.next( [...this.eersteDivisie]);
+      }));
+    return this.eersteDivisie.slice();
   }
 
 

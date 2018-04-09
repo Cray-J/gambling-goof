@@ -17,5 +17,6 @@ export class AppComponent implements OnInit {
     this.betService.fetchDoubles();
     this.betService.fetchSeasonBets();
     this.betService.fetchUnitBets();
+    this.betService.fetchEersteDivisie();
   }
 }

@@ -46,7 +46,11 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
           this.dataSource.data = this.betService.getSeasonBets();
         } else if (tab === 'Unit Bets') {
           this.dataSource.data = this.betService.getUnitBets();
+        } else if (tab === 'Eerste Divisie') {
+          console.log('getting eerste divisie');
+          this.dataSource.data = this.betService.getEersteDivisie();
         }
+
 
         this.total = 0;
         this.totalLoss = 0;

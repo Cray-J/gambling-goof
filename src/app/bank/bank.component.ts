@@ -13,13 +13,11 @@ import { MultiBet } from '../bets/bet.model';
 })
 export class BankComponent implements OnInit {
   bank: Bank;
-  doubles: MultiBet[];
 
   constructor(private bankService: BankService, private betService: BetService) { }
 
   ngOnInit() {
     this.bank = this.bankService.getBookies();
-    this.doubles = this.betService.fetchDoubles();
 
   }
 
@@ -38,13 +36,4 @@ export class BankComponent implements OnInit {
   getRefunds() {
 
   }
-
-  getDailyWins() {
-    let wins = 0;
-    for (const double of this.doubles) {
-      wins += double.valueReturn;
-    }
-    return wins;
-  }
-
 }

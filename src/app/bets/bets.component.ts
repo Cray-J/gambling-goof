@@ -18,9 +18,4 @@ export class BetsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
   }
-
-  tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
-    this.betService.currentTab.next(tabChangeEvent.tab.textLabel);
-  }
-
 }

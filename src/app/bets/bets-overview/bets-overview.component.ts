@@ -38,36 +38,28 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscriptions.add(this.betService.currentTab.subscribe(
-      (tab: string) => {
-        if (tab === 'Daily Single') {
-          this.dataSource.data = this.betService.getDailyBets();
-        } else if (tab === 'Season Bets') {
-          this.dataSource.data = this.betService.getSeasonBets();
-        } else if (tab === 'Unit Bets') {
-          this.dataSource.data = this.betService.getUnitBets();
-        } else if (tab === 'Eerste Divisie') {
-          console.log('getting eerste divisie');
-          this.dataSource.data = this.betService.getEersteDivisie();
-        }
+    console.log("hary");
+    this.dataSource.data = this.betService.getSingleBets();
+    let subs = this.betService.singleBetsChanged;
+    this.betService.singleBetsChanged.subscribe((bets: SingleBet[]) => {
+      this.dataSource.data = bets;
+    });
+    // this.subscriptions.add();
+    console.log(this.dataSource.data);
+    this.total = 0;
+    this.totalLoss = 0;
+    this.totalWins = 0;
 
-
-        this.total = 0;
-        this.totalLoss = 0;
-        this.totalWins = 0;
-
-        this.dataSource.data.forEach((bet => {
-          if (bet.valueReturn != null) {
-            this.total += bet.valueReturn;
-          }
-          if (Outcome[bet.outcome] === Outcome.win) {
-            this.totalWins += 1;
-          } else if (Outcome[bet.outcome] === Outcome.loss) {
-            this.totalLoss += 1;
-          }
-        }));
+    this.dataSource.data.forEach((bet => {
+      if (bet.valueReturn != null) {
+        this.total += bet.valueReturn;
       }
-    ));
+      if (Outcome[bet.outcome] === Outcome.win) {
+        this.totalWins += 1;
+      } else if (Outcome[bet.outcome] === Outcome.loss) {
+        this.totalLoss += 1;
+      }
+    }));
   }
 
   updateValue(bet: SingleBet) {

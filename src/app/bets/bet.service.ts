@@ -19,8 +19,6 @@ export class BetService {
 
 
   constructor(private db: AngularFirestore) {
-    // this.fetchMultiBets();
-    // this.fetchSingleBets();
   }
 
   public addBet(bet: SingleBet) {
@@ -83,8 +81,8 @@ export class BetService {
   }
 
   updateBet(bet: SingleBet) {
-    console.log(bet.betType);
-    this.db.collection(bet.betType).doc(bet.id).update(bet);
+    console.log(bet);
+    this.db.collection('singleBets').doc(bet.id).set(bet);
   }
 
   updateMultiBet(bet: MultiBet) {

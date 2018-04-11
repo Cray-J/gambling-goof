@@ -2,10 +2,13 @@ import { Outcome } from './outcome.enum';
 import {NgForm} from '@angular/forms';
 import { MultiBet } from './bet.model';
 import { SingleBet } from './singlebet.model';
+import {BankService} from "../bank.service";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class CalculationsService {
 
-
+  constructor(private bankService: BankService) {}
 
   // determineReturns(bet: Bet) {
    /* switch (Outcome[bet.outcome]) {

@@ -1,7 +1,7 @@
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { Bank } from './bets/bank.model';
+import {Bank, BookieAccount} from './bets/bank.model';
 import { Bookie } from './bets/bookie.enum';
 
 @Injectable()
@@ -13,8 +13,8 @@ export class BankService {
     this.bank = {
       bookies: [
         {
-          initialBankroll: 2800,
-          currentBankroll: 2800,
+          initialBankroll: 3000,
+          currentBankroll: 3000,
           wins: 0,
           losses: 0,
           bookie: Bookie.bet365
@@ -42,4 +42,14 @@ export class BankService {
   getBookies(): Bank {
     return this.bank;
   }
-}
+
+  public getBet365(): number {
+    let val = 0;
+     this.bank.bookies.forEach((bookie: BookieAccount) => {
+      if (bookie.bookie === Bookie.bet365) {
+        console.log(bookie.currentBankroll);
+        val = bookie.currentBankroll;
+     }
+    });
+     return val;
+  }

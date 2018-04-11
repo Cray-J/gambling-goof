@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { BetService } from '../bet.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -6,6 +6,7 @@ import { Outcome } from '../outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { CalculationsService } from '../calculations.service';
 import { SingleBet } from '../singlebet.model';
+import {BankService} from "../../bank.service";
 
 
 @Component({
@@ -13,8 +14,10 @@ import { SingleBet } from '../singlebet.model';
   templateUrl: './bets-overview.component.html',
   styleUrls: ['./bets-overview.component.css']
 })
-export class BetsOverviewComponent implements OnInit, OnDestroy {
-  displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'events', 'outcome', 'return'];
+export class BetsOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
+
+
+  displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'type', 'events', 'outcome', 'return'];
   dataSource = new MatTableDataSource<SingleBet>();
   private subscriptions: Subscription = new Subscription();
 
@@ -22,12 +25,14 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   totalWins = 0;
   totalLoss = 0;
   outcomes = Outcome;
+  bet365Balance = 3000;
 
 
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private betService: BetService,
               private calculationService: CalculationsService,
+              public bankService: BankService,
               public dialog: MatDialog) {
   }
 
@@ -38,12 +43,11 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log("hary");
     this.dataSource.data = this.betService.getSingleBets();
-    let subs = this.betService.singleBetsChanged;
     this.betService.singleBetsChanged.subscribe((bets: SingleBet[]) => {
       this.dataSource.data = bets;
     });
+
     // this.subscriptions.add();
     console.log(this.dataSource.data);
     this.total = 0;
@@ -62,8 +66,23 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     }));
   }
 
+  ngAfterViewInit(): void {
+  //  this.bet365Balance = this.bankService.getBet365();
+  }
+
   updateValue(bet: SingleBet) {
+    let oldVal = bet.valueReturn;
+
+    if (oldVal < 0) {
+      this.bet365Balance += (-1 * oldVal);
+    } else if ( oldVal > 0) {
+      this.bet365Balance -= oldVal;
+    }
+
     this.calculationService.determineReturnsForSingle(bet);
+    this.bet365Balance += bet.valueReturn;
+
+
     this.betService.updateBet(bet);
   }
 

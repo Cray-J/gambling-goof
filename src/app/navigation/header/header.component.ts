@@ -4,6 +4,7 @@ import {NewBetDialogComponent} from '../../bets/new-bet-dialog/new-bet-dialog.co
 import { SingleBet } from '../../bets/singlebet.model';
 import {BetService} from "../../bets/bet.service";
 import {BetType} from "../../bets/bet-type.enum";
+import {NewBetComponent} from "../../bets/new-bet/new-bet.component";
 
 @Component({
   selector: 'app-header',
@@ -31,9 +32,6 @@ export class HeaderComponent implements OnInit {
         console.log(this.bet);
 
         this.betService.addBet(this.bet);
-
-      }
-
     });
   }
 

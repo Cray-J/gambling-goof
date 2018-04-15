@@ -32,3 +32,21 @@ npm install -g firebase-tools
 firebase init
 firebase deploy
 ng build --prod
+
+
+
+### Animations
+
+angular animations:
+npm install --save @angular/animations
+enable polyfills om polyfills.ts
+
+void is a state where the element is not attached to the dom
+
+Wildcard state
+
+transition from void to * has the alias ':enter'
+transition from * to void has the alias ':leave'
+
+
+translate only works on block elements, not inline elements

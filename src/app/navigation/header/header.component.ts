@@ -20,7 +20,13 @@ export class HeaderComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(NewBetDialogComponent, {
-      data: { bet: {}}
+      data: {
+        bet:
+          {
+            date:  new Date(),
+            betType: BetType[BetType.unitBet]
+          }
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -32,7 +38,7 @@ export class HeaderComponent implements OnInit {
         console.log(this.bet);
 
         this.betService.addBet(this.bet);
-    });
+    }});
   }
 
   buildId() {

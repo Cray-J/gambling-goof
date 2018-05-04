@@ -7,6 +7,7 @@ import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.componen
 import { CalculationsService } from '../calculations.service';
 import { SingleBet } from '../singlebet.model';
 import {BankService} from "../../bank.service";
+import { isNullOrUndefined } from 'util';
 
 
 @Component({
@@ -58,9 +59,9 @@ export class BetsOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
       if (bet.valueReturn != null) {
         this.total += bet.valueReturn;
       }
-      if (Outcome[bet.outcome] === Outcome.win) {
+      if (bet.outcome === Outcome.win) {
         this.totalWins += 1;
-      } else if (Outcome[bet.outcome] === Outcome.loss) {
+      } else if (bet.outcome === Outcome.loss) {
         this.totalLoss += 1;
       }
     }));
@@ -94,6 +95,14 @@ export class BetsOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      let bet: SingleBet = result;
+      console.log(bet);
+      if (isNullOrUndefined(bet.outcome)) {
+        bet.valueReturn = 0;
+        bet.outcome = Outcome.awaiting;
+      }
+
+      this.betService.updateBet(result);
     });
   }
 

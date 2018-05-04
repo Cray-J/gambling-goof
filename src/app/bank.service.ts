@@ -45,11 +45,13 @@ export class BankService {
 
   public getBet365(): number {
     let val = 0;
-     this.bank.bookies.forEach((bookie: BookieAccount) => {
+    this.bank.bookies.forEach((bookie: BookieAccount) => {
       if (bookie.bookie === Bookie.bet365) {
         console.log(bookie.currentBankroll);
         val = bookie.currentBankroll;
-     }
+      }
     });
-     return val;
+    return val;
   }
+
+}

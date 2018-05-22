@@ -1,6 +1,6 @@
 import { Bookie } from './bookie.enum';
 
-interface BookieAccount {
+export interface BookieAccount {
   initialBankroll: number;
   currentBankroll: number;
   wins: number;

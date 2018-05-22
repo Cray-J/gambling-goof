@@ -28,6 +28,9 @@ export class NewBetComponent implements OnInit {
               private calculationService: CalculationsService,
               private snackbar: MatSnackBar) { }
 
+
+
+
   ngOnInit() {
   }
 

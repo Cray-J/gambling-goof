@@ -20,10 +20,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { KeysPipe } from './keys.pipe';
-import { NewBetComponent } from './bets/new-bet/new-bet.component';
 import { NewBetDialogComponent } from './bets/new-bet-dialog/new-bet-dialog.component';
 import { CalculationsService } from './bets/calculations.service';
-import { DoubleOverviewComponent } from './bets/double-overview/double-overview.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { BankComponent } from './bank/bank.component';
@@ -39,9 +37,7 @@ import { BankService } from './bank.service';
     StatsComponent,
     BetsOverviewComponent,
     KeysPipe,
-    NewBetComponent,
     NewBetDialogComponent,
-    DoubleOverviewComponent,
     BankComponent
   ],
   imports: [

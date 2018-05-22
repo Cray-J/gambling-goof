@@ -12,7 +12,6 @@ export class AppComponent implements OnInit {
   constructor(private betService: BetService) {}
 
   ngOnInit() {
-    this.betService.fetchMultiBets();
     this.betService.fetchSingleBets();
   }
 }

@@ -1,10 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {NewBetDialogComponent} from '../../bets/new-bet-dialog/new-bet-dialog.component';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { NewBetDialogComponent } from '../../bets/new-bet-dialog/new-bet-dialog.component';
 import { SingleBet } from '../../bets/singlebet.model';
-import {BetService} from "../../bets/bet.service";
-import {BetType} from "../../bets/bet-type.enum";
-import {NewBetComponent} from "../../bets/new-bet/new-bet.component";
+import { BetService } from '../../bets/bet.service';
 
 @Component({
   selector: 'app-header',
@@ -32,7 +30,7 @@ export class HeaderComponent implements OnInit {
         console.log(this.bet);
 
         this.betService.addBet(this.bet);
-    });
+    }});
   }
 
   buildId() {

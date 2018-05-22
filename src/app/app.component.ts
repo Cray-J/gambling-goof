@@ -13,10 +13,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.betService.fetchMultiBets();
-    this.betService.fetchDailyBets();
-    this.betService.fetchDoubles();
-    this.betService.fetchSeasonBets();
-    this.betService.fetchUnitBets();
-    this.betService.fetchEersteDivisie();
+    this.betService.fetchSingleBets();
   }
 }

@@ -16,13 +16,13 @@ export class StatsComponent {
 
   // Doughnut
   public doughnutChartLabels: string[] = ['Wins', 'Half-Wins', 'Half-Losses', 'Losses', 'Push', 'Void', 'Awaiting'];
-  public doughnutChartData: number[] = [this.getOutcomes(this.betService.getDailyBets(), 'win'),
-    this.getOutcomes(this.betService.getDailyBets(), 'halfWin'),
-    this.getOutcomes(this.betService.getDailyBets(), 'halfLoss'),
-    this.getOutcomes(this.betService.getDailyBets(), 'loss'),
-    this.getOutcomes(this.betService.getDailyBets(), 'push'),
-    this.getOutcomes(this.betService.getDailyBets(), 'void'),
-    this.getOutcomes(this.betService.getDailyBets(), 'awaiting')];
+  public doughnutChartData: number[] = [this.getOutcomes(this.betService.getSingleBets(), 'win'),
+    this.getOutcomes(this.betService.getSingleBets(), 'halfWin'),
+    this.getOutcomes(this.betService.getSingleBets(), 'halfLoss'),
+    this.getOutcomes(this.betService.getSingleBets(), 'loss'),
+    this.getOutcomes(this.betService.getSingleBets(), 'push'),
+    this.getOutcomes(this.betService.getSingleBets(), 'void'),
+    this.getOutcomes(this.betService.getSingleBets(), 'awaiting')];
   public doughnutChartType = 'doughnut';
 
 
@@ -59,7 +59,7 @@ export class StatsComponent {
   }
 
   getNumberOfBets() {
-    return this.betService.getDailyBets().length;
+    return this.betService.getSingleBets().length;
   }
 
   getOutcomes(bets: SingleBet[], outcome: string) {
@@ -76,7 +76,7 @@ export class StatsComponent {
   getTotal() {
     let total = 0;
 
-    for (const bet of this.betService.getDailyBets()) {
+    for (const bet of this.betService.getSingleBets()) {
       total += bet.valueReturn;
     }
     return total;

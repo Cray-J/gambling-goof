@@ -1,23 +1,11 @@
-<mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
+<mat-tab-group #tabGroup>
   <mat-tab label="New Bet">
     <app-new-bet></app-new-bet>
   </mat-tab>
-  <mat-tab label="Daily Single">
+  <mat-tab label="Singles">
     <app-bets-overview></app-bets-overview>
-  </mat-tab>
-  <mat-tab label="Daily Double" >
-    <app-double-overview></app-double-overview>
   </mat-tab>
   <mat-tab label="Multi Bet">
-    <app-bets-overview></app-bets-overview>
-  </mat-tab>
-  <mat-tab label="Season Bets">
-    <app-bets-overview></app-bets-overview>
-  </mat-tab>
-  <mat-tab label="Unit Bets">
-    <app-bets-overview></app-bets-overview>
-  </mat-tab>
-  <mat-tab label="Eerste Divisie">
     <app-bets-overview></app-bets-overview>
   </mat-tab>
 </mat-tab-group>

@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
       console.log('The dialog was closed');
       if (result !== null) {
         this.bet = result;
+        this.bet.id = this.buildId();
         console.log(result);
         console.log(this.bet);
 
@@ -34,6 +35,29 @@ export class HeaderComponent implements OnInit {
       }
 
     });
+  }
+
+  buildId() {
+    const today = new Date();
+    let dd;
+    let mm; // January is 0!
+    const yyyy = today.getFullYear();
+    today.getTime();
+
+    if (today.getDate() < 10) {
+      dd = '0' + today.getDate();
+    } else {
+      dd = today.getDate();
+    }
+
+
+    if ( today.getMonth() + 1 < 10) {
+      mm = '0' + (today.getMonth() + 1);
+    } else {
+      mm = today.getMonth() + 1;
+    }
+
+    return '' + yyyy + mm  + dd + today.getHours() + today.getMinutes() + today.getSeconds();
   }
 
   onToggleSidenav() {

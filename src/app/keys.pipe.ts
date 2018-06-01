@@ -9,9 +9,6 @@ export class KeysPipe implements PipeTransform {
       if (value.hasOwnProperty(key)) {
         keys.push({ key, value: value[key] });
       }
-      else {
-        keys.push({ key, value: value});
-      }
     }
 
     return keys;

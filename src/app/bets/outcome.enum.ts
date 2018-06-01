@@ -1,20 +1,9 @@
 export enum Outcome {
-  awaiting,
-  win,
-  halfWin,
-  void,
-  push,
-  halfLoss,
-  loss
-}
-
-
-export function outComeToText(outcome: Outcome) {
-  switch (outcome) {
-    case Outcome.awaiting:
-      return 'Awaiting';
-
-    default:
-      return '';
-  }
+  awaiting = 'Awaiting',
+  win = 'Win',
+  halfWin = 'Half-Win',
+  void = 'Void',
+  push = 'Push',
+  halfLoss = 'Half-Loss',
+  loss = 'Loss'
 }

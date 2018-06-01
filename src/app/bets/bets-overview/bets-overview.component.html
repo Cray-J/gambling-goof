@@ -77,7 +77,7 @@
                   (ngModelChange)="element.outcome = $event"
                   (change)="updateValue(element)">
         <mat-option *ngFor="let outcome of outcomes | appKeys"
-                    [value]="outcome">
+                    [value]="outcome.key">
           {{ outcome.value }}
         </mat-option>
       </mat-select>

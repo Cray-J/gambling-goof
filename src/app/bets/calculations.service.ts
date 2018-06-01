@@ -35,14 +35,14 @@ export class CalculationsService {
     const stake = bet.stake;
     const odds = bet.odds;
 
-    if (bet.outcome === Outcome.loss) {
+    if (Outcome[bet.outcome] === Outcome.loss) {
       valueReturn = -stake;
-    } else if (bet.outcome === Outcome.win) {
+    } else if (Outcome[bet.outcome] === Outcome.win) {
       valueReturn = stake * odds - stake;
-    } else if (bet.outcome === Outcome.halfWin) {
+    } else if (Outcome[bet.outcome] === Outcome.halfWin) {
       const realOdds = ((bet.odds - 1) / 2) + 1;
       valueReturn = stake * realOdds - stake;
-    } else if (bet.outcome === Outcome.halfLoss) {
+    } else if (Outcome[bet.outcome] === Outcome.halfLoss) {
       valueReturn = -stake / 2;
     }
     return valueReturn;
@@ -54,15 +54,15 @@ export class CalculationsService {
     const stake = bet.stake;
     const odds = bet.odds;
 
-      if (bet.outcome === Outcome.loss) {
+      if (Outcome[bet.outcome] === Outcome.loss) {
         bet.valueReturn = -stake;
-      } else if (bet.outcome === Outcome.win) {
+      } else if (Outcome[bet.outcome] === Outcome.win) {
         bet.valueReturn = stake * odds - stake;
-      } else if (bet.outcome === Outcome.halfWin) {
+      } else if (Outcome[bet.outcome] === Outcome.halfWin) {
         console.log(((bet.odds - 1) / 2) + 1);
         const realOdds = ((bet.odds - 1) / 2) + 1;
         bet.valueReturn = stake * realOdds - stake;
-      } else if (bet.outcome === Outcome.halfLoss) {
+      } else if (Outcome[bet.outcome] === Outcome.halfLoss) {
         bet.valueReturn = -stake / 2;
       }
   }
@@ -71,13 +71,13 @@ export class CalculationsService {
     let odds = 1;
 
     for (const currBet of bet.bets) {
-      if (currBet.outcome === Outcome.loss) {
+      if (Outcome[currBet.outcome] === Outcome.loss) {
         return -bet.stake;
-      } else if (currBet.outcome === Outcome.win) {
+      } else if (Outcome[currBet.outcome] === Outcome.win) {
         odds *= currBet.odds;
-      } else if (currBet.outcome === Outcome.halfWin) {
+      } else if (Outcome[currBet.outcome] === Outcome.halfWin) {
         return currBet.odds / 2;
-      } else if (currBet.outcome === Outcome.halfLoss) {
+      } else if (Outcome[currBet.outcome] === Outcome.halfLoss) {
         return odds - currBet.odds / 2;
       }
     }

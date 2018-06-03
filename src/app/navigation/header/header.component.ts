@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { NewBetDialogComponent } from '../../bets/new-bet-dialog/new-bet-dialog.component';
 import { SingleBet } from '../../bets/singlebet.model';
 import { BetService } from '../../bets/bet.service';
+import { BetType } from '../../bets/bet-type.enum';
 
 @Component({
   selector: 'app-header',
@@ -14,11 +15,18 @@ export class HeaderComponent implements OnInit {
   bet: SingleBet;
 
   constructor(public dialog: MatDialog,
-              private betService: BetService) {}
+              private betService: BetService) {
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(NewBetDialogComponent, {
-      data: { bet: {}}
+      data: {
+        bet:
+          {
+            date: new Date(),
+            betType: BetType[BetType.unitBet]
+          }
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -26,34 +34,35 @@ export class HeaderComponent implements OnInit {
       if (result !== null) {
         this.bet = result;
         this.bet.id = this.buildId();
-        console.log(result);
-        console.log(this.bet);
-
         this.betService.addBet(this.bet);
-    }});
+      }
+    });
   }
 
   buildId() {
     const today = new Date();
-    let dd;
-    let mm; // January is 0!
     const yyyy = today.getFullYear();
+    let mm; // January is 0!
+    let dd;
+    let hours;
+    let minutes;
+    let seconds;
     today.getTime();
 
-    if (today.getDate() < 10) {
-      dd = '0' + today.getDate();
-    } else {
-      dd = today.getDate();
+    mm = this.checkFormat(today.getMonth() + 1);
+    dd = this.checkFormat(today.getDate());
+    hours = this.checkFormat(today.getHours());
+    minutes = this.checkFormat(today.getMinutes());
+    seconds = this.checkFormat(today.getSeconds());
+
+    return '' + yyyy + mm + dd + hours + minutes + seconds;
+  }
+
+  checkFormat(time: number): string {
+    if (time < 10) {
+      return '0' + time;
     }
-
-
-    if ( today.getMonth() + 1 < 10) {
-      mm = '0' + (today.getMonth() + 1);
-    } else {
-      mm = today.getMonth() + 1;
-    }
-
-    return '' + yyyy + mm  + dd + today.getHours() + today.getMinutes() + today.getSeconds();
+    return '' + time;
   }
 
   onToggleSidenav() {

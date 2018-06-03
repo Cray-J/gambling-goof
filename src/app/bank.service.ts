@@ -54,3 +54,5 @@ export class BankService {
     return val;
   }
 }
+
+}

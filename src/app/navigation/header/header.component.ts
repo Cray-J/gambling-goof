@@ -49,8 +49,8 @@ export class HeaderComponent implements OnInit {
     let seconds;
     today.getTime();
 
-    mm = this.checkFormat(today.getMonth() + 1);
-    dd = this.checkFormat(today.getDate());
+    mm = this.checkFormat(this.bet.date.getMonth() + 1);
+    dd = this.checkFormat(this.bet.date.getDate());
     hours = this.checkFormat(today.getHours());
     minutes = this.checkFormat(today.getMinutes());
     seconds = this.checkFormat(today.getSeconds());

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { BetService } from '../bet.service';
 import { Subscription } from 'rxjs/Subscription';
-import { allOutcomes, Outcome } from '../outcome.enum';
+import { Outcome } from '../outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { CalculationsService } from '../calculations.service';
 import { SingleBet } from '../singlebet.model';
@@ -22,12 +22,9 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   outcomes = Outcome;
   betType = BetType;
   bookie = Bookie;
-  bet365Balance = 0;
 
-  seasonBets: SingleBet[] = [];
-  flatStakeBets: SingleBet[] = [];
-
-
+  seasonBets: BetTypeStats = new BetTypeStats();
+  flatStakeBets: BetTypeStats = new BetTypeStats();
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -45,66 +42,54 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.betService.betsChanged.subscribe((bets: SingleBet[]) => {
       this.dataSource.data = bets;
+      this.seasonBets = new BetTypeStats();
+      this.flatStakeBets = new BetTypeStats();
       bets.forEach(bet => {
         if (BetType[bet.betType] === BetType.flatStake) {
-          this.flatStakeBets.push(bet);
+          this.flatStakeBets.bets.push(bet);
+          this.setBet(this.flatStakeBets, bet);
         } else if (BetType[bet.betType] === BetType.season) {
-          this.seasonBets.push(bet);
+          this.seasonBets.bets.push(bet);
+          this.setBet(this.seasonBets, bet);
         }
       });
     });
   }
 
-  findOutcome(outcome: Outcome, betType: BetType) {
-    let total = 0;
-    const type: SingleBet[] = betType === BetType.flatStake ? this.flatStakeBets
-                                                             : this.seasonBets;
-      type.forEach( bet => {
-        if (Outcome[bet.outcome] === outcome) {
-          total += 1;
-        }
-      });
-    return total;
+  setBet(betStats: BetTypeStats, bet: SingleBet) {
+    betStats.totalWin += bet.valueReturn;
+    betStats.totalStaked += bet.stake;
+
+    const outcome = Outcome[bet.outcome];
+    if (outcome === Outcome.win) {
+      betStats.wins += 1;
+    } else if (outcome === Outcome.halfWin) {
+      betStats.halfWins += 1;
+    } else if (outcome === Outcome.halfLoss) {
+      betStats.halfLoss += 1;
+    } else if (outcome === Outcome.loss) {
+      betStats.loss += 1;
+    } else if (outcome === Outcome.push || outcome === Outcome.void) {
+      betStats.voidPush += 1;
+    } else if (outcome === Outcome.awaiting) {
+      betStats.awaiting += 1;
+    }
   }
 
   totalWins() {
-    let wins = 0;
-    let halfWins = 0;
-    this.dataSource.data.forEach(bet => {
-      if (Outcome[bet.outcome] === Outcome.win) {
-        wins++;
-      } else if (Outcome[bet.outcome] === Outcome.halfWin) {
-        halfWins++;
-      }
-    });
-    return wins + halfWins;
+    return this.seasonBets.totalWins() + this.flatStakeBets.totalWins();
   }
 
   totalReturn() {
-    let total = 0;
-    this.dataSource.data.forEach(bet => total += bet.valueReturn);
-    return total;
+    return this.seasonBets.totalWin + this.flatStakeBets.totalWin;
   }
 
   totalStaked() {
-    let total = 0;
-    this.dataSource.data.forEach(bet => total += bet.stake);
-    return total;
+    return this.seasonBets.totalStaked + this.flatStakeBets.totalStaked;
   }
 
   updateValue(bet: SingleBet) {
-    const oldVal = bet.valueReturn;
-
-    if (oldVal < 0) {
-      this.bet365Balance += (-1 * oldVal);
-    } else if ( oldVal > 0) {
-      this.bet365Balance -= oldVal;
-    }
-
     this.calculationService.determineReturnsForSingle(bet);
-    this.bet365Balance += bet.valueReturn;
-
-
     this.betService.updateBet(bet);
   }
 
@@ -114,7 +99,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     } else {
       this.dataSource.filter = val;
     }
-    console.log(val);
   }
 
 
@@ -142,4 +126,28 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
+}
+
+export class BetTypeStats {
+  wins = 0;
+  halfWins = 0;
+  loss = 0;
+  halfLoss = 0;
+  voidPush = 0;
+  awaiting = 0;
+  totalWin = 0;
+  totalStaked = 0;
+  bets: SingleBet[] = [];
+
+  totalWins() {
+    return this.wins + this.halfWins;
+  }
+
+  roi() {
+    return this.totalWin / this.totalStaked * 100;
+  }
+
+  winRatio() {
+    return (this.wins + this.halfWins) / (this.bets.length - this.voidPush - this.awaiting) * 100;
+  }
 }

@@ -54,9 +54,14 @@ mat-card-content, mat-list-option {
   font-weight: 600;
 }
 
+.awaiting {
+  color: blue;
+  font-weight: 600;
+}
+
 .mat-list-item {
   font-size: 12px;
-  padding: 0px;
+  padding: 0;
 }
 
 .mat-card-header {

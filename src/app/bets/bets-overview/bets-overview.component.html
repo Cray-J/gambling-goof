@@ -4,17 +4,14 @@
     <div fxFlex>
       Total
     </div>
-
     <div fxFlex>
-      bets: {{ dataSource.data.length }}
-    </div>
-    <div fxFlex>
-      Outcomes:
-      <span class="wins">{{ findOutcome(outcomes.win, betType.flatStake) }} </span> /
-      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.flatStake)}}</span> /
-      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.flatStake)}}</span> /
-      <span class="losses">{{findOutcome(outcomes.loss, betType.flatStake)}}</span> /
-      <span class="push-void">{{findOutcome(outcomes.push, betType.flatStake)}}</span>
+      bets: {{ dataSource.data.length }} &mdash;
+      <span class="wins">{{flatStakeBets.wins + seasonBets.wins}} </span> /
+      <span class="half-wins">{{ flatStakeBets.halfWins + seasonBets.halfWins}}</span> /
+      <span class="half-losses">{{flatStakeBets.halfLoss + seasonBets.halfLoss}}</span> /
+      <span class="losses">{{flatStakeBets.loss + seasonBets.loss}}</span> /
+      <span class="push-void">{{flatStakeBets.voidPush + seasonBets.voidPush}}</span>
+      <span class="awaiting">/({{flatStakeBets.awaiting + seasonBets.awaiting}})</span>
     </div>
     <div fxFlex
          *ngIf="totalReturn() > 0">Total return : +{{ totalReturn() | number : '1.2-2'}}
@@ -33,25 +30,23 @@
       Season
     </div>
     <div fxFlex>
-      bets: {{ seasonBets.length }}
-    </div>
-    <div fxFlex>
-      Outcomes:
-      <span class="wins">{{ findOutcome(outcomes.win, betType.season) }} </span> /
-      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.season)}}</span> /
-      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.season)}}</span> /
-      <span class="losses">{{findOutcome(outcomes.loss, betType.season)}}</span> /
-      <span class="push-void">{{findOutcome(outcomes.push, betType.season)}}</span>
+      bets: {{ seasonBets.bets.length }} &mdash;
+      <span class="wins">{{seasonBets.wins}} </span> /
+      <span class="half-wins">{{ seasonBets.halfWins}}</span> /
+      <span class="half-losses">{{seasonBets.halfLoss}}</span> /
+      <span class="losses">{{seasonBets.loss}}</span> /
+      <span class="push-void">{{seasonBets.voidPush}}</span>
+      <span class="awaiting">/({{seasonBets.awaiting}})</span>
     </div>
     <div fxFlex
-         *ngIf="totalReturn() > 0">Total return : +{{ totalReturn() | number : '1.2-2'}}
+         *ngIf="seasonBets.totalWin > 0">Total return : +{{ seasonBets.totalWin | number : '1.2-2'}}
     </div>
     <div fxFlex
-         *ngIf="totalReturn() <= 0">Total return : {{ totalReturn() | number : '1.2-2'}}
+         *ngIf="seasonBets.totalWin <= 0">Total return : {{ seasonBets.totalWin | number : '1.2-2'}}
     </div>
-    <div fxFlex>ROI: {{totalReturn()/totalStaked() * 100 | number : '1.2-2'}}%</div>
+    <div fxFlex>ROI: {{ seasonBets.roi() | number : '1.2-2'}}%</div>
     <div fxFlex>
-      Win ratio: {{ totalWins() / dataSource.data.length * 100 | number : '1.2-2'}} %
+      Win ratio: {{  seasonBets.winRatio() | number : '1.2-2'}} %
     </div>
   </div>
 
@@ -59,31 +54,26 @@
     <div fxFlex>
       Flat stake
     </div>
-
     <div fxFlex>
-      bets: {{ flatStakeBets.length }}
-    </div>
-    <div fxFlex>
-      Outcomes:
-      <span class="wins">{{ findOutcome(outcomes.win, betType.flatStake) }} </span> /
-      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.flatStake)}}</span> /
-      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.flatStake)}}</span> /
-      <span class="losses">{{findOutcome(outcomes.loss, betType.flatStake)}}</span> /
-      <span class="push-void">{{findOutcome(outcomes.push, betType.flatStake)}}</span>
+      bets: {{ flatStakeBets.bets.length }} &mdash;
+      <span class="wins">{{flatStakeBets.wins}} </span> /
+      <span class="half-wins">{{ flatStakeBets.halfWins}}</span> /
+      <span class="half-losses">{{flatStakeBets.halfLoss}}</span> /
+      <span class="losses">{{flatStakeBets.loss}}</span> /
+      <span class="push-void">{{flatStakeBets.voidPush}}</span>
+      <span class="awaiting">/({{flatStakeBets.awaiting}})</span>
     </div>
     <div fxFlex
-         *ngIf="totalReturn() > 0">Total return : +{{ totalReturn() | number : '1.2-2'}}
+         *ngIf="flatStakeBets.totalWin > 0">Total return : +{{ flatStakeBets.totalWin | number : '1.2-2'}}
     </div>
     <div fxFlex
-         *ngIf="totalReturn() <= 0">Total return : {{ totalReturn() | number : '1.2-2'}}
+         *ngIf="flatStakeBets.totalWin <= 0">Total return : {{ flatStakeBets.totalWin | number : '1.2-2'}}
     </div>
-    <div fxFlex>ROI: {{totalReturn()/totalStaked() * 100 | number : '1.2-2'}}%</div>
+    <div fxFlex>ROI: {{flatStakeBets.roi() | number : '1.2-2'}}%</div>
     <div fxFlex>
-      Win ratio: {{ totalWins() / dataSource.data.length * 100 | number : '1.2-2'}} %
+      Win ratio: {{ flatStakeBets.winRatio() | number : '1.2-2'}} %
     </div>
   </div>
-
-
 
 
   <div  fxLayoutAlign="center center">

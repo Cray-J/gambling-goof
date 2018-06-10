@@ -1,96 +1,171 @@
 <div fxLayout="column">
 
-<section class="stats" fxLayoutAlign="center center">
-  <mat-card  fxFlex="40%">
-    <mat-card-header fxLayoutAlign="center center">Daily Web Single</mat-card-header>
-    <mat-card-content>
-      <mat-list>
-        <mat-list-item>Number of bets: {{ dataSource.data.length }}</mat-list-item>
-        <mat-list-item *ngIf="total > 0">Total return : +{{ total | number : '1.2-2'}}</mat-list-item>
-        <mat-list-item *ngIf="total <= 0">Total return : {{ total | number : '1.2-2'}}</mat-list-item>
-        <mat-list-item>Number of wins: {{ totalWins }}</mat-list-item>
-        <mat-list-item>Number of losses: {{ totalLoss }}</mat-list-item>
-        <mat-list-item>BET365 balance: {{ bet365Balance }}</mat-list-item>
-      </mat-list>
-    </mat-card-content>
-  </mat-card>
-</section>
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="stats">
+    <div fxFlex>
+      Total
+    </div>
+
+    <div fxFlex>
+      bets: {{ dataSource.data.length }}
+    </div>
+    <div fxFlex>
+      Outcomes:
+      <span class="wins">{{ findOutcome(outcomes.win, betType.percentBet) }} </span> /
+      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.percentBet)}}</span> /
+      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.percentBet)}}</span> /
+      <span class="losses">{{findOutcome(outcomes.loss, betType.percentBet)}}</span> /
+      <span class="push-void">{{findOutcome(outcomes.push, betType.percentBet)}}</span>
+    </div>
+    <div fxFlex
+         *ngIf="totalReturn() > 0">Total return : +{{ totalReturn() | number : '1.2-2'}}
+    </div>
+    <div fxFlex
+         *ngIf="totalReturn() <= 0">Total return : {{ totalReturn() | number : '1.2-2'}}
+    </div>
+    <div fxFlex>ROI: {{totalReturn()/totalStaked() * 100 | number : '1.2-2'}}%</div>
+    <div fxFlex>
+      Win ratio: {{ totalWins() / dataSource.data.length * 100 | number : '1.2-2'}} %
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="middle-stats">
+    <div fxFlex>
+      Season
+    </div>
+    <div fxFlex>
+      bets: {{ seasonBets.length }}
+    </div>
+    <div fxFlex>
+      Outcomes:
+      <span class="wins">{{ findOutcome(outcomes.win, betType.seasonBet) }} </span> /
+      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.seasonBet)}}</span> /
+      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.seasonBet)}}</span> /
+      <span class="losses">{{findOutcome(outcomes.loss, betType.seasonBet)}}</span> /
+      <span class="push-void">{{findOutcome(outcomes.push, betType.seasonBet)}}</span>
+    </div>
+    <div fxFlex
+         *ngIf="totalReturn() > 0">Total return : +{{ totalReturn() | number : '1.2-2'}}
+    </div>
+    <div fxFlex
+         *ngIf="totalReturn() <= 0">Total return : {{ totalReturn() | number : '1.2-2'}}
+    </div>
+    <div fxFlex>ROI: {{totalReturn()/totalStaked() * 100 | number : '1.2-2'}}%</div>
+    <div fxFlex>
+      Win ratio: {{ totalWins() / dataSource.data.length * 100 | number : '1.2-2'}} %
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="last-stats">
+    <div fxFlex>
+      Flat stake
+    </div>
+
+    <div fxFlex>
+      bets: {{ flatStakeBets.length }}
+    </div>
+    <div fxFlex>
+      Outcomes:
+      <span class="wins">{{ findOutcome(outcomes.win, betType.percentBet) }} </span> /
+      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.percentBet)}}</span> /
+      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.percentBet)}}</span> /
+      <span class="losses">{{findOutcome(outcomes.loss, betType.percentBet)}}</span> /
+      <span class="push-void">{{findOutcome(outcomes.push, betType.percentBet)}}</span>
+    </div>
+    <div fxFlex
+         *ngIf="totalReturn() > 0">Total return : +{{ totalReturn() | number : '1.2-2'}}
+    </div>
+    <div fxFlex
+         *ngIf="totalReturn() <= 0">Total return : {{ totalReturn() | number : '1.2-2'}}
+    </div>
+    <div fxFlex>ROI: {{totalReturn()/totalStaked() * 100 | number : '1.2-2'}}%</div>
+    <div fxFlex>
+      Win ratio: {{ totalWins() / dataSource.data.length * 100 | number : '1.2-2'}} %
+    </div>
+  </div>
 
 
-  <div fxLayoutAlign="center center">
+
+
+  <div  fxLayoutAlign="center center">
     <mat-form-field fxFlex="40%">
       <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="filter">
     </mat-form-field>
   </div>
 
-<mat-table #table [dataSource]="dataSource" matSort fxFlex="">
-  <ng-container matColumnDef="date">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{element.date | date:'dd/MM-yyyy'}}</mat-cell>
-  </ng-container>
+  <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+    <mat-button-toggle value="all" (change)="setFilter('all')">all</mat-button-toggle>
+    <mat-button-toggle value="season" (change)="setFilter('season')">season</mat-button-toggle>
+    <mat-button-toggle value="flatStake" (change)="setFilter('percentBet')">Flat stake</mat-button-toggle>
+  </mat-button-toggle-group>
 
-  <ng-container matColumnDef="match">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Match</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{  element.match }}</mat-cell>
-  </ng-container>
+  <mat-table #table [dataSource]="dataSource" matSort fxFlex="">
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.date | date:'dd/MM-yyyy'}}</mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="selection">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.selection }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="match">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Match</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{  element.match }}</mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="stake">
-    <mat-header-cell *matHeaderCellDef>Stake</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.stake }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="selection">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.selection }}</mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="bookie">
-    <mat-header-cell *matHeaderCellDef>Bookie</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.bookie }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="stake">
+      <mat-header-cell *matHeaderCellDef>Stake</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.stake }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="bookie">
+      <mat-header-cell *matHeaderCellDef>Bookie</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.bookie}} </mat-cell>
+    </ng-container>
 
 
-  <ng-container matColumnDef="odds">
-    <mat-header-cell *matHeaderCellDef>Odds</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.odds | number : '1.2-2' }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="odds">
+      <mat-header-cell *matHeaderCellDef>Odds</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.odds | number : '1.2-2' }}</mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="type">
-    <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.betType }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.betType }}</mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="events">
-    <mat-header-cell *matHeaderCellDef>Events</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <mat-icon (click)="openDialog(element)" class="editIcon">border_color</mat-icon>
-      <mat-icon *ngIf="element.redCard" class="redCard" matTooltip="Red card">crop_square</mat-icon>
-      <mat-icon *ngIf="element.missedPen" class="missedPen" matTooltip="Missed penalty">error</mat-icon>
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="events">
+      <mat-header-cell *matHeaderCellDef>Events</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-icon (click)="openDialog(element)" class="editIcon">border_color</mat-icon>
+        <mat-icon *ngIf="element.redCard" class="redCard" matTooltip="Red card">crop_square</mat-icon>
+        <mat-icon *ngIf="element.missedPen" class="missedPen" matTooltip="Missed penalty">error</mat-icon>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="outcome">
-    <mat-header-cell *matHeaderCellDef>Outcome</mat-header-cell>
-    <mat-cell *matCellDef="let element" >
-      <mat-form-field>
-      <mat-select [ngModel]="element.outcome"
-                  (ngModelChange)="element.outcome = $event"
-                  (change)="updateValue(element)">
-        <mat-option *ngFor="let outcome of outcomes | appKeys"
-                    [value]="outcome.key">
-          {{ outcome.value }}
-        </mat-option>
-      </mat-select>
-      </mat-form-field>
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="outcome">
+      <mat-header-cell *matHeaderCellDef>Outcome</mat-header-cell>
+      <mat-cell *matCellDef="let element" >
+        <mat-form-field>
+          <mat-select [ngModel]="element.outcome"
+                      (ngModelChange)="element.outcome = $event"
+                      (change)="updateValue(element)">
+            <mat-option *ngFor="let outcome of outcomes | appKeys"
+                        [value]="outcome.key">
+              {{ outcome.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="return" >
-    <mat-header-cell *matHeaderCellDef>Return</mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="return" >
+      <mat-header-cell *matHeaderCellDef>Return</mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 </div>

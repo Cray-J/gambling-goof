@@ -10,7 +10,7 @@ import { SingleBet } from './singlebet.model';
 export class BetService {
 
   private singleBets: SingleBet[] = [];
-  singleBetsChanged = new Subject<SingleBet[]>();
+  betsChanged = new Subject<SingleBet[]>();
   private fbSubs: Subscription[] = [];
 
 
@@ -22,7 +22,7 @@ export class BetService {
     this.db.collection('singleBets').doc(bet.id).set(bet);
     // this.db.ref.child('singleBets').child(bet.id).set(bet);
     this.singleBets.push(bet);
-    this.singleBetsChanged.next(this.singleBets);
+    this.betsChanged.next(this.singleBets);
   }
 
   getSingleBets(): SingleBet[] {
@@ -43,7 +43,7 @@ export class BetService {
         bets.sort(betDateComparator());
         this.singleBets = bets;
         console.log(this.singleBets);
-        this.singleBetsChanged.next([...this.singleBets]);
+        this.betsChanged.next([...this.singleBets]);
       }));
   }
 

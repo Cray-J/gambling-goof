@@ -7,3 +7,13 @@ export enum Outcome {
   halfLoss = 'Half-Loss',
   loss = 'Loss'
 }
+
+export function allOutcomes() {
+  return [Outcome.awaiting,
+  Outcome.win,
+  Outcome.halfWin,
+  Outcome.void,
+  Outcome.push,
+  Outcome.halfLoss,
+  Outcome.loss];
+}

@@ -1,12 +1,12 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { BetService } from '../bet.service';
 import { Subscription } from 'rxjs/Subscription';
-import { Outcome } from '../outcome.enum';
+import { allOutcomes, Outcome } from '../outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { CalculationsService } from '../calculations.service';
 import { SingleBet } from '../singlebet.model';
-import {BankService} from '../../bank.service';
+import { BetType } from '../bet-type.enum';
 
 
 @Component({
@@ -14,25 +14,23 @@ import {BankService} from '../../bank.service';
   templateUrl: './bets-overview.component.html',
   styleUrls: ['./bets-overview.component.css']
 })
-export class BetsOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
-
-
+export class BetsOverviewComponent implements OnInit, OnDestroy {
   displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'type', 'events', 'outcome', 'return'];
   dataSource = new MatTableDataSource<SingleBet>();
   private subscriptions: Subscription = new Subscription();
-
-  total = 0;
-  totalWins = 0;
-  totalLoss = 0;
   outcomes = Outcome;
-  bet365Balance = 3000;
+  betType = BetType;
+  bet365Balance = 0;
+
+  seasonBets: SingleBet[] = [];
+  flatStakeBets: SingleBet[] = [];
+
 
 
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private betService: BetService,
               private calculationService: CalculationsService,
-              public bankService: BankService,
               public dialog: MatDialog) {
   }
 
@@ -43,35 +41,57 @@ export class BetsOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.dataSource.data = this.betService.getSingleBets();
-    this.betService.singleBetsChanged.subscribe((bets: SingleBet[]) => {
+    this.betService.betsChanged.subscribe((bets: SingleBet[]) => {
       this.dataSource.data = bets;
+      bets.forEach(bet => {
+        if (BetType[bet.betType] === BetType.percentBet) {
+          this.flatStakeBets.push(bet);
+        } else if (BetType[bet.betType] === BetType.seasonBet) {
+          this.seasonBets.push(bet);
+        }
+      });
     });
-
-    // this.subscriptions.add();
-    console.log(this.dataSource.data);
-    this.total = 0;
-    this.totalLoss = 0;
-    this.totalWins = 0;
-
-    this.dataSource.data.forEach((bet => {
-      if (bet.valueReturn != null) {
-        this.total += bet.valueReturn;
-      }
-      if (Outcome[bet.outcome] === Outcome.win) {
-        this.totalWins += 1;
-      } else if (Outcome[bet.outcome] === Outcome.loss) {
-        this.totalLoss += 1;
-      }
-    }));
   }
 
-  ngAfterViewInit(): void {
-  //  this.bet365Balance = this.bankService.getBet365();
+  findOutcome(outcome: Outcome, betType: BetType) {
+    let total = 0;
+    const type: SingleBet[] = betType === BetType.percentBet ? this.flatStakeBets
+                                                             : this.seasonBets;
+      type.forEach( bet => {
+        if (Outcome[bet.outcome] === outcome) {
+          total += 1;
+        }
+      });
+    return total;
+  }
+
+  totalWins() {
+    let wins = 0;
+    let halfWins = 0;
+    this.dataSource.data.forEach(bet => {
+      if (Outcome[bet.outcome] === Outcome.win) {
+        wins++;
+      } else if (Outcome[bet.outcome] === Outcome.halfWin) {
+        halfWins++;
+      }
+    });
+    return wins + halfWins;
+  }
+
+  totalReturn() {
+    let total = 0;
+    this.dataSource.data.forEach(bet => total += bet.valueReturn);
+    return total;
+  }
+
+  totalStaked() {
+    let total = 0;
+    this.dataSource.data.forEach(bet => total += bet.stake);
+    return total;
   }
 
   updateValue(bet: SingleBet) {
-    let oldVal = bet.valueReturn;
+    const oldVal = bet.valueReturn;
 
     if (oldVal < 0) {
       this.bet365Balance += (-1 * oldVal);
@@ -84,6 +104,15 @@ export class BetsOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     this.betService.updateBet(bet);
+  }
+
+  setFilter(val) {
+    if (val === 'all') {
+      this.dataSource.filter = "";
+    } else {
+      this.dataSource.filter = val;
+    }
+    console.log(val);
   }
 
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import {
-  MatButtonModule,
+  MatButtonModule, MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
   MatDatepickerModule, MatDialogModule, MatExpansionModule,
@@ -45,7 +45,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatDialogModule,
     MatTooltipModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatButtonToggleModule
   ],
   exports: [
     MatButtonModule,
@@ -71,7 +72,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSnackBarModule,
     MatDialogModule,
     MatTooltipModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatButtonToggleModule
   ]
 })
 export class MaterialModule {}

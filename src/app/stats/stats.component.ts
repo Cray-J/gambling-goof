@@ -13,6 +13,23 @@ export class StatsComponent {
   constructor(private betService: BetService) { }
 
 
+  dailyStats() {
+    return [];
+  }
+
+
+  /**: DailyStats[] {
+    const stats: DailyStats[] = [];
+    this.dataSource.data.forEach(bet => {
+      const temp = stats.findIndex(item => item.day.getDate() === bet.date.getDate());
+      if (temp > -1) {
+        stats[temp].dailyReturn += bet.valueReturn;
+      } else {
+        stats.push({dailyReturn: bet.valueReturn, day: bet.date});
+      }
+    });
+    return stats;
+  }*/
 
   // Doughnut
   public doughnutChartLabels: string[] = ['Wins', 'Half-Wins', 'Half-Losses', 'Losses', 'Push', 'Void', 'Awaiting'];
@@ -107,8 +124,10 @@ export class StatsComponent {
      * assign it;
      */
   }
-
-
-
-
 }
+
+export class DailyStats {
+  dailyReturn = 0;
+  day: Date;
+}
+

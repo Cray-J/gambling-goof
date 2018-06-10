@@ -1,4 +1,4 @@
 export enum BetType {
-  seasonBet = 'Season Bet',
-  percentBet = 'Percent Bet'
+  season = 'Season',
+  flatStake = 'Flat stake'
 }

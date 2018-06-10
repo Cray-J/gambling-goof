@@ -7,6 +7,7 @@ import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.componen
 import { CalculationsService } from '../calculations.service';
 import { SingleBet } from '../singlebet.model';
 import { BetType } from '../bet-type.enum';
+import { Bookie } from '../bookie.enum';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   outcomes = Outcome;
   betType = BetType;
+  bookie = Bookie;
   bet365Balance = 0;
 
   seasonBets: SingleBet[] = [];
@@ -44,9 +46,9 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     this.betService.betsChanged.subscribe((bets: SingleBet[]) => {
       this.dataSource.data = bets;
       bets.forEach(bet => {
-        if (BetType[bet.betType] === BetType.percentBet) {
+        if (BetType[bet.betType] === BetType.flatStake) {
           this.flatStakeBets.push(bet);
-        } else if (BetType[bet.betType] === BetType.seasonBet) {
+        } else if (BetType[bet.betType] === BetType.season) {
           this.seasonBets.push(bet);
         }
       });
@@ -55,7 +57,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
 
   findOutcome(outcome: Outcome, betType: BetType) {
     let total = 0;
-    const type: SingleBet[] = betType === BetType.percentBet ? this.flatStakeBets
+    const type: SingleBet[] = betType === BetType.flatStake ? this.flatStakeBets
                                                              : this.seasonBets;
       type.forEach( bet => {
         if (Outcome[bet.outcome] === outcome) {
@@ -108,7 +110,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
 
   setFilter(val) {
     if (val === 'all') {
-      this.dataSource.filter = "";
+      this.dataSource.filter = '';
     } else {
       this.dataSource.filter = val;
     }

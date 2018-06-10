@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
         bet:
           {
             date: new Date(),
-            betType: BetType.percentBet
+            betType: BetType.flatStake
           }
       }
     });

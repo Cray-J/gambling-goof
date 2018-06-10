@@ -10,11 +10,11 @@
     </div>
     <div fxFlex>
       Outcomes:
-      <span class="wins">{{ findOutcome(outcomes.win, betType.percentBet) }} </span> /
-      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.percentBet)}}</span> /
-      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.percentBet)}}</span> /
-      <span class="losses">{{findOutcome(outcomes.loss, betType.percentBet)}}</span> /
-      <span class="push-void">{{findOutcome(outcomes.push, betType.percentBet)}}</span>
+      <span class="wins">{{ findOutcome(outcomes.win, betType.flatStake) }} </span> /
+      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.flatStake)}}</span> /
+      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.flatStake)}}</span> /
+      <span class="losses">{{findOutcome(outcomes.loss, betType.flatStake)}}</span> /
+      <span class="push-void">{{findOutcome(outcomes.push, betType.flatStake)}}</span>
     </div>
     <div fxFlex
          *ngIf="totalReturn() > 0">Total return : +{{ totalReturn() | number : '1.2-2'}}
@@ -37,11 +37,11 @@
     </div>
     <div fxFlex>
       Outcomes:
-      <span class="wins">{{ findOutcome(outcomes.win, betType.seasonBet) }} </span> /
-      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.seasonBet)}}</span> /
-      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.seasonBet)}}</span> /
-      <span class="losses">{{findOutcome(outcomes.loss, betType.seasonBet)}}</span> /
-      <span class="push-void">{{findOutcome(outcomes.push, betType.seasonBet)}}</span>
+      <span class="wins">{{ findOutcome(outcomes.win, betType.season) }} </span> /
+      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.season)}}</span> /
+      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.season)}}</span> /
+      <span class="losses">{{findOutcome(outcomes.loss, betType.season)}}</span> /
+      <span class="push-void">{{findOutcome(outcomes.push, betType.season)}}</span>
     </div>
     <div fxFlex
          *ngIf="totalReturn() > 0">Total return : +{{ totalReturn() | number : '1.2-2'}}
@@ -65,11 +65,11 @@
     </div>
     <div fxFlex>
       Outcomes:
-      <span class="wins">{{ findOutcome(outcomes.win, betType.percentBet) }} </span> /
-      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.percentBet)}}</span> /
-      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.percentBet)}}</span> /
-      <span class="losses">{{findOutcome(outcomes.loss, betType.percentBet)}}</span> /
-      <span class="push-void">{{findOutcome(outcomes.push, betType.percentBet)}}</span>
+      <span class="wins">{{ findOutcome(outcomes.win, betType.flatStake) }} </span> /
+      <span class="half-wins">{{ findOutcome(outcomes.halfWin, betType.flatStake)}}</span> /
+      <span class="half-losses">{{findOutcome(outcomes.halfLoss, betType.flatStake)}}</span> /
+      <span class="losses">{{findOutcome(outcomes.loss, betType.flatStake)}}</span> /
+      <span class="push-void">{{findOutcome(outcomes.push, betType.flatStake)}}</span>
     </div>
     <div fxFlex
          *ngIf="totalReturn() > 0">Total return : +{{ totalReturn() | number : '1.2-2'}}
@@ -95,7 +95,7 @@
   <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
     <mat-button-toggle value="all" (change)="setFilter('all')">all</mat-button-toggle>
     <mat-button-toggle value="season" (change)="setFilter('season')">season</mat-button-toggle>
-    <mat-button-toggle value="flatStake" (change)="setFilter('percentBet')">Flat stake</mat-button-toggle>
+    <mat-button-toggle value="flatStake" (change)="setFilter('flatStake')">Flat stake</mat-button-toggle>
   </mat-button-toggle-group>
 
   <mat-table #table [dataSource]="dataSource" matSort fxFlex="">
@@ -121,7 +121,7 @@
 
     <ng-container matColumnDef="bookie">
       <mat-header-cell *matHeaderCellDef>Bookie</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.bookie}} </mat-cell>
+      <mat-cell *matCellDef="let element">{{bookie[element.bookie]}} </mat-cell>
     </ng-container>
 
 
@@ -132,7 +132,7 @@
 
     <ng-container matColumnDef="type">
       <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.betType }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ betType[element.betType] }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="events">

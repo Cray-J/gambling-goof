@@ -15,6 +15,10 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
+        <mat-form-field class="hours">
+          <input matInput placeHolder="time" [(ngModel)]="data.time">
+        </mat-form-field>
+
         <mat-form-field>
           <mat-select placeholder="Bookie"  [(ngModel)]="data.bet.bookie" required>
             <mat-option *ngFor="let bookie of bookies | appKeys" [value]="bookie.key">
@@ -36,6 +40,14 @@
           <mat-select placeholder="Type of Bet" [(ngModel)]="data.bet.betType" required>
             <mat-option *ngFor="let betType of betTypes | appKeys" [value]="betType.key">
               {{betType.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select [(ngModel)]="data.bet.outcome">
+            <mat-option *ngFor="let outcome of outcomes | appKeys"
+                        [value]="outcome.key">
+              {{ outcome.value }}
             </mat-option>
           </mat-select>
         </mat-form-field>

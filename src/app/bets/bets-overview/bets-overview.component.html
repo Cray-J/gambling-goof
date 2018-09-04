@@ -21,7 +21,7 @@
     </div>
     <div fxFlex>ROI: {{totalReturn()/totalStaked() * 100 | number : '1.2-2'}}%</div>
     <div fxFlex>
-      Win ratio: {{ totalWins() / dataSource.data.length * 100 | number : '1.2-2'}} %
+      Win ratio: {{ (seasonBets.totalWins() + flatStakeBets.totalWins()) / dataSource.data.length * 100 | number : '1.2-2'}} %
     </div>
   </div>
 

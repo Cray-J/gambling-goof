@@ -4,6 +4,7 @@ import { NewBetDialogComponent } from '../../bets/new-bet-dialog/new-bet-dialog.
 import { SingleBet } from '../../bets/singlebet.model';
 import { BetService } from '../../bets/bet.service';
 import { BetType } from '../../bets/bet-type.enum';
+import { Outcome } from '../../bets/outcome.enum';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +26,7 @@ export class HeaderComponent implements OnInit {
           {
             date: new Date(),
             betType: BetType.flatStake
-          }
+          },
       }
     });
 
@@ -33,9 +34,12 @@ export class HeaderComponent implements OnInit {
       console.log('The dialog was closed');
       if (result !== null) {
         this.bet = result;
-        this.bet.id = this.buildId();
+        this.bet.date.setHours(result.time);
+        this.bet.valueReturn = 0;
+        this.bet.id = '' + Date.now();
         this.betService.addBet(this.bet);
       }
+      console.log(this.bet);
     });
   }
 

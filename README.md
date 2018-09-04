@@ -28,10 +28,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 ### Deploy commands
-npm install -g firebase-tools
-firebase init
-firebase deploy
-ng build --prod
+* npm install -g firebase-tools
+* firebase init (set public directory to dist & do not overwrite index.html)
+* ng build --prod
+* firebase deploy
 
 
 

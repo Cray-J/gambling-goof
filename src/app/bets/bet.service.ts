@@ -3,21 +3,20 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { betDateComparator } from './comparators';
-import { MultiBet } from './bet.model';
-import { SingleBet } from './singlebet.model';
+import { Bet } from './bet.model';
 
 @Injectable()
 export class BetService {
 
-  private singleBets: SingleBet[] = [];
-  betsChanged = new Subject<SingleBet[]>();
+  private singleBets: Bet[] = [];
+  betsChanged = new Subject<Bet[]>();
   private fbSubs: Subscription[] = [];
 
 
   constructor(private db: AngularFirestore) {
   }
 
-  public addBet(bet: SingleBet) {
+  public addBet(bet: Bet) {
     // this.db.collection('singleBets').add(bet);
     this.db.collection('singleBets').doc(bet.id).set(bet);
     // this.db.ref.child('singleBets').child(bet.id).set(bet);
@@ -25,7 +24,7 @@ export class BetService {
     this.betsChanged.next(this.singleBets);
   }
 
-  getSingleBets(): SingleBet[] {
+  getSingleBets(): Bet[] {
     return this.singleBets.slice();
   }
 
@@ -35,11 +34,11 @@ export class BetService {
       .snapshotChanges()
       .map(docArray => {
         return docArray.map(doc => {
-          const tempBet = doc.payload.doc.data() as SingleBet;
+          const tempBet = doc.payload.doc.data() as Bet;
           // tempBet.id = doc.payload.doc.id;
           return tempBet;
         });
-      }).subscribe((bets: SingleBet[]) => {
+      }).subscribe((bets: Bet[]) => {
         bets.sort(betDateComparator());
         this.singleBets = bets;
         console.log(this.singleBets);
@@ -47,7 +46,7 @@ export class BetService {
       }));
   }
 
-  updateBet(bet: SingleBet) {
+  updateBet(bet: Bet) {
     this.db.collection('singleBets').doc(bet.id).set(bet);
   }
 }

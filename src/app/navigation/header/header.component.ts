@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { NewBetDialogComponent } from '../../bets/new-bet-dialog/new-bet-dialog.component';
-import { SingleBet } from '../../bets/singlebet.model';
+import { Bet } from '../../bets/bet.model';
 import { BetService } from '../../bets/bet.service';
 import { BetType } from '../../bets/bet-type.enum';
-import { Outcome } from '../../bets/outcome.enum';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  bet: SingleBet;
+  bet: Bet;
 
   constructor(public dialog: MatDialog,
               private betService: BetService) {
@@ -43,42 +42,8 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  buildId() {
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    let mm; // January is 0!
-    let dd;
-    let hours;
-    let minutes;
-    let seconds;
-    today.getTime();
-
-    mm = this.checkFormat(this.bet.date.getMonth() + 1);
-    dd = this.checkFormat(this.bet.date.getDate());
-    hours = this.checkFormat(today.getHours());
-    minutes = this.checkFormat(today.getMinutes());
-    seconds = this.checkFormat(today.getSeconds());
-
-    return '' + yyyy + mm + dd + hours + minutes + seconds;
-  }
-
-  checkFormat(time: number): string {
-    if (time < 10) {
-      return '0' + time;
-    }
-    return '' + time;
-  }
-
   onToggleSidenav() {
 
-  }
-
-
-  ngOnInit() {
-  }
-
-  recalculate() {
-    console.log('recalculating');
   }
 
 }

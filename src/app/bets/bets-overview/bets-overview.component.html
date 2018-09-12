@@ -25,68 +25,11 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center" class="middle-stats">
-    <div fxFlex>
-      Season
-    </div>
-    <div fxFlex>
-      bets: {{ seasonBets.bets.length }} &mdash;
-      <span class="wins">{{seasonBets.wins}} </span> /
-      <span class="half-wins">{{ seasonBets.halfWins}}</span> /
-      <span class="half-losses">{{seasonBets.halfLoss}}</span> /
-      <span class="losses">{{seasonBets.loss}}</span> /
-      <span class="push-void">{{seasonBets.voidPush}}</span>
-      <span class="awaiting">/({{seasonBets.awaiting}})</span>
-    </div>
-    <div fxFlex
-         *ngIf="seasonBets.totalWin > 0">Total return : +{{ seasonBets.totalWin | number : '1.2-2'}}
-    </div>
-    <div fxFlex
-         *ngIf="seasonBets.totalWin <= 0">Total return : {{ seasonBets.totalWin | number : '1.2-2'}}
-    </div>
-    <div fxFlex>ROI: {{ seasonBets.roi() | number : '1.2-2'}}%</div>
-    <div fxFlex>
-      Win ratio: {{  seasonBets.winRatio() | number : '1.2-2'}} %
-    </div>
-  </div>
-
-  <div fxLayout="row" fxLayoutAlign="space-between center" class="last-stats">
-    <div fxFlex>
-      Flat stake
-    </div>
-    <div fxFlex>
-      bets: {{ flatStakeBets.bets.length }} &mdash;
-      <span class="wins">{{flatStakeBets.wins}} </span> /
-      <span class="half-wins">{{ flatStakeBets.halfWins}}</span> /
-      <span class="half-losses">{{flatStakeBets.halfLoss}}</span> /
-      <span class="losses">{{flatStakeBets.loss}}</span> /
-      <span class="push-void">{{flatStakeBets.voidPush}}</span>
-      <span class="awaiting">/({{flatStakeBets.awaiting}})</span>
-    </div>
-    <div fxFlex
-         *ngIf="flatStakeBets.totalWin > 0">Total return : +{{ flatStakeBets.totalWin | number : '1.2-2'}}
-    </div>
-    <div fxFlex
-         *ngIf="flatStakeBets.totalWin <= 0">Total return : {{ flatStakeBets.totalWin | number : '1.2-2'}}
-    </div>
-    <div fxFlex>ROI: {{flatStakeBets.roi() | number : '1.2-2'}}%</div>
-    <div fxFlex>
-      Win ratio: {{ flatStakeBets.winRatio() | number : '1.2-2'}} %
-    </div>
-  </div>
-
-
   <div  fxLayoutAlign="center center">
     <mat-form-field fxFlex="40%">
       <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="filter">
     </mat-form-field>
   </div>
-
-  <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-    <mat-button-toggle value="all" (change)="setFilter('all')">all</mat-button-toggle>
-    <mat-button-toggle value="season" (change)="setFilter('season')">season</mat-button-toggle>
-    <mat-button-toggle value="flatStake" (change)="setFilter('flatStake')">Flat stake</mat-button-toggle>
-  </mat-button-toggle-group>
 
   <mat-table #table [dataSource]="dataSource" matSort fxFlex="">
     <ng-container matColumnDef="date">
@@ -118,11 +61,6 @@
     <ng-container matColumnDef="odds">
       <mat-header-cell *matHeaderCellDef>Odds</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.odds | number : '1.2-2' }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="type">
-      <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ betType[element.betType] }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="events">

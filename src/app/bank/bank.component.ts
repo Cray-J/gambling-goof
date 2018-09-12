@@ -3,8 +3,6 @@ import { BankService } from '../bank.service';
 import { Bank } from '../bets/bank.model';
 import {Bookie} from '../bets/bookie.enum';
 import {BetService} from '../bets/bet.service';
-import { SingleBet } from '../bets/singlebet.model';
-import { MultiBet } from '../bets/bet.model';
 
 @Component({
   selector: 'app-bank',
@@ -14,7 +12,7 @@ import { MultiBet } from '../bets/bet.model';
 export class BankComponent implements OnInit {
   bank: Bank;
 
-  constructor(private bankService: BankService, private betService: BetService) { }
+  constructor(private bankService: BankService) { }
 
   ngOnInit() {
     this.bank = this.bankService.getBookies();
@@ -23,17 +21,5 @@ export class BankComponent implements OnInit {
 
   getBookies() {
     return this.bank.bookies;
-  }
-
-  getWins(bookie: Bookie) {
-   // this.bank.bookies.find(bookie)
-  }
-
-  getLosses() {
-
-  }
-
-  getRefunds() {
-
   }
 }

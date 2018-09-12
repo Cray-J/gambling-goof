@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatTabChangeEvent} from '@angular/material';
 import {BetService} from './bet.service';
 
 @Component({
@@ -11,7 +10,7 @@ export class BetsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('tabGroup') tabGroup;
 
-  constructor(private betService: BetService) { }
+  constructor() { }
 
   ngOnInit() {
   }

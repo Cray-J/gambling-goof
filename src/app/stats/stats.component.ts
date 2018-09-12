@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BetService} from '../bets/bet.service';
-import { SingleBet } from '../bets/singlebet.model';
+import { Bet } from '../bets/bet.model';
 
 @Component({
   selector: 'app-stats',
@@ -79,7 +79,7 @@ export class StatsComponent {
     return this.betService.getSingleBets().length;
   }
 
-  getOutcomes(bets: SingleBet[], outcome: string) {
+  getOutcomes(bets: Bet[], outcome: string) {
     const betOutcomes = 0;
     bets.forEach(bet => {
      /* if (bet.outcome === outcome) {

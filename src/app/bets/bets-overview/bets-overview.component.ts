@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Outcome } from '../outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { CalculationsService } from '../calculations.service';
-import { SingleBet } from '../singlebet.model';
+import { Bet } from '../bet.model';
 import { BetType } from '../bet-type.enum';
 import { Bookie } from '../bookie.enum';
 
@@ -16,8 +16,8 @@ import { Bookie } from '../bookie.enum';
   styleUrls: ['./bets-overview.component.css']
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
-  displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'type', 'events', 'outcome', 'return'];
-  dataSource = new MatTableDataSource<SingleBet>();
+  displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'events', 'outcome', 'return'];
+  dataSource = new MatTableDataSource<Bet>();
   private subscriptions: Subscription = new Subscription();
   outcomes = Outcome;
   betType = BetType;
@@ -40,7 +40,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.betService.betsChanged.subscribe((bets: SingleBet[]) => {
+    this.betService.betsChanged.subscribe((bets: Bet[]) => {
       this.dataSource.data = bets;
       this.seasonBets = new BetTypeStats();
       this.flatStakeBets = new BetTypeStats();
@@ -56,7 +56,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  setBet(betStats: BetTypeStats, bet: SingleBet) {
+  setBet(betStats: BetTypeStats, bet: Bet) {
     betStats.totalWin += bet.valueReturn;
     betStats.totalStaked += bet.stake;
 
@@ -88,7 +88,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     return this.seasonBets.totalStaked + this.flatStakeBets.totalStaked;
   }
 
-  updateValue(bet: SingleBet) {
+  updateValue(bet: Bet) {
     this.calculationService.determineReturnsForSingle(bet);
     this.betService.updateBet(bet);
   }
@@ -102,7 +102,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
 
-  openDialog(element: SingleBet): void {
+  openDialog(element: Bet): void {
     const dialogRef = this.dialog.open(NewBetDialogComponent, {
       width: '700',
       data: {bet: element}
@@ -116,7 +116,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  setStyle(bet: SingleBet) {
+  setStyle(bet: Bet) {
     if (bet.valueReturn > 0) {
       return 'lawngreen';
     } else if (bet.valueReturn < 0) {
@@ -137,7 +137,7 @@ export class BetTypeStats {
   awaiting = 0;
   totalWin = 0;
   totalStaked = 0;
-  bets: SingleBet[] = [];
+  bets: Bet[] = [];
 
   totalWins() {
     return this.wins + this.halfWins;

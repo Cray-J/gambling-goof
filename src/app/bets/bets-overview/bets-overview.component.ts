@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { BetService } from '../bet.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Outcome } from '../outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { CalculationsService } from '../calculations.service';

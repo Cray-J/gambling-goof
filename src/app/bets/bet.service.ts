@@ -1,9 +1,9 @@
-import { Subject } from 'rxjs/Subject';
+import { Subject ,  Subscription } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 import { betDateComparator } from './comparators';
 import { Bet } from './bet.model';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class BetService {
@@ -31,14 +31,14 @@ export class BetService {
   public fetchSingleBets() {
     this.fbSubs.push(this.db
       .collection('singleBets')
-      .snapshotChanges()
-      .map(docArray => {
+      .snapshotChanges().pipe(
+      map(docArray => {
         return docArray.map(doc => {
           const tempBet = doc.payload.doc.data() as Bet;
           // tempBet.id = doc.payload.doc.id;
           return tempBet;
         });
-      }).subscribe((bets: Bet[]) => {
+      })).subscribe((bets: Bet[]) => {
         bets.sort(betDateComparator());
         this.singleBets = bets;
         console.log(this.singleBets);

@@ -1,8 +1,8 @@
 import { Subject ,  Subscription } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
-import { betDateComparator } from './comparators';
-import { Bet } from './bet.model';
+import { betDateComparator } from '../shared/comparators';
+import { Bet } from '../shared/model/bet.model';
 import {map} from 'rxjs/operators';
 
 @Injectable()

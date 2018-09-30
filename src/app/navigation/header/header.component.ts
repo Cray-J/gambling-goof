@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { NewBetDialogComponent } from '../../bets/new-bet-dialog/new-bet-dialog.component';
-import { Bet } from '../../bets/bet.model';
-import { BetService } from '../../bets/bet.service';
-import { BetType } from '../../bets/bet-type.enum';
+import { Bet } from '../../shared/model/bet.model';
+import { BetService } from '../../core/bet.service';
 
 @Component({
   selector: 'app-header',
@@ -23,8 +22,7 @@ export class HeaderComponent {
       data: {
         bet:
           {
-            date: new Date(),
-            betType: BetType.flatStake
+            date: new Date()
           },
       }
     });

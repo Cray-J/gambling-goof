@@ -1,20 +1,12 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {BetService} from './bet.service';
+import {Component, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-bets',
-  templateUrl: './bets.component.html',
-  styleUrls: ['./bets.component.css']
+  templateUrl: './bets.component.html'
 })
-export class BetsComponent implements OnInit, AfterViewInit {
+export class BetsComponent {
 
   @ViewChild('tabGroup') tabGroup;
 
   constructor() { }
-
-  ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-  }
 }

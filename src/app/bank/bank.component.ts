@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BankService } from '../bank.service';
-import { Bank } from '../bets/bank.model';
-import {Bookie} from '../bets/bookie.enum';
-import {BetService} from '../bets/bet.service';
+import { BankService } from '../core/bank.service';
+import { Bank } from '../shared/model/bank.model';
 
 @Component({
   selector: 'app-bank',

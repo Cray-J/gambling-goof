@@ -1,9 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Bet} from '../bet.model';
-import {BetType} from '../bet-type.enum';
-import {Bookie} from '../bookie.enum';
-import {Outcome} from '../outcome.enum';
+import {Bet} from '../../shared/model/bet.model';
+import {Bookie} from '../../shared/model/bookie.enum';
 
 @Component({
   selector: 'app-new-bet-dialog',
@@ -13,11 +11,7 @@ import {Outcome} from '../outcome.enum';
 export class NewBetDialogComponent implements OnInit {
 
   bet: Bet;
-  public betTypes = BetType;
   public bookies = Bookie;
-  public outcomes = Outcome;
-
-
 
   constructor(
     public dialogRef: MatDialogRef<NewBetDialogComponent>,

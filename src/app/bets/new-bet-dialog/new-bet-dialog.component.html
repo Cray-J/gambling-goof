@@ -36,22 +36,6 @@
         </mat-form-field>
       </div>
       <div fxLayout="row">
-        <mat-form-field>
-          <mat-select placeholder="Type of Bet" [(ngModel)]="data.bet.betType" required>
-            <mat-option *ngFor="let betType of betTypes | appKeys" [value]="betType.key">
-              {{betType.value}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select [(ngModel)]="data.bet.outcome">
-            <mat-option *ngFor="let outcome of outcomes | appKeys"
-                        [value]="outcome.key">
-              {{ outcome.value }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
       <!--  <mat-form-field>
           <mat-select placeholder="Outcome"  ngModel name="outcome">
             <mat-option *ngFor="let outcome of outcomes | appKeys" [value]="outcome.key">

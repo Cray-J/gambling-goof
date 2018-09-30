@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BetService} from './bets/bet.service';
+import {BetService} from './core/bet.service';
 
 
 @Component({

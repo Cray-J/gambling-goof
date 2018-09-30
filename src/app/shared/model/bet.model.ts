@@ -1,4 +1,3 @@
-import { BetType } from './bet-type.enum';
 import { Bookie } from './bookie.enum';
 import { Outcome } from './outcome.enum';
 
@@ -9,7 +8,6 @@ export interface Bet {
   selection: string;
   stake: number;
   odds: number;
-  betType: BetType;
   bookie: Bookie;
   outcome: Outcome;
   valueReturn: number;

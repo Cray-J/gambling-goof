@@ -1,5 +1,5 @@
-import { Outcome } from './outcome.enum';
-import { Bet } from './bet.model';
+import { Outcome } from '../shared/model/outcome.enum';
+import { Bet } from '../shared/model/bet.model';
 import {Injectable} from '@angular/core';
 
 @Injectable()

@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { BetService } from '../bet.service';
+import { BetService } from '../../core/bet.service';
 import { Subscription } from 'rxjs';
-import { Outcome } from '../outcome.enum';
+import { Outcome } from '../../shared/model/outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
-import { CalculationsService } from '../calculations.service';
-import { Bet } from '../bet.model';
-import { BetType } from '../bet-type.enum';
-import { Bookie } from '../bookie.enum';
+import { CalculationsService } from '../../core/calculations.service';
+import { Bet } from '../../shared/model/bet.model';
+import { Bookie } from '../../shared/model/bookie.enum';
 
 
 @Component({
@@ -20,7 +19,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Bet>();
   private subscriptions: Subscription = new Subscription();
   outcomes = Outcome;
-  betType = BetType;
   bookie = Bookie;
 
   seasonBets: BetTypeStats = new BetTypeStats();
@@ -45,13 +43,8 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
       this.seasonBets = new BetTypeStats();
       this.flatStakeBets = new BetTypeStats();
       bets.forEach(bet => {
-        if (BetType[bet.betType] === BetType.flatStake) {
           this.flatStakeBets.bets.push(bet);
           this.setBet(this.flatStakeBets, bet);
-        } else if (BetType[bet.betType] === BetType.season) {
-          this.seasonBets.bets.push(bet);
-          this.setBet(this.seasonBets, bet);
-        }
       });
     });
   }

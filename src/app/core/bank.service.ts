@@ -1,8 +1,8 @@
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {Bank, BookieAccount} from './bets/bank.model';
-import { Bookie } from './bets/bookie.enum';
+import {Bank, BookieAccount} from '../shared/model/bank.model';
+import { Bookie } from '../shared/model/bookie.enum';
 
 @Injectable()
 export class BankService {

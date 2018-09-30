@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {BetService} from '../bets/bet.service';
-import { Bet } from '../bets/bet.model';
+import {BetService} from '../core/bet.service';
+import { Bet } from '../shared/model/bet.model';
 
 @Component({
   selector: 'app-stats',

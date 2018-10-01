@@ -10,19 +10,22 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
   animations: [
     trigger('slideInOut', [
       state('in', style({
-        transform: 'translate3d(0, 0, 0)'
+        transform: 'translate3d(-300%, 0, 0)',
+        backgroundColor: 'green',
       })),
       state('out', style({
-        transform: 'translate3d(100%, 0, 0)'
+        transform: 'translate3d(-150%, 0, 0)',
+        backgroundColor: 'red',
       })),
       transition('in => out', animate('400ms ease-in-out')),
-      transition('out => in', animate('400ms ease-in-out'))
+      transition('out => in', animate('300ms ease-in-out'))
     ]),
   ]
 })
 export class AppComponent implements OnInit {
 
-  menuState:string = 'out';
+  menuState1: string = 'out';
+  menuState2: string = 'in';
 
   constructor(private betService: BetService) {}
 
@@ -32,6 +35,7 @@ export class AppComponent implements OnInit {
 
   toggleMenu() {
     // 1-line if statement that toggles the value:
-    this.menuState = this.menuState === 'out' ? 'in' : 'out';
+    this.menuState1 = this.menuState1 === 'out' ? 'in' : 'out';
+    this.menuState2 = this.menuState2 === 'out' ? 'in' : 'out';
   }
 }

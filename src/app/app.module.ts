@@ -20,6 +20,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {ChartsModule} from 'ng2-charts';
 import {BankComponent} from './bank/bank.component';
 import {BetsModule} from './bets/bets.module';
+import { MenuAnimationComponent } from "./menu-animation/menu-animation.component";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {BetsModule} from './bets/bets.module';
     WelcomeComponent,
     SidenavListComponent,
     StatsComponent,
-    BankComponent
+    BankComponent,
+    MenuAnimationComponent
   ],
   imports: [
     BrowserModule,

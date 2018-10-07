@@ -5184,6 +5184,10 @@ netmask@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
 
+ng-pick-datetime@^6.0.16:
+  version "6.0.16"
+  resolved "https://registry.yarnpkg.com/ng-pick-datetime/-/ng-pick-datetime-6.0.16.tgz#82a400f0aba5cc905bb443616f5ac4b9bfcc88e1"
+
 ng2-charts@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/ng2-charts/-/ng2-charts-1.6.0.tgz#108a2133ff62a8623895240fadbddbea2951f29d"

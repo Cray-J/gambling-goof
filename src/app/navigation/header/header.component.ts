@@ -31,7 +31,6 @@ export class HeaderComponent {
       console.log('The dialog was closed');
       if (result !== null) {
         this.bet = result;
-        this.bet.date.setHours(result.time);
         this.bet.valueReturn = 0;
         this.bet.id = '' + Date.now();
         this.betService.addBet(this.bet);

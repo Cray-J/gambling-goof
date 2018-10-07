@@ -10,7 +10,7 @@ import {
   MatSortModule,
   MatTableModule, MatTabsModule
 } from '@angular/material';
-import {FormsModule} from "@angular/forms";
+import {FormsModule} from '@angular/forms';
 
 const materialModules = [
   MatDialogModule,

@@ -34,14 +34,11 @@ export class BetService {
       .snapshotChanges().pipe(
       map(docArray => {
         return docArray.map(doc => {
-          const tempBet = doc.payload.doc.data() as Bet;
-          // tempBet.id = doc.payload.doc.id;
-          return tempBet;
+          return doc.payload.doc.data() as Bet;
         });
       })).subscribe((bets: Bet[]) => {
         bets.sort(betDateComparator());
         this.singleBets = bets;
-        console.log(this.singleBets);
         this.betsChanged.next([...this.singleBets]);
       }));
   }

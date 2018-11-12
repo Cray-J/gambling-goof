@@ -12,7 +12,7 @@ import { Bookie } from '../../shared/model/bookie.enum';
 @Component({
   selector: 'app-bets-overview',
   templateUrl: './bets-table.component.html',
-  styleUrls: ['./bets-table.component.css']
+  styleUrls: ['./bets-table.component.scss']
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
   displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'events', 'outcome', 'return'];

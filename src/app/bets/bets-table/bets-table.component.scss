@@ -121,3 +121,15 @@ mat-card-content, mat-list-option {
 .element-row.expanded {
   border-bottom-color: transparent;
 }
+
+
+mat-table {
+  padding-right: 50px;
+  padding-left: 50px;
+
+  mat-header-row {
+    background-color: green;
+    font-weight: 700;
+
+  }
+}

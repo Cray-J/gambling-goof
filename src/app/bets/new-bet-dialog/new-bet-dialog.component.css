@@ -4,18 +4,23 @@ div.my-modal > div.modal-dialog {
 .mat-dialog-container {
   background-color: #000;
   height: 250px;
-  width: 800px;
+  min-width: 2000px!important;
+}
+
+mat-dialog-container {
+  min-width: 2000px!important;
+
 }
 
 .new-bet {
   padding: 30px;
 }
 
-.mat-form-field {
+/*.mat-form-field {
   padding: 20px;
   width: 150px;
 
-}
+}*/
 
 .numberInput {
   width: 60px;

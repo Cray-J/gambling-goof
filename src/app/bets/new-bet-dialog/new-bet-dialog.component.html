@@ -1,34 +1,68 @@
 <h1 mat-dialog-title fxLayoutAlign="center center">Add a new Bet</h1>
-<div mat-dialog-content fxLayoutAlign="center" fxLayout="column">
-      <div fxLayout="row">
-        <mat-form-field class="match">
-          <input matInput placeholder="Match" [(ngModel)]="data.bet.match" required>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Selection" [(ngModel)]="data.bet.selection" required>
-        </mat-form-field>
-      </div>
-      <div fxLayout="row">
-        <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="data.bet.date" placeholder="Date Time">
-        <owl-date-time #dt1></owl-date-time>
-
-        <mat-form-field>
-          <mat-select placeholder="Bookie"  [(ngModel)]="data.bet.bookie" required>
-            <mat-option *ngFor="let bookie of bookies | appKeys" [value]="bookie.key">
-              {{bookie.value}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxLayout="row">
-        <mat-form-field class="numberInput">
-          <input matInput type="number" placeholder="Stake" [(ngModel)]="data.bet.stake" required>
-        </mat-form-field>
-        <mat-form-field class="numberInput">
-          <input matInput type="number" placeholder="Odds" [(ngModel)]="data.bet.odds" required>
-        </mat-form-field>
-      </div>
-      <div fxLayout="row">
+<mat-dialog-content >
+  <div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <div>
+      <label>Match</label>
+    </div>
+    <div>
+      <mat-form-field class="match">
+        <input matInput [(ngModel)]="data.bet.match" required>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <div>
+      <label>Selection</label>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput [(ngModel)]="data.bet.selection" required>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <div>
+      <label>Date</label>
+    </div>
+    <div>
+      <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="data.bet.date">
+      <owl-date-time #dt1></owl-date-time>
+    </div>
+  </div>
+  <div fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <div>
+      <label>Bookie</label>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-select [(ngModel)]="data.bet.bookie" required>
+          <mat-option *ngFor="let bookie of bookies | appKeys" [value]="bookie.key">
+            {{bookie.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+    <div>
+      <label>Stake</label>
+    </div>
+    <mat-form-field class="numberInput">
+      <input matInput type="number" [(ngModel)]="data.bet.stake" required>
+    </mat-form-field>
+  </div>
+  <div>
+    <div>
+      <label>Odds</label>
+    </div>
+    <div>
+      <mat-form-field class="numberInput">
+        <input matInput type="number" [(ngModel)]="data.bet.odds" required>
+      </mat-form-field>
+    </div>
+  </div>
+ <!-- <div fxLayout="row">
       <!--  <mat-form-field>
           <mat-select placeholder="Outcome"  ngModel name="outcome">
             <mat-option *ngFor="let outcome of outcomes | appKeys" [value]="outcome.key">
@@ -42,8 +76,10 @@
         </mat-form-field>
       </div>
 -->
-</div>
-<div mat-dialog-actions fxLayoutAlign="center center">
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data.bet" cdkFocusInitial>Submit</button>
-</div>
+ <!-- </div> -->
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data.bet" cdkFocusInitial>Submit</button>
+  </mat-dialog-actions>
+  </div>
+</mat-dialog-content>

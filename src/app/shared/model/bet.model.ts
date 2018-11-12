@@ -15,5 +15,5 @@ export interface Bet {
   missedPen: boolean;
   finalScore: string;
   reasoning: string;
-  review: string;
+  rating: number;
 }

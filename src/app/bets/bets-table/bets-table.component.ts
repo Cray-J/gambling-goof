@@ -4,7 +4,6 @@ import { BetService } from '../../core/bet.service';
 import { Subscription } from 'rxjs';
 import { Outcome } from '../../shared/model/outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
-import { CalculationsService } from '../../core/calculations.service';
 import { Bet } from '../../shared/model/bet.model';
 import { Bookie } from '../../shared/model/bookie.enum';
 
@@ -27,7 +26,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private betService: BetService,
-              private calculationService: CalculationsService,
               public dialog: MatDialog) {
   }
 
@@ -82,7 +80,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateValue(bet: Bet) {
-    this.calculationService.determineReturnsForSingle(bet);
     this.betService.updateBet(bet);
   }
 

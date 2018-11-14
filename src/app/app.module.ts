@@ -3,12 +3,11 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './navigation/header/header.component';
+import { HeaderComponent } from './header/header.component';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { StatsComponent } from './stats/stats.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -17,18 +16,13 @@ import { environment } from '../environments/environment';
 import { NewBetDialogComponent } from './bets/new-bet-dialog/new-bet-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
-import { BankComponent } from './bank/bank.component';
 import { BetsModule } from './bets/bets.module';
-import { MenuAnimationComponent } from './menu-animation/menu-animation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SidenavListComponent,
-    StatsComponent,
-    BankComponent,
-    MenuAnimationComponent
+    StatsComponent
   ],
   imports: [
     BrowserModule,

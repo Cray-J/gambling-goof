@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { NewBetDialogComponent } from '../../bets/new-bet-dialog/new-bet-dialog.component';
-import { Bet } from '../../shared/model/bet.model';
-import { BetService } from '../../core/bet.service';
+import { NewBetDialogComponent } from '../bets/new-bet-dialog/new-bet-dialog.component';
+import { Bet } from '../shared/model/bet.model';
+import { BetService } from '../core/bet.service';
 
 @Component({
   selector: 'app-header',

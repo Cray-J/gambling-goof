@@ -4,7 +4,7 @@ import { BetsComponent } from './bets/bets.component';
 import { StatsComponent } from './stats/stats.component';
 
 const routes: Routes = [
-  { path: '', component: BetsComponent },
+  { path: '', redirectTo: 'bets', pathMatch: 'full' },
   { path: 'bets', component: BetsComponent },
   { path: 'stats', component: StatsComponent }
 

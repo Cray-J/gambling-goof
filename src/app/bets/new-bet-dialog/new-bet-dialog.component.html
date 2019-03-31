@@ -37,8 +37,8 @@
     <div>
       <mat-form-field>
         <mat-select [(ngModel)]="data.bet.bookie" required>
-          <mat-option *ngFor="let bookie of bookies | appKeys" [value]="bookie.key">
-            {{bookie.value}}
+          <mat-option *ngFor="let bookie of bookies" [value]="bookie">
+            {{bookie}}
           </mat-option>
         </mat-select>
       </mat-form-field>

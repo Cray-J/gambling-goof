@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {KeysPipe} from './pipes/keys.pipe';
 import {
   MatDatepickerModule,
   MatDialogModule,
@@ -30,8 +29,7 @@ const materialModules = [
   imports: [
     CommonModule
   ],
-  declarations: [KeysPipe],
-  exports: [KeysPipe,
-  materialModules]
+  declarations: [],
+  exports: [materialModules]
 })
 export class SharedModule { }

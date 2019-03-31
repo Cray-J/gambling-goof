@@ -1,11 +1,11 @@
 export enum Outcome {
-  awaiting = 'Awaiting',
-  win = 'Win',
-  halfWin = 'Half-Win',
-  void = 'Void',
-  push = 'Push',
-  halfLoss = 'Half-Loss',
-  loss = 'Loss'
+  awaiting = 'awaiting',
+  win = 'win',
+  halfWin = 'halfWin',
+  void = 'void',
+  push = 'push',
+  halfLoss = 'halfLoss',
+  loss = 'loss'
 }
 
 export function allOutcomes() {

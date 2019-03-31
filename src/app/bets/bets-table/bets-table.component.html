@@ -77,11 +77,10 @@
       <mat-cell *matCellDef="let element" >
         <mat-form-field>
           <mat-select [ngModel]="element.outcome"
-                      (ngModelChange)="element.outcome = $event"
-                      (change)="updateValue(element)">
-            <mat-option *ngFor="let outcome of outcomes | appKeys"
-                        [value]="outcome.key">
-              {{ outcome.value }}
+                      (ngModelChange)="updateValue(element, $event)">
+            <mat-option *ngFor="let outcome of outcomes"
+                        [value]="outcome">
+              {{ outcome }}
             </mat-option>
           </mat-select>
         </mat-form-field>

@@ -2,11 +2,10 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { BetService } from '../../core/bet.service';
 import { Subscription } from 'rxjs';
-import { Outcome } from '../../shared/model/outcome.enum';
+import {allOutcomes, Outcome} from '../../shared/model/outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { Bet } from '../../shared/model/bet.model';
 import { Bookie } from '../../shared/model/bookie.enum';
-
 
 @Component({
   selector: 'app-bets-overview',
@@ -17,7 +16,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'events', 'outcome', 'return'];
   dataSource = new MatTableDataSource<Bet>();
   private subscriptions: Subscription = new Subscription();
-  outcomes = Outcome;
+  outcomes = allOutcomes();
   bookie = Bookie;
 
   seasonBets: BetTypeStats = new BetTypeStats();
@@ -67,10 +66,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  totalWins() {
-    return this.seasonBets.totalWins() + this.flatStakeBets.totalWins();
-  }
-
   totalReturn() {
     return this.seasonBets.totalWin + this.flatStakeBets.totalWin;
   }
@@ -79,18 +74,26 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     return this.seasonBets.totalStaked + this.flatStakeBets.totalStaked;
   }
 
-  updateValue(bet: Bet) {
+  updateValue(bet: Bet, outcome: Outcome) {
+    bet.outcome = outcome;
+    switch(bet.outcome) {
+      case Outcome.win:
+        bet.valueReturn = bet.stake * bet.odds;
+        break;
+      case Outcome.halfWin:
+        bet.valueReturn = (bet.stake * bet.odds) / 2;
+        break;
+      case Outcome.halfLoss:
+        bet.valueReturn = -bet.stake / 2;
+        break;
+      case Outcome.loss:
+        bet.valueReturn = -bet.stake;
+      default:
+        bet.valueReturn = 0;
+    }
+    console.log(bet);
     this.betService.updateBet(bet);
   }
-
-  setFilter(val) {
-    if (val === 'all') {
-      this.dataSource.filter = '';
-    } else {
-      this.dataSource.filter = val;
-    }
-  }
-
 
   openDialog(element: Bet): void {
     const dialogRef = this.dialog.open(NewBetDialogComponent, {
@@ -131,13 +134,5 @@ export class BetTypeStats {
 
   totalWins() {
     return this.wins + this.halfWins;
-  }
-
-  roi() {
-    return this.totalWin / this.totalStaked * 100;
-  }
-
-  winRatio() {
-    return (this.wins + this.halfWins) / (this.bets.length - this.voidPush - this.awaiting) * 100;
   }
 }

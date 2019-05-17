@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Bet} from '../../shared/model/bet.model';
 import {Bookie} from '../../shared/model/bookie.enum';
@@ -8,10 +8,10 @@ import {Bookie} from '../../shared/model/bookie.enum';
   templateUrl: './new-bet-dialog.component.html',
   styleUrls: ['./new-bet-dialog.component.css']
 })
-export class NewBetDialogComponent implements OnInit {
+export class NewBetDialogComponent {
 
   bet: Bet;
-  public bookies = Bookie;
+  public bookies = Bookie.allBookies();
 
   constructor(
     public dialogRef: MatDialogRef<NewBetDialogComponent>,
@@ -21,8 +21,4 @@ export class NewBetDialogComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-  ngOnInit() {
-  }
-
 }

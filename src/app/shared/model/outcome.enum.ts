@@ -17,7 +17,3 @@ export function allOutcomes() {
   Outcome.halfLoss,
   Outcome.loss];
 }
-
-export function getValue() {
-  return Outcome.awaiting;
-}

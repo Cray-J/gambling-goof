@@ -1,12 +1,10 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { BetsComponent } from './bets/bets.component';
-import { StatsComponent } from './stats/stats.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'bets', pathMatch: 'full' },
-  { path: 'bets', component: BetsComponent },
-  { path: 'stats', component: StatsComponent }
+  { path: 'bets', component: BetsComponent }
 
 ];
 

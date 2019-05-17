@@ -1,32 +1,17 @@
 <div fxLayout="column">
-
-  <div fxLayout="row" fxLayoutAlign="space-between center" class="stats">
-    <div fxFlex>
-      Total
-    </div>
-    <div fxFlex>
-      bets: {{ dataSource.data.length }} &mdash;
-      <span class="wins">{{flatStakeBets.wins + seasonBets.wins}} </span> /
-      <span class="half-wins">{{ flatStakeBets.halfWins + seasonBets.halfWins}}</span> /
-      <span class="half-losses">{{flatStakeBets.halfLoss + seasonBets.halfLoss}}</span> /
-      <span class="losses">{{flatStakeBets.loss + seasonBets.loss}}</span> /
-      <span class="push-void">{{flatStakeBets.voidPush + seasonBets.voidPush}}</span>
-      <span class="awaiting">/({{flatStakeBets.awaiting + seasonBets.awaiting}})</span>
-    </div>
-    <div fxFlex
-         *ngIf="totalReturn() > 0">Total return : +{{ totalReturn() | number : '1.2-2'}}
-    </div>
-    <div fxFlex
-         *ngIf="totalReturn() <= 0">Total return : {{ totalReturn() | number : '1.2-2'}}
-    </div>
-    <div fxFlex>ROI: {{totalReturn()/totalStaked() * 100 | number : '1.2-2'}}%</div>
-    <div fxFlex>
-      Win ratio: {{ (seasonBets.totalWins() + flatStakeBets.totalWins()) / dataSource.data.length * 100 | number : '1.2-2'}} %
-    </div>
+  <div fxLayout="row">
+    <mat-card>
+      <h2 fxLayout fxLayoutAlign="center center">Overall stats</h2>
+      <div>
+        <h3>Total: {{total()}}</h3>
+        <h3>Number of days: {{totalDays()}}</h3>
+        <h3>Expected total: +{{totalDays() * 100}}</h3>
+      </div>
+    </mat-card>
   </div>
 
-  <div  fxLayoutAlign="center center">
-    <mat-form-field fxFlex="40%">
+  <div class="filterField">
+    <mat-form-field>
       <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="filter">
     </mat-form-field>
   </div>
@@ -54,7 +39,7 @@
 
     <ng-container matColumnDef="bookie">
       <mat-header-cell *matHeaderCellDef>Bookie</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{bookie[element.bookie]}} </mat-cell>
+      <mat-cell *matCellDef="let element">{{element.bookie}} </mat-cell>
     </ng-container>
 
 
@@ -89,7 +74,8 @@
 
     <ng-container matColumnDef="return" >
       <mat-header-cell *matHeaderCellDef>Return</mat-header-cell>
-      <mat-cell *matCellDef="let element" [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
+      <mat-cell *matCellDef="let element"
+                [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

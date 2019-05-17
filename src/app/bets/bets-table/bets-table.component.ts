@@ -18,9 +18,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   outcomes = allOutcomes();
   bookie = Bookie;
-
-  seasonBets: BetTypeStats = new BetTypeStats();
-  flatStakeBets: BetTypeStats = new BetTypeStats();
+  startDate = new Date("May 16 2019 12:00");
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -35,63 +33,35 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.betService.betsChanged.subscribe((bets: Bet[]) => {
-      this.dataSource.data = bets;
-      this.seasonBets = new BetTypeStats();
-      this.flatStakeBets = new BetTypeStats();
-      bets.forEach(bet => {
-          this.flatStakeBets.bets.push(bet);
-          this.setBet(this.flatStakeBets, bet);
-      });
-    });
-  }
-
-  setBet(betStats: BetTypeStats, bet: Bet) {
-    betStats.totalWin += bet.valueReturn;
-    betStats.totalStaked += bet.stake;
-
-    const outcome = Outcome[bet.outcome];
-    if (outcome === Outcome.win) {
-      betStats.wins += 1;
-    } else if (outcome === Outcome.halfWin) {
-      betStats.halfWins += 1;
-    } else if (outcome === Outcome.halfLoss) {
-      betStats.halfLoss += 1;
-    } else if (outcome === Outcome.loss) {
-      betStats.loss += 1;
-    } else if (outcome === Outcome.push || outcome === Outcome.void) {
-      betStats.voidPush += 1;
-    } else if (outcome === Outcome.awaiting) {
-      betStats.awaiting += 1;
-    }
-  }
-
-  totalReturn() {
-    return this.seasonBets.totalWin + this.flatStakeBets.totalWin;
-  }
-
-  totalStaked() {
-    return this.seasonBets.totalStaked + this.flatStakeBets.totalStaked;
+    this.betService.betsChanged.subscribe((bets: Bet[]) => this.dataSource.data = bets);
   }
 
   updateValue(bet: Bet, outcome: Outcome) {
     bet.outcome = outcome;
-    switch(bet.outcome) {
+    switch (bet.outcome) {
       case Outcome.win:
-        bet.valueReturn = bet.stake * bet.odds;
+        bet.valueReturn = (bet.stake * bet.odds) - bet.stake;
         break;
       case Outcome.halfWin:
-        bet.valueReturn = (bet.stake * bet.odds) / 2;
+        bet.valueReturn = (bet.stake * bet.odds) / 2 - bet.stake;
         break;
       case Outcome.halfLoss:
         bet.valueReturn = -bet.stake / 2;
         break;
       case Outcome.loss:
         bet.valueReturn = -bet.stake;
-      default:
+        break;
+      case Outcome.awaiting:
         bet.valueReturn = 0;
+        break;
+      case Outcome.push:
+        bet.valueReturn = 0;
+        break;
+      default:
+        return null;
     }
     console.log(bet);
+    console.log(bet.valueReturn);
     this.betService.updateBet(bet);
   }
 
@@ -109,6 +79,16 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+  public total() {
+    let val = 0;
+    this.dataSource.data.forEach(bet => val += bet.valueReturn);
+    return val;
+  }
+
+  public totalDays() {
+    return new Date().getDate() - this.startDate.getDate();
+  }
+
   setStyle(bet: Bet) {
     if (bet.valueReturn > 0) {
       return 'lawngreen';
@@ -119,20 +99,4 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-}
-
-export class BetTypeStats {
-  wins = 0;
-  halfWins = 0;
-  loss = 0;
-  halfLoss = 0;
-  voidPush = 0;
-  awaiting = 0;
-  totalWin = 0;
-  totalStaked = 0;
-  bets: Bet[] = [];
-
-  totalWins() {
-    return this.wins + this.halfWins;
-  }
 }

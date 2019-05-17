@@ -122,14 +122,47 @@ mat-card-content, mat-list-option {
   border-bottom-color: transparent;
 }
 
+/deep/ mat-card.mat-card {
+  padding: 30px!important;
+  max-width: 600px!important;
+  margin-left: 100px;
+  margin-top: 50px;
+  align-content: center;
+}
+
+.filterField {
+  margin-left: 50px;
+  width: 800px!important;
+  align-content: center;
+  align-self: center;
+
+  /deep/ mat-form-field {
+    width: 200px!important;
+    min-width: 200px!important;
+    align-content: center;
+    align-self: center;
+
+  }
+}
+
 
 mat-table {
-  padding-right: 50px;
-  padding-left: 50px;
+  margin-right: 50px;
+  margin-left: 50px;
+  background-color: lightgrey;
+
+  mat-header-cell {
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+  }
 
   mat-header-row {
-    background-color: green;
-    font-weight: 700;
+    background-color: midnightblue;
+  }
 
+  mat-cell {
+    font-size: 14px;
+    font-weight: 100;
   }
 }

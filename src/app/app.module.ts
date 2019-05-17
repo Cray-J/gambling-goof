@@ -8,7 +8,6 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { StatsComponent } from './stats/stats.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -21,8 +20,7 @@ import { BetsModule } from './bets/bets.module';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    StatsComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,8 @@ import { BetsComponent } from './bets.component';
 import { NewBetDialogComponent } from './new-bet-dialog/new-bet-dialog.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { BetsOverviewComponent } from './bets-table/bets-table.component';
-import {MatCardModule} from "@angular/material";
+import { MatCardModule, MatDialogActions, MatDialogModule } from "@angular/material";
+import {FlexModule} from "@angular/flex-layout";
 
 @NgModule({
   imports: [
@@ -14,6 +15,8 @@ import {MatCardModule} from "@angular/material";
     OwlNativeDateTimeModule,
     CommonModule,
     SharedModule,
+    FlexModule,
+    MatDialogModule,
     CoreModule,
     MatCardModule
   ],

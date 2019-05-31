@@ -6,6 +6,7 @@ import {allOutcomes, Outcome} from '../../shared/model/outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { Bet } from '../../shared/model/bet.model';
 import { Bookie } from '../../shared/model/bookie.enum';
+import { BetType } from '../../shared/model/bet-type.enum';
 
 @Component({
   selector: 'app-bets-overview',
@@ -13,12 +14,14 @@ import { Bookie } from '../../shared/model/bookie.enum';
   styleUrls: ['./bets-table.component.scss']
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
-  displayedColumns = ['date', 'match', 'selection', 'bookie', 'stake', 'odds', 'events', 'outcome', 'return'];
+  displayedColumns = ['date', 'match', 'selection', 'type', 'bookie', 'stake', 'odds', 'outcome', 'return', 'events'];
   dataSource = new MatTableDataSource<Bet>();
   private subscriptions: Subscription = new Subscription();
   outcomes = allOutcomes();
-  bookie = Bookie;
-  startDate = new Date("May 16 2019 12:00");
+  public bookie = Bookie;
+  public allOutcomes = Outcome;
+  public type = BetType;
+  startDate = new Date('May 29 2019 12:00');
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -27,9 +30,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit() {
@@ -43,7 +44,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
         bet.valueReturn = (bet.stake * bet.odds) - bet.stake;
         break;
       case Outcome.halfWin:
-        bet.valueReturn = (bet.stake * bet.odds) / 2 - bet.stake;
+        bet.valueReturn = (bet.stake * bet.odds - bet.stake) / 2;
         break;
       case Outcome.halfLoss:
         bet.valueReturn = -bet.stake / 2;
@@ -71,7 +72,10 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
       data: {bet: element}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((bet: Bet) => {
+      console.log(bet);
+      this.updateValue(bet, bet.outcome);
+      this.betService.updateBet(bet);
     });
   }
 
@@ -86,17 +90,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public totalDays() {
-    return new Date().getDate() - this.startDate.getDate();
+    return new Date().getDate() - this.startDate.getDate() + 1;
   }
-
-  setStyle(bet: Bet) {
-    if (bet.valueReturn > 0) {
-      return 'lawngreen';
-    } else if (bet.valueReturn < 0) {
-      return 'red';
-    } else if (bet.valueReturn === 0) {
-      return 'grey';
-    }
-  }
-
 }

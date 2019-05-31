@@ -32,6 +32,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 * firebase init (set public directory to dist & do not overwrite index.html)
 * ng build --prod
 * firebase deploy
+* Error might be due to expired token, (do Firebase logout and Firebase login)
 
 
 

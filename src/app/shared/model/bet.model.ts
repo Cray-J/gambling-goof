@@ -1,5 +1,6 @@
 import { Bookie } from './bookie.enum';
 import { Outcome } from './outcome.enum';
+import {BetType} from './bet-type.enum';
 
 export interface Bet {
   id: string;
@@ -16,4 +17,5 @@ export interface Bet {
   finalScore: string;
   reasoning: string;
   rating: number;
+  type: BetType;
 }

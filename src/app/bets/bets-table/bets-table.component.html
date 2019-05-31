@@ -1,11 +1,17 @@
 <div fxLayout="column">
-  <div fxLayout="row">
+  <div fxLayout="row" fxLayoutAlign="center center">
     <mat-card>
-      <h2 fxLayout fxLayoutAlign="center center">Overall stats</h2>
-      <div>
-        <h3>Total: {{total()}}</h3>
-        <h3>Number of days: {{totalDays()}}</h3>
-        <h3>Expected total: +{{totalDays() * 100}}</h3>
+      <h2 fxLayout fxLayoutAlign="center center" class="cardTitle">Overall stats</h2>
+      <div fxLayout="row">
+      <div fxLayout="column" class="statsColumn">
+        <div class="stats">Total: {{total()}}</div>
+        <div class="stats">Number of days: {{totalDays()}}</div>
+        <div class="stats">Expected total: +{{totalDays() * 50}}</div>
+      </div>
+      <div fxLayout="column" class="statsColumn">
+        <div class="stats">Number of bets: {{dataSource.data.length}}</div>
+        <div class="stats">Total + per day: {{total()/totalDays()}}</div>
+      </div>
       </div>
     </mat-card>
   </div>
@@ -37,24 +43,19 @@
       <mat-cell *matCellDef="let element">{{ element.stake }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="bookie">
-      <mat-header-cell *matHeaderCellDef>Bookie</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.bookie}} </mat-cell>
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{type.toText(element.type)}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="bookie">
+      <mat-header-cell *matHeaderCellDef>Bookie</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{bookie.toText(element.bookie)}} </mat-cell>
+    </ng-container>
 
     <ng-container matColumnDef="odds">
       <mat-header-cell *matHeaderCellDef>Odds</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.odds | number : '1.2-2' }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="events">
-      <mat-header-cell *matHeaderCellDef>Events</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <mat-icon (click)="openDialog(element)" class="editIcon">border_color</mat-icon>
-        <mat-icon *ngIf="element.redCard" class="redCard" matTooltip="Red card">crop_square</mat-icon>
-        <mat-icon *ngIf="element.missedPen" class="missedPen" matTooltip="Missed penalty">error</mat-icon>
-      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="outcome">
@@ -65,7 +66,7 @@
                       (ngModelChange)="updateValue(element, $event)">
             <mat-option *ngFor="let outcome of outcomes"
                         [value]="outcome">
-              {{ outcome }}
+              {{ allOutcomes.toText(outcome) }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -75,7 +76,21 @@
     <ng-container matColumnDef="return" >
       <mat-header-cell *matHeaderCellDef>Return</mat-header-cell>
       <mat-cell *matCellDef="let element"
-                [ngStyle]="{'color': setStyle(element)}" >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
+                [class.win]="element.outcome === allOutcomes.win"
+                [class.loss]="element.outcome === allOutcomes.loss"
+                [class.half-win]="element.outcome === allOutcomes.halfWin"
+                [class.half-loss]="element.outcome === allOutcomes.halfLoss"
+                [class.push-void]="element.outcome === allOutcomes._void || element.outcome === allOutcomes.push"
+      >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="events">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-icon (click)="openDialog(element)" class="editIcon">border_color</mat-icon>
+        <mat-icon *ngIf="element.redCard" class="redCard" matTooltip="Red card">crop_square</mat-icon>
+        <mat-icon *ngIf="element.missedPen" class="missedPen" matTooltip="Missed penalty">error</mat-icon>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -16,11 +16,10 @@ mat-dialog-container {
   padding: 30px;
 }
 
-/*.mat-form-field {
-  padding: 20px;
-  width: 150px;
-
-}*/
+/deep/ mat-form-field-infix,
+/deep/ mat-form-field {
+  width: 200px!important;
+}
 
 .numberInput {
   width: 60px;

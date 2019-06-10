@@ -4,14 +4,18 @@
       <h2 fxLayout fxLayoutAlign="center center" class="cardTitle">Overall stats</h2>
       <div fxLayout="row">
       <div fxLayout="column" class="statsColumn">
-        <div class="stats">Total: {{total()}}</div>
-        <div class="stats">Number of days: {{totalDays()}}</div>
-        <div class="stats">Expected total: +{{totalDays() * 50}}</div>
+        <div class="stats">Number of bets: {{dataSource.data.length}}</div>
+        <div class="stats">Total: {{total() | number:'1.0-0'}}</div>
+        <div class="stats">Total + per day: {{total()/totalDays() | number:'1.0-0'}}</div>
       </div>
       <div fxLayout="column" class="statsColumn">
-        <div class="stats">Number of bets: {{dataSource.data.length}}</div>
-        <div class="stats">Total + per day: {{total()/totalDays()}}</div>
+        <div class="stats">Number of days: {{totalDays() | number:'1.0-0'}}</div>
+        <div class="stats">Expected total: +{{totalDays() * 50}}</div>
+        <div class="stats">Difference: {{total() - totalDays() * 50}}</div>
       </div>
+        <div fxLayout="column" class="statsColumn">
+          <div class="stats">ROI: {{calculateROI() | number:'1.2-2'}}%</div>
+        </div>
       </div>
     </mat-card>
   </div>

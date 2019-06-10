@@ -6,8 +6,10 @@ import { BetsComponent } from './bets.component';
 import { NewBetDialogComponent } from './new-bet-dialog/new-bet-dialog.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { BetsOverviewComponent } from './bets-table/bets-table.component';
-import { MatCardModule, MatDialogActions, MatDialogModule } from "@angular/material";
+import { MatButtonModule, MatCardModule, MatDialogActions, MatDialogModule } from "@angular/material";
 import {FlexModule} from "@angular/flex-layout";
+import { ReactiveFormsModule } from "@angular/forms";
+import { MaterialModule } from "../material.module";
 
 @NgModule({
   imports: [
@@ -18,7 +20,7 @@ import {FlexModule} from "@angular/flex-layout";
     FlexModule,
     MatDialogModule,
     CoreModule,
-    MatCardModule
+    MaterialModule
   ],
   declarations: [
     BetsOverviewComponent,

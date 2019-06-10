@@ -14,16 +14,15 @@ import { BetType } from '../../shared/model/bet-type.enum';
   styleUrls: ['./bets-table.component.scss']
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
-  displayedColumns = ['date', 'match', 'selection', 'type', 'bookie', 'stake', 'odds', 'outcome', 'return', 'events'];
-  dataSource = new MatTableDataSource<Bet>();
-  private subscriptions: Subscription = new Subscription();
-  outcomes = allOutcomes();
+  @ViewChild(MatSort, {static: false}) public sort: MatSort;
+  public displayedColumns = ['date', 'match', 'selection', 'type', 'bookie', 'stake', 'odds', 'outcome', 'return', 'events'];
+  public dataSource = new MatTableDataSource<Bet>();
+  public outcomes = allOutcomes();
   public bookie = Bookie;
   public allOutcomes = Outcome;
   public type = BetType;
-  startDate = new Date('May 29 2019 12:00');
-
-  @ViewChild(MatSort) sort: MatSort;
+  private subscriptions: Subscription = new Subscription();
+  private startDate = new Date('June 8 2019 00:01');
 
   constructor(private betService: BetService,
               public dialog: MatDialog) {
@@ -83,13 +82,24 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  public total() {
+  public total(): number {
     let val = 0;
     this.dataSource.data.forEach(bet => val += bet.valueReturn);
     return val;
   }
 
-  public totalDays() {
-    return new Date().getDate() - this.startDate.getDate() + 1;
+  public totalDays(): number {
+    const diff = +new Date() - +this.startDate;
+    return Math.ceil(diff  / 1000 / 60 / 60 / 24);
+  }
+
+  public calculateROI(): number {
+    let invested = 0;
+    let returned = 0;
+    this.dataSource.data.forEach(bet => {
+      invested += bet.stake;
+      returned += bet.valueReturn;
+    });
+    return invested / returned;
   }
 }

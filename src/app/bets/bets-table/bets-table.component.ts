@@ -6,7 +6,7 @@ import {allOutcomes, Outcome} from '../../shared/model/outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { Bet } from '../../shared/model/bet.model';
 import { Bookie } from '../../shared/model/bookie.enum';
-import { BetType } from '../../shared/model/bet-type.enum';
+import { Rating } from '../../shared/model/bet-type.enum';
 
 @Component({
   selector: 'app-bets-overview',
@@ -15,12 +15,12 @@ import { BetType } from '../../shared/model/bet-type.enum';
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, {static: false}) public sort: MatSort;
-  public displayedColumns = ['date', 'match', 'selection', 'type', 'bookie', 'stake', 'odds', 'outcome', 'return', 'events'];
+  public displayedColumns = ['date', 'match', 'selection', 'rating', 'bookie', 'stake', 'odds', 'outcome', 'return', 'events'];
   public dataSource = new MatTableDataSource<Bet>();
   public outcomes = allOutcomes();
   public bookie = Bookie;
   public allOutcomes = Outcome;
-  public type = BetType;
+  public rating = Rating;
   private subscriptions: Subscription = new Subscription();
   private startDate = new Date('June 8 2019 00:01');
 

@@ -1,27 +1,24 @@
-export enum BetType {
-  botd = 'botd',
-  single = 'single',
-  extra = 'extra',
-  season = 'season'
+export enum Rating {
+  rating_1 = 'rating_1',
+  rating_2 = 'rating_2',
+  rating_3 = 'rating_3',
 }
 
-export namespace BetType {
+export namespace Rating {
 
   export function allTypes() {
     return [
-      BetType.botd,
-      BetType.single,
-      BetType.extra,
-      BetType.season
+      Rating.rating_1,
+      Rating.rating_2,
+      Rating.rating_3
     ];
   }
 
-  export function toText(bet: BetType) {
+  export function toText(bet: Rating) {
     switch (bet) {
-      case BetType.botd:  return 'Bet of the day';
-      case BetType.extra: return 'Extra';
-      case BetType.season: return 'Seaon';
-      case BetType.single: return 'Daily single';
+      case Rating.rating_1:  return 'Bet of the day';
+      case Rating.rating_2: return '2';
+      case Rating.rating_3: return '3';
       default: return '';
     }
   }

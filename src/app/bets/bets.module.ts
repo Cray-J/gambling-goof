@@ -10,6 +10,7 @@ import { MatButtonModule, MatCardModule, MatDialogActions, MatDialogModule } fro
 import {FlexModule} from "@angular/flex-layout";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "../material.module";
+import { MultibetTableComponent } from './multibet-table/multibet-table.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { MaterialModule } from "../material.module";
   declarations: [
     BetsOverviewComponent,
     BetsComponent,
-    NewBetDialogComponent
+    NewBetDialogComponent,
+    MultibetTableComponent
   ]
 })
 export class BetsModule { }

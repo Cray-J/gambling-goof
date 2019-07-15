@@ -36,8 +36,22 @@
       </div>
       <div>
         <mat-form-field>
-          <mat-select [(ngModel)]="data.bet.type" required>
+          <mat-select [(ngModel)]="data.bet.betType" required>
             <mat-option *ngFor="let type of betTypes" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Confidence</label>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-select [(ngModel)]="data.bet.confidence" required>
+            <mat-option *ngFor="let type of confidence_levels" [value]="type">
               {{type}}
             </mat-option>
           </mat-select>

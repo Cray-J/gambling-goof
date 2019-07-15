@@ -47,9 +47,9 @@
       <mat-cell *matCellDef="let element">{{ element.stake }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="rating">
-      <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{rating.toText(element.rating)}}</mat-cell>
+    <ng-container matColumnDef="confidence">
+      <mat-header-cell *matHeaderCellDef>Confidence</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.confidence}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="bookie">

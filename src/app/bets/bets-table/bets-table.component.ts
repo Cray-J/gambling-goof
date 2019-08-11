@@ -21,7 +21,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   public allOutcomes = Outcome;
   public confidence = [1, 2, 3, 4, 5];
   private subscriptions: Subscription = new Subscription();
-  private startDate = new Date('July 1 2019 00:01');
+  private startDate = new Date('August 1 2019 00:01');
 
   constructor(private betService: BetService,
               public dialog: MatDialog) {

@@ -18,5 +18,8 @@ export interface Bet {
   finalScore: string;
   reasoning: string;
   confidence: number;
+  probability: number;
   betType: BetType;
+  totalGoal: number;
+  currentProgress: number;
 }

@@ -12,12 +12,21 @@ mat-dialog-container {
 
 }
 
+.mat-dialog-content {
+  min-width: 400px;
+  max-height: 1000px;
+}
+
+.mat-dialog-actions button {
+  vertical-align: bottom;
+}
+
 .new-bet {
   padding: 30px;
 }
 
-/deep/ mat-form-field-infix,
-/deep/ mat-form-field {
+mat-form-field-infix,
+mat-form-field {
   width: 200px!important;
 }
 

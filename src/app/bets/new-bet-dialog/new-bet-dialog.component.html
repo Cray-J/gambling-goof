@@ -51,7 +51,7 @@
       <div>
         <mat-form-field>
           <mat-select [(ngModel)]="data.bet.confidence" required>
-            <mat-option *ngFor="let type of confidence_levels" [value]="type">
+            <mat-option *ngFor="let type of levels" [value]="type">
               {{type}}
             </mat-option>
           </mat-select>

@@ -1,15 +1,19 @@
 export enum BetType {
   single = 'single',
-  double = 'double',
   multi = 'multi',
-  season = 'season'
+  season = 'season',
+  special = 'special',
+  transfer = 'transfer'
 }
 
 export namespace BetType {
   export function allTypes() {
     return [
+      BetType.multi,
       BetType.single,
-      BetType.season
+      BetType.season,
+      BetType.special,
+      BetType.transfer
     ];
   }
 }

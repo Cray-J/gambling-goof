@@ -13,8 +13,6 @@ export interface Bet {
   outcome: Outcome;
   valueReturn: number;
   botd: boolean;
-  redCard: boolean;
-  missedPen: boolean;
   finalScore: string;
   reasoning: string;
   confidence: number;

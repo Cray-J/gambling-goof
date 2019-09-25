@@ -38,30 +38,15 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
 
   updateValue(bet: Bet, outcome: Outcome) {
     bet.outcome = outcome;
-    switch (bet.outcome) {
-      case Outcome.win:
-        bet.valueReturn = (bet.stake * bet.odds) - bet.stake;
-        break;
-      case Outcome.halfWin:
-        bet.valueReturn = (bet.stake * bet.odds - bet.stake) / 2;
-        break;
-      case Outcome.halfLoss:
-        bet.valueReturn = -bet.stake / 2;
-        break;
-      case Outcome.loss:
-        bet.valueReturn = -bet.stake;
-        break;
-      case Outcome.awaiting:
-        bet.valueReturn = 0;
-        break;
-      case Outcome.push:
-        bet.valueReturn = 0;
-        break;
-      default:
-        return null;
-    }
-    console.log(bet);
-    console.log(bet.valueReturn);
+    bet.valueReturn = $enum.mapValue(outcome).with({
+      [Outcome.win]: (bet.stake * bet.odds) - bet.stake,
+      [Outcome.halfWin]: (bet.stake * bet.odds - bet.stake) / 2,
+      [Outcome.push]: 0,
+      [Outcome._void]: 0,
+      [Outcome.awaiting]: null,
+      [Outcome.halfLoss]: -bet.stake / 2,
+      [Outcome.loss]: -bet.stake
+    });
     this.betService.updateBet(bet);
   }
 

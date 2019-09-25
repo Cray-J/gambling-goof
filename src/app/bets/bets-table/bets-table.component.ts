@@ -2,10 +2,11 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { BetService } from '../../core/bet.service';
 import { Subscription } from 'rxjs';
-import {allOutcomes, Outcome} from '../../shared/model/outcome.enum';
+import { Outcome } from '../../shared/model/outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { Bet } from '../../shared/model/bet.model';
-import { Bookie } from '../../shared/model/bookie.enum';
+import { $enum } from 'ts-enum-util';
+import { ToText } from '../../shared/model/to-text';
 
 @Component({
   selector: 'app-bets-overview',
@@ -13,15 +14,15 @@ import { Bookie } from '../../shared/model/bookie.enum';
   styleUrls: ['./bets-table.component.scss']
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
-  @ViewChild(MatSort, {static: false}) public sort: MatSort;
+  @ViewChild(MatSort, { static: false }) public sort: MatSort;
   public displayedColumns = ['date', 'match', 'selection', 'confidence', 'bookie', 'stake', 'odds', 'outcome', 'return', 'events'];
   public dataSource = new MatTableDataSource<Bet>();
-  public outcomes = allOutcomes();
-  public bookie = Bookie;
-  public allOutcomes = Outcome;
+  public outcomes = $enum(Outcome).getKeys();
+  public outcome = Outcome;
+  public toText = ToText;
   public confidence = [1, 2, 3, 4, 5];
   private subscriptions: Subscription = new Subscription();
-  private startDate = new Date('August 1 2019 00:01');
+  private startDate = new Date('September 25 2019 00:01');
 
   constructor(private betService: BetService,
               public dialog: MatDialog) {

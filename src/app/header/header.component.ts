@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { NewBetDialogComponent } from '../bets/new-bet-dialog/new-bet-dialog.component';
 import { Bet } from '../shared/model/bet.model';
 import { BetService } from '../core/bet.service';
+import { BetType } from '../shared/model/bet-type.enum';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +23,10 @@ export class HeaderComponent {
       data: {
         bet:
           {
-            date: new Date()
+            date: new Date(),
+            stake: 100,
+            confidence: 3,
+            betType: BetType.single
           },
       }
     });

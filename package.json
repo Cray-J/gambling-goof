@@ -22,6 +22,7 @@
     "ng2-charts": "^2.3.0",
     "npm": "^6.9.0",
     "rxjs": "^6.5.2",
+    "ts-enum-util": "^4.0.1",
     "zone.js": "^0.9.1"
   },
   "devDependencies": {

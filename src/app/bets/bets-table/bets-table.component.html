@@ -54,7 +54,7 @@
 
     <ng-container matColumnDef="bookie">
       <mat-header-cell *matHeaderCellDef>Bookie</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{bookie.toText(element.bookie)}} </mat-cell>
+      <mat-cell *matCellDef="let element">{{toText.bookie(element.bookie)}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="odds">
@@ -70,7 +70,7 @@
                       (ngModelChange)="updateValue(element, $event)">
             <mat-option *ngFor="let outcome of outcomes"
                         [value]="outcome">
-              {{ allOutcomes.toText(outcome) }}
+              {{ toText.outcome(outcome) }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -80,11 +80,11 @@
     <ng-container matColumnDef="return" >
       <mat-header-cell *matHeaderCellDef>Return</mat-header-cell>
       <mat-cell *matCellDef="let element"
-                [class.win]="element.outcome === allOutcomes.win"
-                [class.loss]="element.outcome === allOutcomes.loss"
-                [class.half-win]="element.outcome === allOutcomes.halfWin"
-                [class.half-loss]="element.outcome === allOutcomes.halfLoss"
-                [class.push-void]="element.outcome === allOutcomes._void || element.outcome === allOutcomes.push"
+                [class.win]="element.outcome === outcome.win"
+                [class.loss]="element.outcome === outcome.loss"
+                [class.half-win]="element.outcome === outcome.halfWin"
+                [class.half-loss]="element.outcome === outcome.halfLoss"
+                [class.push-void]="element.outcome === outcome._void || element.outcome === outcomes.push"
       >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
     </ng-container>
 

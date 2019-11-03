@@ -24,6 +24,14 @@ export class BetService {
     this.betsChanged.next(this.singleBets);
   }
 
+  public addBets(bets: Bet[]) {
+    bets.forEach(bet => {
+      this.db.collection('singleBets').doc(bet.id).set(bet);
+      this.singleBets.push(bet);
+    });
+    this.betsChanged.next(this.singleBets);
+  }
+
   getSingleBets(): Bet[] {
     return this.singleBets.slice();
   }

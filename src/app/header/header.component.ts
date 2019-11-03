@@ -18,7 +18,7 @@ export class HeaderComponent {
               private betService: BetService) {
   }
 
-  openDialog(): void {
+  openSingleDialog(): void {
     const dialogRef = this.dialog.open(NewBetDialogComponent, {
       data: {
         bet:
@@ -41,6 +41,13 @@ export class HeaderComponent {
       }
       console.log(this.bet);
     });
+  }
+
+  openDayDialog() {
+    // create component for bets
+    // call with init data
+    // on close, call
+    // this.betService.addBets(bets);
   }
 
   onToggleSidenav() {

@@ -22,7 +22,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   public toText = ToText;
   public confidence = [1, 2, 3, 4, 5];
   private subscriptions: Subscription = new Subscription();
-  private startDate = new Date('September 25 2019 00:01');
+  private startDate = new Date('October 1 2019 00:01');
 
   constructor(private betService: BetService,
               public dialog: MatDialog) {

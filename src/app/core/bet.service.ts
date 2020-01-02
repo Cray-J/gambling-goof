@@ -5,7 +5,7 @@ import { betDateComparator } from '../shared/comparators';
 import { Bet } from '../shared/model/bet.model';
 import {map} from 'rxjs/operators';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class BetService {
 
   private singleBets: Bet[] = [];
@@ -52,6 +52,8 @@ export class BetService {
   }
 
   updateBet(bet: Bet) {
-    this.db.collection('singleBets').doc(bet.id).set(bet);
+    this.db.collection('singleBets').doc(bet.id).update(bet).then(val => {
+      console.log(val);
+    });
   }
 }

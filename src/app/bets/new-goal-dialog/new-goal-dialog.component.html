@@ -1,0 +1,61 @@
+<h1 mat-dialog-title fxLayoutAlign="center center">Add new Goal</h1>
+<form [formGroup]="goalForm" (ngSubmit)="onSubmit()" novalidate>
+  <div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Month</label>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput [matDatepicker]="dp" placeholder="Month and Year"  formControlName="email"> <!--[formControl]="date"-->
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp
+                          startView="multi-year"
+                          (yearSelected)="chosenYearHandler($event)"
+                          (monthSelected)="chosenMonthHandler($event, dp)"
+                          panelClass="example-month-picker">
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Income</label>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type="number" formControlName="income">
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Total bets</label>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type="number" formControlName="totalBets">
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>ROI</label>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type="number" formControlName="roi">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <button type="submit" [disabled]="goalForm.pristine">Save</button>
+  <button type="reset" (click)="revert()" [disabled]="goalForm.pristine">
+    Revert
+  </button>
+  <!--<mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button (click)="onClose()">Submit</button>
+  </mat-dialog-actions>
+</mat-dialog-content>-->
+</form>

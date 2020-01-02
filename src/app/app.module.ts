@@ -16,6 +16,7 @@ import { NewBetDialogComponent } from './bets/new-bet-dialog/new-bet-dialog.comp
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { BetsModule } from './bets/bets.module';
+import { NewGoalDialogComponent } from './bets/new-goal-dialog/new-goal-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,9 @@ import { BetsModule } from './bets/bets.module';
     BetsModule
   ],
   bootstrap: [AppComponent],
-  entryComponents: [NewBetDialogComponent],
+  entryComponents: [
+    NewBetDialogComponent,
+    NewGoalDialogComponent
+  ],
 })
 export class AppModule { }

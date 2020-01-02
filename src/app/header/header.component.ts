@@ -4,18 +4,21 @@ import { NewBetDialogComponent } from '../bets/new-bet-dialog/new-bet-dialog.com
 import { Bet } from '../shared/model/bet.model';
 import { BetService } from '../core/bet.service';
 import { BetType } from '../shared/model/bet-type.enum';
+import { NewGoalDialogComponent } from '../bets/new-goal-dialog/new-goal-dialog.component';
+import { GoalService } from "../core/goal.service";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
 
   bet: Bet;
 
   constructor(public dialog: MatDialog,
-              private betService: BetService) {
+              private betService: BetService,
+              private goalService: GoalService) {
   }
 
   openSingleDialog(): void {
@@ -50,8 +53,16 @@ export class HeaderComponent {
     // this.betService.addBets(bets);
   }
 
-  onToggleSidenav() {
+  openGoalDialog(): void {
+    const dialogRef = this.dialog.open(NewGoalDialogComponent, {
+        data: {
 
+        }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+       console.log('dialog closed');
+      this.goalService.addGoal(result);
+    });
   }
-
 }

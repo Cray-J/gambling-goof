@@ -10,6 +10,7 @@ import {MatDialogModule} from '@angular/material';
 import {FlexModule} from '@angular/flex-layout';
 import {MaterialModule} from '../material.module';
 import {MultibetTableComponent} from './multibet-table/multibet-table.component';
+import { NewGoalDialogComponent } from './new-goal-dialog/new-goal-dialog.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {MultibetTableComponent} from './multibet-table/multibet-table.component'
     BetsOverviewComponent,
     BetsComponent,
     NewBetDialogComponent,
-    MultibetTableComponent
+    MultibetTableComponent,
+    NewGoalDialogComponent
   ]
 })
 export class BetsModule { }

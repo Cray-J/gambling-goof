@@ -30,3 +30,12 @@ a:active {
   width: 900px;
   height: 250px
 }
+
+div.cdk-overlay-container mat-dialog-container.mat-dialog-container {
+  background-color: red;
+  height: 250px;
+  width: 1200px!important;
+  min-width: 2000px!important;
+}
+
+

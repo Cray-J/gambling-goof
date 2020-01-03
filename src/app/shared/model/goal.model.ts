@@ -3,4 +3,5 @@ export class Goal {
   income: number;
   totalBets: number;
   roi: number;
+  winningDays: number;
 }

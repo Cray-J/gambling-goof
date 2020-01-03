@@ -50,7 +50,7 @@
     </div>
   </div>
   <button type="submit" [disabled]="goalForm.pristine">Save</button>
-  <button type="reset" (click)="revert()" [disabled]="goalForm.pristine">
+  <button type="reset" (click)="onNoClick()" [disabled]="goalForm.pristine">
     Revert
   </button>
   <!--<mat-dialog-actions fxLayout="row" fxLayoutAlign="end">

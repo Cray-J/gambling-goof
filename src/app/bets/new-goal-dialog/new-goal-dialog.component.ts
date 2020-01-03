@@ -80,7 +80,7 @@ export class NewGoalDialogComponent {
     });
   }
 
-  onClose() {
+  onSubmit() {
     console.log(this.date.value.toDate());
     this.dialogRef.close();
   }

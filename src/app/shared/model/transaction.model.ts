@@ -1,5 +1,8 @@
-import { Bookie } from "./bookie.enum";
+import { Bank, Bookie } from './bookie.enum';
 
 export class Transaction {
-  from: Bookie 
+  from: Bookie | Bank;
+  to: Bookie | Bank;
+  amount: number;
+  date: Date;
 }

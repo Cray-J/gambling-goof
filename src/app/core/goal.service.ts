@@ -15,7 +15,7 @@ export class GoalService {
   }
 
   public addGoal(goal: Goal) {
-    this.db.collection('goals').doc(goal.date.getFullYear() + goal.date.getMonth()).set(goal);
+    this.db.collection('goals').doc(`${goal.date.getFullYear()}-${goal.date.getMonth()}`).set(goal);
     this.goals.push(goal);
     this.goalsChanged.next(this.goals);
   }

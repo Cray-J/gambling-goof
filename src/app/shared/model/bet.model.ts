@@ -13,11 +13,5 @@ export interface Bet {
   outcome: Outcome;
   valueReturn: number;
   botd: boolean;
-  finalScore: string;
-  reasoning: string;
-  confidence: number;
-  probability: number;
   betType: BetType;
-  totalGoal: number;
-  currentProgress: number;
 }

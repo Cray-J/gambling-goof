@@ -6,6 +6,7 @@ import { BetService } from '../core/bet.service';
 import { BetType } from '../shared/model/bet-type.enum';
 import { NewGoalDialogComponent } from '../bets/new-goal-dialog/new-goal-dialog.component';
 import { GoalService } from "../core/goal.service";
+import { NewDayDialogComponent } from "../bets/new-day-dialog/new-day-dialog.component";
 
 @Component({
   selector: 'app-header',
@@ -47,6 +48,16 @@ export class HeaderComponent {
   }
 
   openDayDialog() {
+    const dialogRef = this.dialog.open(NewDayDialogComponent, {
+      data: {
+
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('dialog closed');
+      // this.goalService.addGoal(result);
+    });
     // create component for bets
     // call with init data
     // on close, call

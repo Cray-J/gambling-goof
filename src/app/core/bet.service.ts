@@ -16,7 +16,7 @@ export class BetService {
   constructor(private db: AngularFirestore) {
   }
 
-  public addBet(bet: Bet) {
+  public addBet(bet) {
     // this.db.collection('singleBets').add(bet);
     this.db.collection('singleBets').doc(bet.id).set(bet);
     // this.db.ref.child('singleBets').child(bet.id).set(bet);

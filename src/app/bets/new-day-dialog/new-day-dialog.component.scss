@@ -1,0 +1,20 @@
+div.mat-form-field-wrapper {
+  padding-right: 5px;
+}
+
+mat-dialog-container {
+  width: calc(100vw);
+}
+
+div.cdk-overlay-container ::ng-deep #cdk-overlay-0 {
+  max-width: calc(100vw)!important;
+}
+
+::ng-deep #cdk-overlay-0,
+#cdk-overlay-0 {
+  max-width: calc(100vw)!important;
+}
+
+h1 {
+  horiz-align: center;
+}

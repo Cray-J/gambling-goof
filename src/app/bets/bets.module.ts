@@ -11,6 +11,7 @@ import {FlexModule} from '@angular/flex-layout';
 import {MaterialModule} from '../material.module';
 import {MultibetTableComponent} from './multibet-table/multibet-table.component';
 import { NewGoalDialogComponent } from './new-goal-dialog/new-goal-dialog.component';
+import { NewDayDialogComponent } from './new-day-dialog/new-day-dialog.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { NewGoalDialogComponent } from './new-goal-dialog/new-goal-dialog.compon
     BetsComponent,
     NewBetDialogComponent,
     MultibetTableComponent,
-    NewGoalDialogComponent
+    NewGoalDialogComponent,
+    NewDayDialogComponent
   ]
 })
 export class BetsModule { }

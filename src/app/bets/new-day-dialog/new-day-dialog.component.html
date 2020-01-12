@@ -16,24 +16,30 @@
     <mat-form-field>
       <input matInput type="text" name="away" formControlName="away" placeholder="Away">
     </mat-form-field>
+
     <mat-form-field>
-      <input matInput type="text" name="bookie" formControlName="bookie" placeholder="Bookie">
+      <input matInput type="text" name="bookie" formControlName="bookie" placeholder="Bookie" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let bookie of filteredOptions[i] | async" [value]="bookie">
+          {{bookie}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
     <mat-form-field>
       <input matInput type="text" name="selection" formControlName="selection" placeholder="Selection">
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="odds">
       <input matInput type="number" name="odds" formControlName="odds" placeholder="Odds">
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="stake">
       <input matInput type="number" name="stake" formControlName="stake" placeholder="Stake">
     </mat-form-field>
     <button mat-icon-button (click)="removeBet(i)"><mat-icon>clear</mat-icon></button>
   </div>
 </div>
 <br>
-<button mat-raised-button color="accent" type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>
-<button mat-raised-button color="secondary" type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>
-<button mat-raised-button type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>
-<button mat-raised-button color="primary" type="submit">Submit</button>
+<!--<button mat-raised-button color="accent" type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>-->
+<button mat-raised-button color="secondary" type="button" (click)="onNoClick()" style="margin-right: 5px;">Cancel</button>
+<!--<button mat-raised-button type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>-->
+<button mat-raised-button color="primary" (click)="addItem()" type="submit">Submit</button>
 </form>

@@ -10,8 +10,10 @@ import {
   MatTableModule, MatTabsModule
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const materialModules = [
+  MatAutocompleteModule,
   MatDialogModule,
   MatSortModule,
   MatTableModule,

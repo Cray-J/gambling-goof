@@ -1,9 +1,12 @@
 import { Component, Inject, } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { split } from "ts-node";
-import { Bet } from "../../shared/model/bet.model";
-import { BetService } from "../../core/bet.service";
+import { Bet } from '../../shared/model/bet.model';
+import { BetService } from '../../core/bet.service';
+import { Bookie } from '../../shared/model/bookie.enum';
+import { $enum } from 'ts-enum-util';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-day-dialog',
@@ -15,12 +18,16 @@ export class NewDayDialogComponent {
   date = new FormControl(new Date());
   myForm: FormGroup;
   arr: FormArray;
+  public bookies = $enum(Bookie).getKeys();
+  filteredOptions: [Observable<string[]>] = [];
 
   constructor(public dialogRef: MatDialogRef<NewDayDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private betsService: BetService,
               private fb: FormBuilder) {
     this.createFormGroup();
+
+    console.log((this.myForm.get('arr') as FormArray).get('bookie'));
   }
 
   createFormGroup() {
@@ -32,10 +39,9 @@ export class NewDayDialogComponent {
     });*/
     this.myForm = this.fb.group({
       date: this.fb.control(new Date()),
-      arr: this.fb.array([this.createItem()])
+      arr: this.fb.array([])
     });
-    //this.myForm.get('date').setValue(Date.now());
-    console.log(this.myForm);
+    this.addItem();
   }
 
   createItem() {
@@ -51,6 +57,11 @@ export class NewDayDialogComponent {
     group.patchValue({
       stake: 100
     });
+    this.filteredOptions.push(group.get('bookie').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      ));
     return group;
   }
 
@@ -58,9 +69,12 @@ export class NewDayDialogComponent {
     return this.myForm.get('date');
   }
 
+  getFormArray(): FormArray {
+    return this.myForm.get('arr') as FormArray;
+  }
+
   addItem() {
-    this.arr = this.myForm.get('arr') as FormArray;
-    this.arr.push(this.createItem());
+    this.getFormArray().push(this.createItem());
   }
 
   onSubmit() {
@@ -71,7 +85,7 @@ export class NewDayDialogComponent {
     console.log('bets: ', bets);
     bets.forEach(val => {
       if (val.home !== '') {
-        let bet = {};
+        const bet = {};
         bet['match'] = val.home + ' v ' + val.away;
         bet['selection'] = val.selection;
         bet['stake'] = val.stake;
@@ -90,6 +104,12 @@ export class NewDayDialogComponent {
       }
     });
     this.dialogRef.close();
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.bookies.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   onNoClick(): void {

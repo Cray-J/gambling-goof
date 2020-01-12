@@ -2,6 +2,16 @@ div.mat-form-field-wrapper {
   padding-right: 5px;
 }
 
+::ng-deep div.mat-form-field-flex,
+div.mat-form-field-infix {
+  height: 20px!important;
+}
+
+mat-form-field.odds,
+mat-form-field.stake {
+  width: 90px;
+}
+
 mat-dialog-container {
   width: calc(100vw);
 }
@@ -11,6 +21,8 @@ div.cdk-overlay-container ::ng-deep #cdk-overlay-0 {
 }
 
 ::ng-deep #cdk-overlay-0,
+::ng-deep #cdk-overlay-1,
+::ng-deep #cdk-overlay-2,
 #cdk-overlay-0 {
   max-width: calc(100vw)!important;
 }

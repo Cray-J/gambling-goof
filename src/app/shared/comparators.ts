@@ -1,4 +1,4 @@
-export function betDateComparator() {
+export function dateComparator() {
   return (a, b) => compare(a.date, b.date);
 }
 

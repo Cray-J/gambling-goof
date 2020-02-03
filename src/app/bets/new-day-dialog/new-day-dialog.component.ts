@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { split } from "ts-node";
 import { Bet } from "../../shared/model/bet.model";
 import { BetService } from "../../core/bet.service";
+import { Day } from '../../shared/model/day.model';
+import { DayService } from '../../core/day.service';
 
 @Component({
   selector: 'app-new-day-dialog',
@@ -19,6 +21,7 @@ export class NewDayDialogComponent {
   constructor(public dialogRef: MatDialogRef<NewDayDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private betsService: BetService,
+              private dayService: DayService,
               private fb: FormBuilder) {
     this.createFormGroup();
   }
@@ -34,7 +37,7 @@ export class NewDayDialogComponent {
       date: this.fb.control(new Date()),
       arr: this.fb.array([this.createItem()])
     });
-    //this.myForm.get('date').setValue(Date.now());
+    //  this.myForm.get('date').setValue(Date.now());
     console.log(this.myForm);
   }
 
@@ -66,12 +69,17 @@ export class NewDayDialogComponent {
   onSubmit() {
     console.log(this.myForm.value);
     const time: Date = this.myForm.value['date'];
+    console.log(time);
+    const day = time.getDay() < 10 ? `0${time.getDay()}` : time.getDay();
+    const month = time.getMonth() < 10 ? `0${time.getMonth()}` : time.getMonth();
+    const year = time.getFullYear();
+    const id = `${year}${month}${day}`;
     const bets = this.myForm.value['arr'];
-    const newBets: Bet[] = [];
-    console.log('bets: ', bets);
+    const newDay = new Day(id, time, []);
+    console.log('bets: ', bets, newDay);
     bets.forEach(val => {
       if (val.home !== '') {
-        let bet = {};
+        const bet = {};
         bet['match'] = val.home + ' v ' + val.away;
         bet['selection'] = val.selection;
         bet['stake'] = val.stake;
@@ -85,10 +93,11 @@ export class NewDayDialogComponent {
         bet['date'] = time;
         console.log(bet['date']);
         bet['id'] = '' + Date.now();
-
+        newDay.bets.push(bet as Bet);
         this.betsService.addBet(bet);
       }
     });
+    this.dayService.save(newDay);
     this.dialogRef.close();
   }
 

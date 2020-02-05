@@ -1,13 +1,11 @@
 import { Component, Inject, } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Bet } from '../../shared/model/bet.model';
-import { BetService } from '../../core/bet.service';
-import { Bookie } from '../../shared/model/bookie.enum';
-import { $enum } from 'ts-enum-util';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { TeamsService } from '../../core/teams.service';
+import { split } from "ts-node";
+import { Bet } from "../../shared/model/bet.model";
+import { BetService } from "../../core/bet.service";
+import { Day } from '../../shared/model/day.model';
+import { DayService } from '../../core/day.service';
 
 @Component({
   selector: 'app-new-day-dialog',
@@ -25,6 +23,7 @@ export class NewDayDialogComponent {
   constructor(public dialogRef: MatDialogRef<NewDayDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private betsService: BetService,
+              private dayService: DayService,
               private teamsService: TeamsService,
               private fb: FormBuilder) {
     this.createFormGroup();
@@ -80,9 +79,14 @@ export class NewDayDialogComponent {
   onSubmit() {
     console.log(this.myForm.value);
     const time: Date = this.myForm.value['date'];
+    console.log(time);
+    const day = time.getDay() < 10 ? `0${time.getDay()}` : time.getDay();
+    const month = time.getMonth() < 10 ? `0${time.getMonth()}` : time.getMonth();
+    const year = time.getFullYear();
+    const id = `${year}${month}${day}`;
     const bets = this.myForm.value['arr'];
-    const newBets: Bet[] = [];
-    console.log('bets: ', bets);
+    const newDay = new Day(id, time, []);
+    console.log('bets: ', bets, newDay);
     bets.forEach(val => {
       if (val.home !== '') {
         const bet = {};
@@ -100,10 +104,11 @@ export class NewDayDialogComponent {
         bet['date'] = time;
         console.log(bet['date']);
         bet['id'] = '' + Date.now();
-
+        newDay.bets.push(bet as Bet);
         this.betsService.addBet(bet);
       }
     });
+    this.dayService.save(newDay);
     this.dialogRef.close();
   }
 

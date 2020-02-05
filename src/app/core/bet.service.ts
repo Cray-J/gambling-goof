@@ -1,27 +1,26 @@
 import { Subject ,  Subscription } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
-import { betDateComparator } from '../shared/comparators';
+import { dateComparator } from '../shared/comparators';
 import { Bet } from '../shared/model/bet.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class BetService {
-
   private singleBets: Bet[] = [];
   betsChanged = new Subject<Bet[]>();
   private fbSubs: Subscription[] = [];
-
 
   constructor(private db: AngularFirestore) {
   }
 
   public addBet(bet) {
     // this.db.collection('singleBets').add(bet);
-    this.db.collection('singleBets').doc(bet.id).set(bet);
+    this.db.collection('singleBets').doc(bet.id).set(bet).then(result => {
+      this.singleBets.push(bet);
+      this.betsChanged.next(this.singleBets);
+    });
     // this.db.ref.child('singleBets').child(bet.id).set(bet);
-    this.singleBets.push(bet);
-    this.betsChanged.next(this.singleBets);
   }
 
   public addBets(bets: Bet[]) {
@@ -45,7 +44,7 @@ export class BetService {
           return doc.payload.doc.data() as Bet;
         });
       })).subscribe((bets: Bet[]) => {
-        bets.sort(betDateComparator());
+        bets.sort(dateComparator());
         this.singleBets = bets;
         this.betsChanged.next([...this.singleBets]);
       }));

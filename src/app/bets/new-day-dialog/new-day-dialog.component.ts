@@ -7,6 +7,7 @@ import { Bookie } from '../../shared/model/bookie.enum';
 import { $enum } from 'ts-enum-util';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { TeamsService } from '../../core/teams.service';
 
 @Component({
   selector: 'app-new-day-dialog',
@@ -19,15 +20,14 @@ export class NewDayDialogComponent {
   myForm: FormGroup;
   arr: FormArray;
   public bookies = $enum(Bookie).getKeys();
-  filteredOptions: [Observable<string[]>] = [];
+  filteredOptions: Observable<string[]>[] = [];
 
   constructor(public dialogRef: MatDialogRef<NewDayDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private betsService: BetService,
+              private teamsService: TeamsService,
               private fb: FormBuilder) {
     this.createFormGroup();
-
-    console.log((this.myForm.get('arr') as FormArray).get('bookie'));
   }
 
   createFormGroup() {
@@ -86,6 +86,7 @@ export class NewDayDialogComponent {
     bets.forEach(val => {
       if (val.home !== '') {
         const bet = {};
+        this.updateTeams(val.home, val.away);
         bet['match'] = val.home + ' v ' + val.away;
         bet['selection'] = val.selection;
         bet['stake'] = val.stake;
@@ -104,6 +105,16 @@ export class NewDayDialogComponent {
       }
     });
     this.dialogRef.close();
+  }
+
+  private updateTeams(home, away) {
+    [home, away].forEach(team => {
+      console.log(team, this.teamsService.teams);
+      if (!this.teamsService.teams.some(t => t === team)) {
+        console.log('Trying to save team');
+        this.teamsService.addTeam(team);
+      }
+    });
   }
 
   private _filter(value: string): string[] {

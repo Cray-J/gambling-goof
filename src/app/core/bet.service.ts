@@ -3,7 +3,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
 import { betDateComparator } from '../shared/comparators';
 import { Bet } from '../shared/model/bet.model';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class BetService {

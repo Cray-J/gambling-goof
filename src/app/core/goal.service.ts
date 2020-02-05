@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Goal } from '../shared/model/goal.model';
-import { Subject, Subscription } from 'rxjs/index';
+import { Subject, Subscription } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 

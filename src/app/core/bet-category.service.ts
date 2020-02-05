@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable({providedIn: 'root'})
 export class BetCategoryService {
   public betCategories: BetCategory[] = [];
-  private betCategoriesChanged = new Subject<BetCategory[]>();
+  public betCategoriesChanged = new Subject<BetCategory[]>();
   private fbSubs: Subscription[] = [];
 
   constructor(private db: AngularFirestore) {

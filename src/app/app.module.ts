@@ -18,6 +18,7 @@ import { ChartsModule } from 'ng2-charts';
 import { BetsModule } from './bets/bets.module';
 import { NewGoalDialogComponent } from './bets/new-goal-dialog/new-goal-dialog.component';
 import { NewDayDialogComponent } from "./bets/new-day-dialog/new-day-dialog.component";
+import { InventoryPageComponent } from "./bets/inventory-page/inventory-page.component";
 
 @NgModule({
   declarations: [

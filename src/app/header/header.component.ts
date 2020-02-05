@@ -9,7 +9,7 @@ import { GoalService } from "../core/goal.service";
 import { NewDayDialogComponent } from "../bets/new-day-dialog/new-day-dialog.component";
 
 @Component({
-  selector: 'app-header',
+  selector: 'header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

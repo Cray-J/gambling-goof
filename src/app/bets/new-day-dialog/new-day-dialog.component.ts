@@ -1,14 +1,18 @@
 import { Component, Inject, } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { split } from "ts-node";
-import { Bet } from "../../shared/model/bet.model";
-import { BetService } from "../../core/bet.service";
+import { Bet } from '../../shared/model/bet.model';
+import { BetService } from '../../core/bet.service';
 import { Day } from '../../shared/model/day.model';
 import { DayService } from '../../core/day.service';
+import { $enum } from 'ts-enum-util';
+import { Bookie } from '../../shared/model/bookie.enum';
+import { Observable } from 'rxjs';
+import { TeamsService } from '../../core/teams.service';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-new-day-dialog',
+  selector: 'new-day-dialog',
   templateUrl: './new-day-dialog.component.html',
   styleUrls: ['./new-day-dialog.component.scss']
 })

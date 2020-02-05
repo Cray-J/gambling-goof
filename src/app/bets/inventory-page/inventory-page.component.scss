@@ -1,0 +1,23 @@
+div.pageContainer {
+  padding-left: 24px;
+  padding-top: 24px;
+}
+
+mat-card {
+  min-width: 500px;
+  min-height: 400px;
+
+  mat-card-title {
+    text-align: center;
+  }
+
+  mat-card-content {
+    height: 70%;
+  }
+
+  mat-card-actions {
+    button {
+      padding-bottom: 16px;
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { TeamsService } from './core/teams.service';
 
 
 @Component({
-  selector: 'app-root',
+  selector: 'root',
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {

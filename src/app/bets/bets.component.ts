@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 
 @Component({
-  selector: 'app-bets',
+  selector: 'bets',
   templateUrl: './bets.component.html'
 })
 export class BetsComponent {

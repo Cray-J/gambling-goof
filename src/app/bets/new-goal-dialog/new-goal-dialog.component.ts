@@ -33,7 +33,7 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-new-goal-dialog',
+  selector: 'new-goal-dialog',
   templateUrl: './new-goal-dialog.component.html',
   styleUrls: ['./new-goal-dialog.component.scss'],
   providers: [

@@ -1,0 +1,30 @@
+<div class="pageContainer">
+
+  <div fxLayout="row" fxLayoutGap="16px">
+    <mat-card>
+      <mat-card-title>
+        Teams
+      </mat-card-title>
+      <mat-card-content>
+        <div *ngFor="let team of teams">
+          {{team.name }} - {{team.country}}
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="end">
+        <button mat-raised-button>CHANGE</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>
+        Bet categories
+      </mat-card-title>
+      <mat-card-content>
+
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="end">
+        <button mat-raised-button>CHANGE</button>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+</div>

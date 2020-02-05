@@ -1,9 +1,12 @@
 <mat-tab-group #tabGroup>
   <mat-tab label="Singles">
-    <app-bets-overview></app-bets-overview>
+    <bets-overview></bets-overview>
   </mat-tab>
   <mat-tab label="Doubles">
-    <app-multibet-table></app-multibet-table>
+    <multibet-table></multibet-table>
+  </mat-tab>
+  <mat-tab label="Inventory">
+    <inventory-page></inventory-page>
   </mat-tab>
   <mat-tab label="Stats" [disabled]="true">
 

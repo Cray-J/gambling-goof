@@ -6,7 +6,7 @@ import { BetType } from '../../shared/model/bet-type.enum';
 import { $enum } from 'ts-enum-util';
 
 @Component({
-  selector: 'app-new-bet-dialog',
+  selector: 'new-bet-dialog',
   templateUrl: './new-bet-dialog.component.html',
   styleUrls: ['./new-bet-dialog.component.scss']
 })

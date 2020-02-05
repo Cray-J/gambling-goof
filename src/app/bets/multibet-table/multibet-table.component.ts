@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-multibet-table',
+  selector: 'multibet-table',
   template: `
     <p>
       multibet-table works!

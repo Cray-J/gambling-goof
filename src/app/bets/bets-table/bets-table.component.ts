@@ -9,7 +9,7 @@ import { $enum } from 'ts-enum-util';
 import { ToText } from '../../shared/model/to-text';
 
 @Component({
-  selector: 'app-bets-overview',
+  selector: 'bets-overview',
   templateUrl: './bets-table.component.html',
   styleUrls: ['./bets-table.component.scss']
 })

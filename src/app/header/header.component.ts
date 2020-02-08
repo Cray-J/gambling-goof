@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NewBetDialogComponent } from '../bets/new-bet-dialog/new-bet-dialog.component';
 import { Bet } from '../shared/model/bet.model';
 import { BetService } from '../core/bet.service';
 import { BetType } from '../shared/model/bet-type.enum';
 import { NewGoalDialogComponent } from '../bets/new-goal-dialog/new-goal-dialog.component';
-import { GoalService } from "../core/goal.service";
-import { NewDayDialogComponent } from "../bets/new-day-dialog/new-day-dialog.component";
+import { GoalService } from '../core/goal.service';
+import { NewDayDialogComponent } from '../bets/new-day-dialog/new-day-dialog.component';
 
 @Component({
-  selector: 'header',
+  selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

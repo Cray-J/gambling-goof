@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Bet} from '../../shared/model/bet.model';
 import {Bookie} from '../../shared/model/bookie.enum';
 import { BetType } from '../../shared/model/bet-type.enum';

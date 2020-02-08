@@ -5,7 +5,7 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-<div formArrayName="arr" *ngFor="let a of myForm.get('arr').controls; let i = index" fxLayout="column">
+<!--<div formArrayName="arr" *ngFor="let a of myForm.get('arr').controls; let i = index" fxLayout="column">
   <div [formGroupName]="i" style="margin-bottom: 10px;" fxLayout="row" fxLayoutGap="10px">
     <mat-form-field>
       <input matInput type="text" name="time" formControlName="time" placeholder="Time">
@@ -36,7 +36,7 @@
     </mat-form-field>
     <button mat-icon-button (click)="removeBet(i)"><mat-icon>clear</mat-icon></button>
   </div>
-</div>
+</div>-->
 <br>
 <!--<button mat-raised-button color="accent" type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>-->
 <button mat-raised-button color="secondary" type="button" (click)="onNoClick()" style="margin-right: 5px;">Cancel</button>

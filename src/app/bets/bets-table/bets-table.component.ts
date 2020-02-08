@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { BetService } from '../../core/bet.service';
 import { Subscription } from 'rxjs';
 import { Outcome } from '../../shared/model/outcome.enum';
@@ -7,6 +6,9 @@ import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.componen
 import { Bet } from '../../shared/model/bet.model';
 import { $enum } from 'ts-enum-util';
 import { ToText } from '../../shared/model/to-text';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'bets-overview',
@@ -14,7 +16,7 @@ import { ToText } from '../../shared/model/to-text';
   styleUrls: ['./bets-table.component.scss']
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
-  @ViewChild(MatSort, { static: false }) public sort: MatSort;
+  @ViewChild(MatSort) public sort: MatSort;
   public displayedColumns = ['date', 'match', 'selection', 'confidence', 'bookie', 'stake', 'odds', 'outcome', 'return', 'events'];
   public dataSource = new MatTableDataSource<Bet>();
   public outcomes = $enum(Outcome).getKeys();

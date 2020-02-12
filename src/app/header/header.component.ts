@@ -5,8 +5,10 @@ import { Bet } from '../shared/model/bet.model';
 import { BetService } from '../core/bet.service';
 import { BetType } from '../shared/model/bet-type.enum';
 import { NewGoalDialogComponent } from '../bets/new-goal-dialog/new-goal-dialog.component';
-import { GoalService } from "../core/goal.service";
-import { NewDayDialogComponent } from "../bets/new-day-dialog/new-day-dialog.component";
+import { GoalService } from '../core/goal.service';
+import { NewDayDialogComponent } from '../bets/new-day-dialog/new-day-dialog.component';
+import { DayService } from '../core/day.service';
+import { Day } from "../shared/model/day.model";
 
 @Component({
   selector: 'header',
@@ -19,6 +21,7 @@ export class HeaderComponent {
 
   constructor(public dialog: MatDialog,
               private betService: BetService,
+              private daysService: DayService,
               private goalService: GoalService) {
   }
 
@@ -49,8 +52,8 @@ export class HeaderComponent {
 
   openDayDialog() {
     const dialogRef = this.dialog.open(NewDayDialogComponent, {
+      disableClose: true,
       data: {
-
       }
     });
 

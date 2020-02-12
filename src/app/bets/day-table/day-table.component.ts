@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DayService } from '../../core/day.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Day } from '../../shared/model/day.model';
@@ -14,22 +14,31 @@ import { BetType } from '../../shared/model/bet-type.enum';
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
       state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-berzier(0.4, 0.0, 0.2, 1'))
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
     ])
   ]
 })
-export class DayTableComponent {
+export class DayTableComponent implements OnInit {
   public displayedColumns = ['date', 'bets', 'result'];
   public subRows = ['time', 'match', 'selection', 'stake', 'odds', 'return'];
   dataSource = ELEMENT_DATA;
   expandedElement: Day | null;
+  public days: Day[];
 
   constructor(private dayService: DayService) {
+  }
+
+  public ngOnInit(): void {
+    console.log('oninit');
+    this.dayService.daysChanged.subscribe(result => {
+      console.log('got days: ', result);
+      this.days = result;
+    });
   }
 }
 
 const ELEMENT_DATA: Day[] = [
-  new Day('id1', new Date(2020, 2, 4), [
+  /**new Day('id1', new Date(2020, 2, 4), [
     {
       id: '10',
       date: new Date(2020, 2, 4, 14, 30),
@@ -72,5 +81,5 @@ const ELEMENT_DATA: Day[] = [
       betType: BetType.single
     }
   ], -100
-  )
+  )**/
 ];

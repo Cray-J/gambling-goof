@@ -1,5 +1,5 @@
-import { Component, Inject, } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, Inject, OnInit, } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Bet } from '../../shared/model/bet.model';
 import { BetService } from '../../core/bet.service';
@@ -16,30 +16,33 @@ import { map, startWith } from 'rxjs/operators';
   templateUrl: './new-day-dialog.component.html',
   styleUrls: ['./new-day-dialog.component.scss']
 })
-export class NewDayDialogComponent {
+export class NewDayDialogComponent implements OnInit {
 
   date = new FormControl(new Date());
   myForm: FormGroup;
   arr: FormArray;
   public bookies = $enum(Bookie).getKeys();
   filteredOptions: Observable<string[]>[] = [];
+  public days: Day[];
 
   constructor(public dialogRef: MatDialogRef<NewDayDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private betsService: BetService,
-              private dayService: DayService,
+              public dayService: DayService,
               private teamsService: TeamsService,
               private fb: FormBuilder) {
     this.createFormGroup();
   }
 
+  public ngOnInit(): void {
+    console.log('dialog init');
+    this.dayService.daysChanged.subscribe(days => {
+      console.log(days);
+      this.days = days;
+    });
+  }
+
   createFormGroup() {
-   /* return new FormGroup({
-      month: new FormControl(),
-      income: new FormControl(),
-      totalBets: new FormControl(),
-      roi: new FormControl()
-    });*/
     this.myForm = this.fb.group({
       date: this.fb.control(new Date()),
       arr: this.fb.array([])
@@ -60,7 +63,8 @@ export class NewDayDialogComponent {
     group.patchValue({
       stake: 100
     });
-    this.filteredOptions.push(group.get('bookie').valueChanges
+    this.filteredOptions.
+    push(group.get('bookie').valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
@@ -68,12 +72,16 @@ export class NewDayDialogComponent {
     return group;
   }
 
-  getDateField() {
+  getDateField(): AbstractControl {
     return this.myForm.get('date');
   }
 
   getFormArray(): FormArray {
     return this.myForm.get('arr') as FormArray;
+  }
+
+  getFormArrayControls(): AbstractControl[] {
+    return (this.myForm.get('arr') as FormArray).controls;
   }
 
   addItem() {
@@ -84,12 +92,20 @@ export class NewDayDialogComponent {
     console.log(this.myForm.value);
     const time: Date = this.myForm.value['date'];
     console.log(time);
-    const day = time.getDay() < 10 ? `0${time.getDay()}` : time.getDay();
-    const month = time.getMonth() < 10 ? `0${time.getMonth()}` : time.getMonth();
+    const day = time.getDate() < 10 ? `0${time.getDate()}` : time.getDate();
+    const tempMonth = 1 + time.getMonth();
+    const month = tempMonth < 10 ? `0${tempMonth}` : tempMonth;
     const year = time.getFullYear();
-    const id = `${year}${month}${day}`;
+    const newDay: Day = {
+      id: `${year}${month}${day}`,
+      bets: [],
+      date: time,
+      summary: '',
+      result: 0
+    };
+    console.log('ID: ', newDay.id);
+
     const bets = this.myForm.value['arr'];
-    const newDay = new Day(id, time, []);
     console.log('bets: ', bets, newDay);
     bets.forEach(val => {
       if (val.home !== '') {
@@ -106,13 +122,23 @@ export class NewDayDialogComponent {
         console.log(time, splitTime);
         time.setHours(+splitTime[0], +splitTime[1]);
         bet['date'] = time;
-        console.log(bet['date']);
         bet['id'] = '' + Date.now();
         newDay.bets.push(bet as Bet);
-        this.betsService.addBet(bet);
+       // this.betsService.addBet(bet);
       }
     });
-    this.dayService.save(newDay);
+    const existing = this.days.find(d => d.id === newDay.id);
+
+    console.log(newDay);
+    if (existing) {
+      console.log('found day');
+      existing.bets.push(...newDay.bets);
+      this.dayService.save(existing);
+    } else {
+      console.log('new day');
+      this.dayService.save(newDay);
+    }
+
     this.dialogRef.close();
   }
 
@@ -127,9 +153,7 @@ export class NewDayDialogComponent {
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.bookies.filter(option => option.toLowerCase().includes(filterValue));
+    return this.bookies.filter(option => option.toLowerCase().includes(value.toLowerCase()));
   }
 
   onNoClick(): void {

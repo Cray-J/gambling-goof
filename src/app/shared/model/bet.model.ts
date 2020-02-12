@@ -4,8 +4,6 @@ import { BetType } from './bet-type.enum';
 
 export class Bet {
   id: string;
-  date: Date;
-  match: string;
   selection: string;
   stake: number;
   odds: number;

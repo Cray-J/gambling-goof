@@ -43,3 +43,33 @@
 <!--<button mat-raised-button type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>-->
 <button mat-raised-button color="primary" (click)="addItem()" type="submit">Submit</button>
 </form>
+
+<!--
+
+<form [formGroup]="myForm">
+  <div formArrayName="companies">
+    <div *ngFor="let comp of myForm.get('companies').controls; let i=index">
+    <h3>COMPANY {{i+1}}: </h3>
+    <div [formGroupName]="i">
+      <input formControlName="company" />
+      <button (click)="deleteCompany(i)">
+         Delete Company
+      </button>
+      <div formArrayName="projects">
+        <div *ngFor="let project of comp.get('projects').controls; let j=index">
+          <h4>PROJECT {{j+1}}</h4>
+          <div [formGroupName]="j">
+            <input formControlName="projectName" />
+            <button (click)="deleteProject(comp.controls.projects, j)">
+              Delete Project
+            </button>
+          </div>
+        </div>
+        <button (click)="addNewProject(comp.controls.projects)">
+          Add new Project
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+-->

@@ -1,9 +1,9 @@
-import { Bet } from './bet.model';
+import { Match } from './match.model';
 
 export class Day {
   id: string;
   date: Date;
-  bets: Bet[];
+  matches: Match[];
   summary: string;
   result: number;
   verfied: boolean;

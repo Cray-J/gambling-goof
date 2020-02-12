@@ -12,12 +12,13 @@ import { TeamsService } from '../../core/teams.service';
 import { map, startWith } from 'rxjs/operators';
 
 @Component({
-  selector: 'new-day-dialog',
+  selector: 'app-new-day-dialog',
   templateUrl: './new-day-dialog.component.html',
   styleUrls: ['./new-day-dialog.component.scss']
 })
 export class NewDayDialogComponent implements OnInit {
-
+ // https://stackblitz.com/edit/angular-dffny7?file=app/app.component.html
+  // https://stackoverflow.com/questions/48436145/angular-reactive-forms-with-nested-form-arrays/48527939
   date = new FormControl(new Date());
   myForm: FormGroup;
   arr: FormArray;
@@ -45,7 +46,7 @@ export class NewDayDialogComponent implements OnInit {
   createFormGroup() {
     this.myForm = this.fb.group({
       date: this.fb.control(new Date()),
-      arr: this.fb.array([])
+      matches: this.fb.array([])
     });
     this.addItem();
   }
@@ -98,12 +99,18 @@ export class NewDayDialogComponent implements OnInit {
     const year = time.getFullYear();
     const newDay: Day = {
       id: `${year}${month}${day}`,
-      bets: [],
+      matches: [],
       date: time,
       summary: '',
-      result: 0
+      result: 0,
+      verfied: false
     };
     console.log('ID: ', newDay.id);
+
+    const matches = this.myForm.value['matches'];
+    matches.forEach(match => {
+
+    });
 
     const bets = this.myForm.value['arr'];
     console.log('bets: ', bets, newDay);
@@ -132,7 +139,7 @@ export class NewDayDialogComponent implements OnInit {
     console.log(newDay);
     if (existing) {
       console.log('found day');
-      existing.bets.push(...newDay.bets);
+      existing.matches.push(...newDay.matches);
       this.dayService.save(existing);
     } else {
       console.log('new day');
@@ -140,6 +147,64 @@ export class NewDayDialogComponent implements OnInit {
     }
 
     this.dialogRef.close();
+  }
+
+  public addNewMatch() {
+    const control = <FormArray>this.myForm.controls.matches;
+    control.push(
+      this.fb.group({
+        time: [''],
+        home: [''],
+        away: [''],
+        bets: this.fb.array([])
+      })
+    );
+  }
+
+  public deleteMatch(index: number) {
+    const control = <FormArray>this.myForm.controls.matches;
+    control.removeAt(index);
+  }
+
+  public setMatches() {
+    const control = <FormArray>this.myForm.controls.matches;
+    this.data.matches.forEach(x => {
+      control.push(this.fb.group({
+        matches: x.matches
+      }));
+    });
+  }
+
+  public setBets(x) {
+    const arr = new FormArray([]);
+    x.bets.forEach(y => {
+      arr.push(this.fb.group({
+        selection: y.selection
+      }));
+    });
+  }
+
+  public addNewBet(control) {
+    const group = this.fb.group({
+        bookie: [''],
+        selection: [''],
+        odds: [''],
+        stake: ['']
+      });
+    group.patchValue({
+      stake: 100
+    });
+    control.push(group);
+   /* this
+      .filteredOptions
+      .push(group.get('bookie').valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      ));*/
+  }
+
+  public deleteProject(control, index) {
+    control.removeAt(index);
   }
 
   private updateTeams(home, away) {

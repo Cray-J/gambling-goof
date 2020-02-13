@@ -5,7 +5,7 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-<div formArrayName="arr" *ngFor="let a of getFormArrayControls(); let i = index" fxLayout="column">
+<div formArrayName="matches" *ngFor="let match of getMatchesControls(); let i = index" fxLayout="column">
   <div [formGroupName]="i" style="margin-bottom: 10px;" fxLayout="row" fxLayoutGap="10px">
     <mat-form-field>
       <input matInput type="text" name="time" formControlName="time" placeholder="Time">
@@ -16,32 +16,39 @@
     <mat-form-field>
       <input matInput type="text" name="away" formControlName="away" placeholder="Away">
     </mat-form-field>
+    <button mat-icon-button color="primary" (click)="addNewBet(match)" type="submit"><mat-icon>add</mat-icon></button>
 
-    <mat-form-field>
-      <input matInput type="text" name="bookie" formControlName="bookie" placeholder="Bookie" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let bookie of filteredOptions[i] | async" [value]="bookie">
-          {{bookie}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" name="selection" formControlName="selection" placeholder="Selection">
-    </mat-form-field>
-    <mat-form-field class="odds">
-      <input matInput type="number" name="odds" formControlName="odds" placeholder="Odds">
-    </mat-form-field>
-    <mat-form-field class="stake">
-      <input matInput type="number" name="stake" formControlName="stake" placeholder="Stake">
-    </mat-form-field>
-    <button mat-icon-button (click)="removeBet(i)"><mat-icon>clear</mat-icon></button>
+
+
+    <div forArrayName="bets">
+      <div *ngFor="let bet of getBetsControls(match); let j=index">
+        <mat-form-field>
+          <input matInput type="text" name="bookie" formControlName="bookie" placeholder="Bookie" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let bookie of filteredOptions[i] | async" [value]="bookie">
+              {{bookie}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" name="selection" formControlName="selection" placeholder="Selection">
+        </mat-form-field>
+        <mat-form-field class="odds">
+          <input matInput type="number" name="odds" formControlName="odds" placeholder="Odds">
+        </mat-form-field>
+        <mat-form-field class="stake">
+          <input matInput type="number" name="stake" formControlName="stake" placeholder="Stake">
+        </mat-form-field>
+        <button mat-icon-button (click)="removeBet(i)"><mat-icon>clear</mat-icon></button>
+      </div>
+    </div>
   </div>
 </div>
 <br>
 <!--<button mat-raised-button color="accent" type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>-->
 <button mat-raised-button color="secondary" type="button" (click)="onNoClick()" style="margin-right: 5px;">Cancel</button>
 <!--<button mat-raised-button type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>-->
-<button mat-raised-button color="primary" (click)="addItem()" type="submit">Submit</button>
+<button mat-raised-button color="primary" (click)="addNewMatch()" type="submit">Submit</button>
 </form>
 
 <!--

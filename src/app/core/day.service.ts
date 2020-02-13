@@ -19,7 +19,7 @@ export class DayService {
     this.db.collection('days').doc(day.id).set(day);
     const index = this.days.find(p => p.id === day.id);
     if (index) {
-      index.bets.push(...day.bets);
+      // index.bets.push(...day.bets);
     } else {
       this.days.push(day);
     }

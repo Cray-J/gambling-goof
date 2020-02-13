@@ -48,7 +48,7 @@ export class NewDayDialogComponent implements OnInit {
       date: this.fb.control(new Date()),
       matches: this.fb.array([])
     });
-    this.addItem();
+    this.addNewMatch();
   }
 
   createItem() {
@@ -81,12 +81,12 @@ export class NewDayDialogComponent implements OnInit {
     return this.myForm.get('arr') as FormArray;
   }
 
-  getFormArrayControls(): AbstractControl[] {
-    return (this.myForm.get('arr') as FormArray).controls;
+  getMatchesControls(): AbstractControl[] {
+    return (this.myForm.get('matches') as FormArray).controls;
   }
 
-  addItem() {
-    this.getFormArray().push(this.createItem());
+  getBetsControls(form) {
+    return (form.get('bets') as FormArray).controls;
   }
 
   onSubmit() {
@@ -130,7 +130,7 @@ export class NewDayDialogComponent implements OnInit {
         time.setHours(+splitTime[0], +splitTime[1]);
         bet['date'] = time;
         bet['id'] = '' + Date.now();
-        newDay.bets.push(bet as Bet);
+        // newDay.bets.push(bet as Bet);
        // this.betsService.addBet(bet);
       }
     });
@@ -194,7 +194,8 @@ export class NewDayDialogComponent implements OnInit {
     group.patchValue({
       stake: 100
     });
-    control.push(group);
+    control.get('bets').push(group);
+    console.log(control);
    /* this
       .filteredOptions
       .push(group.get('bookie').valueChanges.pipe(
@@ -230,7 +231,7 @@ export class NewDayDialogComponent implements OnInit {
     const arr = this.myForm.get('arr') as FormArray;
     console.log(i, arr.length);
     if (i === arr.length - 1) {
-      this.addItem();
+      // this.addItem();
     }
   }
 

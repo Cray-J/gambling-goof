@@ -30,3 +30,44 @@ div.cdk-overlay-container ::ng-deep #cdk-overlay-0 {
 h1 {
   horiz-align: center;
 }
+
+.Xs, .Ys, .Zs, p{
+  margin: 10px;
+}
+
+input{
+  margin: 10px;
+}
+
+input[type="button"], p{
+  margin-top: 0px;
+}
+
+
+.Xs{
+  border: red solid 1px;
+  background-color: #ff7f7f;
+}
+
+.Ys{
+  border: green solid 1px;
+  background-color: #7fbf7f;
+}
+
+.Zs{
+  border: blue solid 1px;
+  background-color: #7f7fff;
+}
+
+input[value="Add X"]{
+  background-color: #ff7f7f;
+}
+
+input[value="Add Y"]{
+  background-color: #7fbf7f;
+}
+
+input[value="Add Z"]{
+  background-color: #7f7fff;
+}
+

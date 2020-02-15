@@ -10,6 +10,8 @@ import { Bookie } from '../../shared/model/bookie.enum';
 import { Observable } from 'rxjs';
 import { TeamsService } from '../../core/teams.service';
 import { map, startWith } from 'rxjs/operators';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-new-day-dialog',
@@ -32,212 +34,169 @@ export class NewDayDialogComponent implements OnInit {
               public dayService: DayService,
               private teamsService: TeamsService,
               private fb: FormBuilder) {
-    this.createFormGroup();
+    // this.createFormGroup();
   }
 
-  public ngOnInit(): void {
-    console.log('dialog init');
-    this.dayService.daysChanged.subscribe(days => {
-      console.log(days);
-      this.days = days;
+  form: FormGroup;
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      'Xs': this.fb.array([
+        this.initX()
+      ])
+    });
+    this.form.valueChanges.subscribe(data => this.validateForm());
+    this.validateForm();
+  }
+
+  initX() {
+    return this.fb.group({
+      //  ---------------------forms fields on x level ------------------------
+      'X': ['X', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      // ---------------------------------------------------------------------
+      'Ys': this.fb.array([
+        this.initY()
+      ])
     });
   }
 
-  createFormGroup() {
-    this.myForm = this.fb.group({
-      date: this.fb.control(new Date()),
-      matches: this.fb.array([])
+  initY() {
+    return this.fb.group({
+      //  ---------------------forms fields on y level ------------------------
+      'Y1': ['Y1', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      'Y2': ['Y2', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      // ---------------------------------------------------------------------
     });
-    this.addNewMatch();
   }
 
-  createItem() {
-    const group = this.fb.group({
-      time: [''],
-      home: [''],
-      away: [''],
-      bookie: [''],
-      selection: [''],
-      odds: [''],
-      stake: ['']
-    });
-    group.patchValue({
-      stake: 100
-    });
-    this.filteredOptions.
-    push(group.get('bookie').valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      ));
-    return group;
+  addX() {
+    const control = <FormArray>this.form.controls['Xs'];
+    control.push(this.initX());
   }
 
-  getDateField(): AbstractControl {
-    return this.myForm.get('date');
+
+  addY(ix) {
+    const control = (<FormArray>this.form.controls['Xs']).at(ix).get('Ys') as FormArray;
+    control.push(this.initY());
   }
 
-  getFormArray(): FormArray {
-    return this.myForm.get('arr') as FormArray;
+  formErrors = {
+    Xs: this.XsErrors()
+  };
+
+
+  XsErrors() {
+    return [{
+      //  ---------------------forms errors on x level ------------------------
+      X: '',
+
+      // ---------------------------------------------------------------------
+      'Ys': this.YsErrors()
+
+    }]
+
   }
 
-  getMatchesControls(): AbstractControl[] {
-    return (this.myForm.get('matches') as FormArray).controls;
+  YsErrors() {
+    return [{
+      //  ---------------------forms errors on y level ------------------------
+      Y1: '',
+      Y2: ''
+      // ----------------------------------------------------------------------
+    }];
   }
 
-  getBetsControls(form) {
-    return (form.get('bets') as FormArray).controls;
-  }
 
-  onSubmit() {
-    console.log(this.myForm.value);
-    const time: Date = this.myForm.value['date'];
-    console.log(time);
-    const day = time.getDate() < 10 ? `0${time.getDate()}` : time.getDate();
-    const tempMonth = 1 + time.getMonth();
-    const month = tempMonth < 10 ? `0${tempMonth}` : tempMonth;
-    const year = time.getFullYear();
-    const newDay: Day = {
-      id: `${year}${month}${day}`,
-      matches: [],
-      date: time,
-      summary: '',
-      result: 0,
-      verfied: false
-    };
-    console.log('ID: ', newDay.id);
+  validationMessages = {
+    Xs: {
+      X: {
+        required: 'X is required.',
+        pattern: 'X must be 3 characters long.'
 
-    const matches = this.myForm.value['matches'];
-    matches.forEach(match => {
-
-    });
-
-    const bets = this.myForm.value['arr'];
-    console.log('bets: ', bets, newDay);
-    bets.forEach(val => {
-      if (val.home !== '') {
-        const bet = {};
-        this.updateTeams(val.home, val.away);
-        bet['match'] = val.home + ' v ' + val.away;
-        bet['selection'] = val.selection;
-        bet['stake'] = val.stake;
-        bet['odds'] = val.odds;
-        bet['bookie'] = val.bookie;
-
-        const firstTime = val.time;
-        const splitTime = firstTime.split(':');
-        console.log(time, splitTime);
-        time.setHours(+splitTime[0], +splitTime[1]);
-        bet['date'] = time;
-        bet['id'] = '' + Date.now();
-        // newDay.bets.push(bet as Bet);
-       // this.betsService.addBet(bet);
+      },
+      Ys: {
+        Y1: {
+          required: 'Y1 is required.',
+          pattern: 'Y1 must be 3 characters long.'
+        },
+        Y2: {
+          required: 'Y2 is required.',
+          pattern: 'Y2 must be 3 characters long.'
+        }
       }
-    });
-    const existing = this.days.find(d => d.id === newDay.id);
-
-    console.log(newDay);
-    if (existing) {
-      console.log('found day');
-      existing.matches.push(...newDay.matches);
-      this.dayService.save(existing);
-    } else {
-      console.log('new day');
-      this.dayService.save(newDay);
     }
+  };
 
-    this.dialogRef.close();
+  // form validation
+  validateForm() {
+    // console.log('validateForm');
+    // for (let field in this.formErrors) {
+    //   this.formErrors[field] = '';
+    //   let input = this.register_readers.get(field);
+    //   if (input.invalid && input.dirty) {
+    //     for (let error in input.errors) {
+    //       this.formErrors[field] = this.validationMessages[field][error];
+    //     }
+    //   }
+    // }
+    this.validateXs();
   }
-
-  public addNewMatch() {
-    const control = <FormArray>this.myForm.controls.matches;
-    control.push(
-      this.fb.group({
-        time: [''],
-        home: [''],
-        away: [''],
-        bets: this.fb.array([])
-      })
-    );
-  }
-
-  public deleteMatch(index: number) {
-    const control = <FormArray>this.myForm.controls.matches;
-    control.removeAt(index);
-  }
-
-  public setMatches() {
-    const control = <FormArray>this.myForm.controls.matches;
-    this.data.matches.forEach(x => {
-      control.push(this.fb.group({
-        matches: x.matches
-      }));
-    });
-  }
-
-  public setBets(x) {
-    const arr = new FormArray([]);
-    x.bets.forEach(y => {
-      arr.push(this.fb.group({
-        selection: y.selection
-      }));
-    });
-  }
-
-  public addNewBet(control) {
-    const group = this.fb.group({
-        bookie: [''],
-        selection: [''],
-        odds: [''],
-        stake: ['']
+  validateXs() {
+    let XsA = <FormArray>this.form['controls'].Xs;
+    console.log('validateXs');
+    // console.log(XsA.value);
+    this.formErrors.Xs = [];
+    let x = 1;
+    while (x <= XsA.length) {
+      this.formErrors.Xs.push({
+        X: '',
+        Ys: [{
+          Y1: '',
+          Y2: ''
+        }]
       });
-    group.patchValue({
-      stake: 100
-    });
-    control.get('bets').push(group);
-    console.log(control);
-   /* this
-      .filteredOptions
-      .push(group.get('bookie').valueChanges.pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      ));*/
-  }
-
-  public deleteProject(control, index) {
-    control.removeAt(index);
-  }
-
-  private updateTeams(home, away) {
-    [home, away].forEach(team => {
-      console.log(team, this.teamsService.teams);
-      if (!this.teamsService.teams.some(t => t === team)) {
-        console.log('Trying to save team');
-        this.teamsService.addTeam(team);
+      let X = <FormGroup>XsA.at(x - 1);
+      console.log('X--->');
+      console.log(X.value);
+      for (let field in X.controls) {
+        let input = X.get(field);
+        console.log('field--->');
+        console.log(field);
+        if (input.invalid && input.dirty) {
+          for (let error in input.errors) {
+            this.formErrors.Xs[x - 1][field] = this.validationMessages.Xs[field][error];
+          }
+        }
       }
-    });
-  }
-
-  private _filter(value: string): string[] {
-    return this.bookies.filter(option => option.toLowerCase().includes(value.toLowerCase()));
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  addNew(i) {
-    console.log(i);
-    const arr = this.myForm.get('arr') as FormArray;
-    console.log(i, arr.length);
-    if (i === arr.length - 1) {
-      // this.addItem();
+      this.validateYs(x);
+      x++;
     }
+
   }
 
-  removeBet(index: number) {
-    const arr = this.myForm.get('arr') as FormArray;
-    arr.removeAt(index);
+  validateYs(x) {
+    console.log('validateYs');
+    let YsA = (<FormArray>this.form.controls['Xs']).at(x - 1).get('Ys') as FormArray;
+    this.formErrors.Xs[x - 1].Ys = [];
+    let y = 1;
+    while (y <= YsA.length) {
+      this.formErrors.Xs[x - 1].Ys.push({
+        Y1: '',
+        Y2: ''
+      });
+      let Y = <FormGroup>YsA.at(y - 1);
+      for (let field in Y.controls) {
+        let input = Y.get(field);
+        if (input.invalid && input.dirty) {
+          for (let error in input.errors) {
+            this.formErrors.Xs[x - 1].Ys[y - 1][field] = this.validationMessages.Xs.Ys[field][error];
+
+          }
+
+        }
+      }
+      y++;
+    }
   }
 }
 

@@ -1,29 +1,63 @@
-<form [formGroup]="form">
+<form [formGroup]="form" id="form1" (ngSubmit)="onSubmit()">
+  <h1 fxLayoutAlign="space-around center">Bets for a day</h1>
+  <mat-form-field>
+    <input [formControl]="getDateField()" [matDatepicker]="picker" matInput placeholder="Choose a date">
+    <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <button (click)="addMatch()" color="primary" mat-raised-button type="button">Add new Match</button>
+
+
+
   <!-- X -->
-  <div formArrayName="Xs">
-    <div *ngFor="let X of form['controls'].Xs['controls']; let ix=index">
-      <div formGroupName="{{ix}}" class="Xs">
-        <input type="text" formControlName="X">
-        <p>{{ formErrors.Xs[ix].X }}</p>
-        <!-- Y -->
-        <div formArrayName="Ys">
-          <div *ngFor="let Y of X['controls'].Ys['controls']; let iy=index">
-            <div formGroupName="{{iy}}" class="Ys">
-              <input type="text" formControlName="Y1">
-              <p> {{ formErrors.Xs[ix].Ys[iy].Y1 }}</p>
-              <input type="text" formControlName="Y2">
-              <p>{{ formErrors.Xs[ix].Ys[iy].Y2 }}</p>
+  <div formArrayName="matches">
+    <div *ngFor="let match of form['controls'].matches['controls']; let ix=index" fxLayout="row"
+         [class.evenRow]="isEvenNumber(ix)"
+         [class.oddRow]="!isEvenNumber(ix)">
+      <div formGroupName="{{ix}}" fxLayout="column" fxLayoutGap="10px" style="margin-bottom: 10px;" class="matches">
+        <div fxLayout="row">
+          <mat-form-field>
+            <input matInput type="time" formControlName="time" placeholder="Time">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="text" formControlName="home" placeholder="Home">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="text" formControlName="away" placeholder="Away">
+          </mat-form-field>
+          <button (click)="addBet(ix)" color="primary" mat-icon-button type="button">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
+
+        <div formArrayName="bets">
+          <div *ngFor="let bet of match['controls'].bets['controls']; let iy=index">
+            <div formGroupName="{{iy}}" class="bets">
+              <mat-form-field>
+                <input matInput type="text" name="bookie" formControlName="bookie" placeholder="Bookie">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="text" name="selection" formControlName="selection" placeholder="Selection">
+              </mat-form-field>
+              <mat-form-field class="odds">
+                <input matInput type="number" name="odds" formControlName="odds" placeholder="Odds">
+              </mat-form-field>
+              <mat-form-field class="stake">
+                <input matInput type="number" name="stake" formControlName="stake" placeholder="Stake">
+              </mat-form-field>
+              <button mat-icon-button (click)="removeBet(match, iy)"><mat-icon>clear</mat-icon></button>
             </div>
           </div>
-          <input type="button" (click)="addY(ix)" value="Add Y">
         </div>
-        <!-- Y End-->
       </div>
     </div>
-    <input type="button" (click)="addX()" value="Add X">
   </div>
-  <!-- X End -->
+
+  <button mat-raised-button color="secondary" type="button" (click)="onNoClick()" style="margin-right: 5px;">Cancel</button>
+  <!--<button mat-raised-button type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>-->
+  <button mat-raised-button color="primary" (click)="addItem()" type="submit">Submit</button>
   <form>
 
-    <h5>Field Values</h5>
-    <pre style="font-size:15px">{{ form.value | json }}</pre>
+<!--    <h5>Field Values</h5>-->
+<!--    <pre style="font-size:15px">{{ form.value | json }}</pre>-->

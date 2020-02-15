@@ -41,57 +41,83 @@ export class NewDayDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      'Xs': this.fb.array([
-        this.initX()
+      date: this.fb.control(new Date()),
+      matches: this.fb.array([
+        this.initMatch()
       ])
     });
     this.form.valueChanges.subscribe(data => this.validateForm());
     this.validateForm();
   }
 
-  initX() {
+  public getDateField(): AbstractControl {
+    return this.form.get('date');
+  }
+
+  public removeBet(match: AbstractControl, index: number) {
+    (match.controls.bets as FormArray).removeAt(index);
+  }
+
+  public onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  public onSubmit() {
+    console.log(this.form.getRawValue());
+    this.dialogRef.close();
+  }
+
+  public isEvenNumber(index: number): boolean {
+    return index % 2 === 0;
+  }
+
+  initMatch() {
     return this.fb.group({
       //  ---------------------forms fields on x level ------------------------
-      'X': ['X', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      'time': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      'home': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      'away': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
       // ---------------------------------------------------------------------
-      'Ys': this.fb.array([
-        this.initY()
+      'bets': this.fb.array([
+        this.initBet()
       ])
     });
   }
 
-  initY() {
+  initBet() {
     return this.fb.group({
       //  ---------------------forms fields on y level ------------------------
-      'Y1': ['Y1', [Validators.required, Validators.pattern('[0-9]{3}')]],
-      'Y2': ['Y2', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      bookie: [''],
+      selection: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      odds: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      stake: ['']
       // ---------------------------------------------------------------------
     });
   }
 
-  addX() {
-    const control = <FormArray>this.form.controls['Xs'];
-    control.push(this.initX());
+  addMatch() {
+    const control = <FormArray>this.form.controls['matches'];
+    control.push(this.initMatch());
   }
 
 
-  addY(ix) {
-    const control = (<FormArray>this.form.controls['Xs']).at(ix).get('Ys') as FormArray;
-    control.push(this.initY());
+  addBet(ix) {
+    const control = (<FormArray>this.form.controls['matches']).at(ix).get('bets') as FormArray;
+    control.push(this.initBet());
   }
 
   formErrors = {
-    Xs: this.XsErrors()
+    matches: this.matchesErrors()
   };
 
 
-  XsErrors() {
+  matchesErrors() {
     return [{
       //  ---------------------forms errors on x level ------------------------
       X: '',
 
       // ---------------------------------------------------------------------
-      'Ys': this.YsErrors()
+      'bets': this.YsErrors()
 
     }]
 
@@ -107,25 +133,25 @@ export class NewDayDialogComponent implements OnInit {
   }
 
 
-  validationMessages = {
-    Xs: {
-      X: {
-        required: 'X is required.',
-        pattern: 'X must be 3 characters long.'
-
-      },
-      Ys: {
-        Y1: {
-          required: 'Y1 is required.',
-          pattern: 'Y1 must be 3 characters long.'
-        },
-        Y2: {
-          required: 'Y2 is required.',
-          pattern: 'Y2 must be 3 characters long.'
-        }
-      }
-    }
-  };
+  // validationMessages = {
+  //   matches: {
+  //     X: {
+  //       required: 'X is required.',
+  //       pattern: 'X must be 3 characters long.'
+  //
+  //     },
+  //     Ys: {
+  //       Y1: {
+  //         required: 'Y1 is required.',
+  //         pattern: 'Y1 must be 3 characters long.'
+  //       },
+  //       Y2: {
+  //         required: 'Y2 is required.',
+  //         pattern: 'Y2 must be 3 characters long.'
+  //       }
+  //     }
+  //   }
+  // };
 
   // form validation
   validateForm() {
@@ -139,64 +165,64 @@ export class NewDayDialogComponent implements OnInit {
     //     }
     //   }
     // }
-    this.validateXs();
+    // this.validateMatches();
   }
-  validateXs() {
-    let XsA = <FormArray>this.form['controls'].Xs;
-    console.log('validateXs');
-    // console.log(XsA.value);
-    this.formErrors.Xs = [];
-    let x = 1;
-    while (x <= XsA.length) {
-      this.formErrors.Xs.push({
-        X: '',
-        Ys: [{
-          Y1: '',
-          Y2: ''
-        }]
-      });
-      let X = <FormGroup>XsA.at(x - 1);
-      console.log('X--->');
-      console.log(X.value);
-      for (let field in X.controls) {
-        let input = X.get(field);
-        console.log('field--->');
-        console.log(field);
-        if (input.invalid && input.dirty) {
-          for (let error in input.errors) {
-            this.formErrors.Xs[x - 1][field] = this.validationMessages.Xs[field][error];
-          }
-        }
-      }
-      this.validateYs(x);
-      x++;
-    }
+  // validateMatches() {
+  //   let XsA = <FormArray>this.form['controls'].matches;
+  //   console.log('validateMatches');
+  //   // console.log(XsA.value);
+  //   this.formErrors.matches = [];
+  //   let x = 1;
+  //   while (x <= XsA.length) {
+  //     this.formErrors.matches.push({
+  //       X: '',
+  //       Ys: [{
+  //         Y1: '',
+  //         Y2: ''
+  //       }]
+  //     });
+  //     let X = <FormGroup>XsA.at(x - 1);
+  //     console.log('X--->');
+  //     console.log(X.value);
+  //     for (let field in X.controls) {
+  //       let input = X.get(field);
+  //       console.log('field--->');
+  //       console.log(field);
+  //       if (input.invalid && input.dirty) {
+  //         for (let error in input.errors) {
+  //           this.formErrors.matches[x - 1][field] = this.validationMessages.matches[field][error];
+  //         }
+  //       }
+  //     }
+  //     this.validateYs(x);
+  //     x++;
+  //   }
+  //
+  // }
 
-  }
-
-  validateYs(x) {
-    console.log('validateYs');
-    let YsA = (<FormArray>this.form.controls['Xs']).at(x - 1).get('Ys') as FormArray;
-    this.formErrors.Xs[x - 1].Ys = [];
-    let y = 1;
-    while (y <= YsA.length) {
-      this.formErrors.Xs[x - 1].Ys.push({
-        Y1: '',
-        Y2: ''
-      });
-      let Y = <FormGroup>YsA.at(y - 1);
-      for (let field in Y.controls) {
-        let input = Y.get(field);
-        if (input.invalid && input.dirty) {
-          for (let error in input.errors) {
-            this.formErrors.Xs[x - 1].Ys[y - 1][field] = this.validationMessages.Xs.Ys[field][error];
-
-          }
-
-        }
-      }
-      y++;
-    }
-  }
+  // validateYs(x) {
+  //   console.log('validateYs');
+  //   let YsA = (<FormArray>this.form.controls['Xs']).at(x - 1).get('Ys') as FormArray;
+  //   this.formErrors.Xs[x - 1].Ys = [];
+  //   let y = 1;
+  //   while (y <= YsA.length) {
+  //     this.formErrors.Xs[x - 1].Ys.push({
+  //       Y1: '',
+  //       Y2: ''
+  //     });
+  //     let Y = <FormGroup>YsA.at(y - 1);
+  //     for (let field in Y.controls) {
+  //       let input = Y.get(field);
+  //       if (input.invalid && input.dirty) {
+  //         for (let error in input.errors) {
+  //           this.formErrors.Xs[x - 1].Ys[y - 1][field] = this.validationMessages.Xs.Ys[field][error];
+  //
+  //         }
+  //
+  //       }
+  //     }
+  //     y++;
+  //   }
+  // }
 }
 

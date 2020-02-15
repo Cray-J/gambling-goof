@@ -27,6 +27,10 @@ div.cdk-overlay-container ::ng-deep #cdk-overlay-0 {
   max-width: calc(100vw)!important;
 }
 
+//form {
+//  overflow: scroll;
+//}
+
 h1 {
   horiz-align: center;
 }
@@ -34,15 +38,33 @@ h1 {
 .Xs, .Ys, .Zs, p{
   margin: 10px;
 }
-
-input{
-  margin: 10px;
-}
+//
+//input{
+//  margin: 10px;
+//}
 
 input[type="button"], p{
   margin-top: 0px;
 }
 
+mat-form-field {
+  padding-right: 10px;
+  font-size: 12px;
+}
+
+#form1{
+  height: calc(90vh);
+  overflow-y:auto;
+  width: calc(60vw);
+}
+
+.evenRow {
+  background-color: #ccffcc;
+}
+
+.oddRow {
+  background-color: #cce6ff;
+}
 
 .Xs{
   border: red solid 1px;

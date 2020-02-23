@@ -7,8 +7,6 @@
   </mat-form-field>
   <button (click)="addMatch()" color="primary" mat-raised-button type="button">Add new Match</button>
 
-
-
   <!-- X -->
   <div formArrayName="matches">
     <div *ngFor="let match of form['controls'].matches['controls']; let ix=index" fxLayout="row"
@@ -56,7 +54,7 @@
 
   <button mat-raised-button color="secondary" type="button" (click)="onNoClick()" style="margin-right: 5px;">Cancel</button>
   <!--<button mat-raised-button type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>-->
-  <button mat-raised-button color="primary" (click)="addItem()" type="submit">Submit</button>
+  <button mat-raised-button color="primary" type="submit">Submit</button>
   <form>
 
 <!--    <h5>Field Values</h5>-->

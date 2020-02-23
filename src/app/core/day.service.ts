@@ -16,13 +16,18 @@ export class DayService {
   }
 
   public save(day: Day) {
-    this.db.collection('days').doc(day.id).set(day);
-    const index = this.days.find(p => p.id === day.id);
-    if (index) {
+    const existingBets = this.days.find(p => p.id === day.id);
+    if (existingBets) {
+      day.matches.push(...existingBets.matches);
       // index.bets.push(...day.bets);
     } else {
       this.days.push(day);
     }
+    console.log('saving in service: ', day.id, day);
+    this.db.collection('days').doc(day.id).set(day).then(result => {
+      console.log('Saved:', result);
+    });
+
     this.daysChanged.next(this.days);
   }
 

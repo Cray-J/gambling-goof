@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Bet } from '../../shared/model/bet.model';
 import { BetService } from '../../core/bet.service';
 import { Day } from '../../shared/model/day.model';
 import { DayService } from '../../core/day.service';
@@ -9,9 +8,6 @@ import { $enum } from 'ts-enum-util';
 import { Bookie } from '../../shared/model/bookie.enum';
 import { Observable } from 'rxjs';
 import { TeamsService } from '../../core/teams.service';
-import { map, startWith } from 'rxjs/operators';
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-new-day-dialog',
@@ -22,11 +18,11 @@ export class NewDayDialogComponent implements OnInit {
  // https://stackblitz.com/edit/angular-dffny7?file=app/app.component.html
   // https://stackoverflow.com/questions/48436145/angular-reactive-forms-with-nested-form-arrays/48527939
   date = new FormControl(new Date());
-  myForm: FormGroup;
   arr: FormArray;
   public bookies = $enum(Bookie).getKeys();
   filteredOptions: Observable<string[]>[] = [];
   public days: Day[];
+  form: FormGroup;
 
   constructor(public dialogRef: MatDialogRef<NewDayDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -36,8 +32,6 @@ export class NewDayDialogComponent implements OnInit {
               private fb: FormBuilder) {
     // this.createFormGroup();
   }
-
-  form: FormGroup;
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -62,22 +56,78 @@ export class NewDayDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  public onSubmit() {
-    console.log(this.form.getRawValue());
-    this.dialogRef.close();
-  }
-
   public isEvenNumber(index: number): boolean {
     return index % 2 === 0;
   }
 
+  public onSubmit() {
+    console.log(this.form.getRawValue());
+    const time: Date = this.form.value['date'];
+    const currDay = time.getUTCDate();
+    const day = time.getUTCDate();
+    const month = time.getMonth() < 10 ? `0${time.getMonth() + 1}` : time.getMonth() + 1;
+    const year = time.getFullYear();
+    const id = `${year}${month}${day}`;
+
+    const matches = this.form.value['matches'];
+    console.log(matches);
+
+    const newDay: Day = {
+      id: id,
+      date: time,
+      matches: this.form.value['matches'],
+      summary: '',
+      result: 0,
+      verified: false
+    };
+
+    this.dayService.save(newDay);
+    this.dialogRef.close();
+  }
+
+  public onSubmit1() {
+    console.log(this.form.getRawValue());
+    this.dialogRef.close();
+    console.log(this.form.value);
+    const time: Date = this.form.value['date'];
+    console.log(time);
+    const day = time.getDay() < 10 ? `0${time.getDay()}` : time.getDay();
+    const month = time.getMonth() < 10 ? `0${time.getMonth()}` : time.getMonth();
+    const year = time.getFullYear();
+    const id = `${year}${month}${day}`;
+    const bets = this.form.value['arr'];
+    const newDay = new Day(id, time, []);
+    console.log('bets: ', bets, newDay);
+    bets.forEach(val => {
+      if (val.home !== '') {
+        const bet = {};
+        this.updateTeams(val.home, val.away);
+        bet['match'] = val.home + ' v ' + val.away;
+        bet['selection'] = val.selection;
+        bet['stake'] = val.stake;
+        bet['odds'] = val.odds;
+        bet['bookie'] = val.bookie;
+
+        const firstTime = val.time;
+        const splitTime = firstTime.split(':');
+        console.log(time, splitTime);
+        time.setHours(+splitTime[0], +splitTime[1]);
+        bet['date'] = time;
+        console.log(bet['date']);
+        bet['id'] = '' + Date.now();
+        newDay.bets.push(bet as Bet);
+        this.betsService.addBet(bet);
+      }
+    });
+    this.dayService.save(newDay);
+    this.dialogRef.close();
+  }
+
   initMatch() {
     return this.fb.group({
-      //  ---------------------forms fields on x level ------------------------
       'time': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
       'home': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
       'away': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
-      // ---------------------------------------------------------------------
       'bets': this.fb.array([
         this.initBet()
       ])
@@ -86,12 +136,10 @@ export class NewDayDialogComponent implements OnInit {
 
   initBet() {
     return this.fb.group({
-      //  ---------------------forms fields on y level ------------------------
       bookie: [''],
       selection: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
       odds: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
       stake: ['']
-      // ---------------------------------------------------------------------
     });
   }
 
@@ -113,22 +161,15 @@ export class NewDayDialogComponent implements OnInit {
 
   matchesErrors() {
     return [{
-      //  ---------------------forms errors on x level ------------------------
       X: '',
-
-      // ---------------------------------------------------------------------
       'bets': this.YsErrors()
-
-    }]
-
+    }];
   }
 
   YsErrors() {
     return [{
-      //  ---------------------forms errors on y level ------------------------
       Y1: '',
       Y2: ''
-      // ----------------------------------------------------------------------
     }];
   }
 

@@ -6,5 +6,5 @@ export class Day {
   matches: Match[];
   summary: string;
   result: number;
-  verfied: boolean;
+  verified: boolean;
 }

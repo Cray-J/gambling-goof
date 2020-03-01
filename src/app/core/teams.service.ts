@@ -3,7 +3,7 @@ import { Subject, Subscription } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
 import { nameComparator } from '../shared/comparators';
-import { Team } from "../shared/model/team.model";
+import { Team } from '../shared/model/team.model';
 
 @Injectable({providedIn: 'root'})
 export class TeamsService {

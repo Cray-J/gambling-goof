@@ -5,6 +5,9 @@ import { Day } from '../../shared/model/day.model';
 import { Bookie } from '../../shared/model/bookie.enum';
 import { Outcome } from '../../shared/model/outcome.enum';
 import { BetType } from '../../shared/model/bet-type.enum';
+import { ToText } from '../../shared/model/to-text';
+import { Bet } from '../../shared/model/bet.model';
+import { $enum } from 'ts-enum-util';
 
 @Component({
   selector: 'day-table',
@@ -21,9 +24,10 @@ import { BetType } from '../../shared/model/bet-type.enum';
 export class DayTableComponent implements OnInit {
   public displayedColumns = ['date', 'bets', 'result'];
   public subRows = ['time', 'match', 'selection', 'stake', 'odds', 'return'];
-  dataSource = ELEMENT_DATA;
   expandedElement: Day | null;
   public days: Day[];
+  public toText = ToText;
+  public outcomes = $enum(Outcome).getKeys();
 
   constructor(private dayService: DayService) {
   }
@@ -35,51 +39,34 @@ export class DayTableComponent implements OnInit {
       this.days = result;
     });
   }
-}
 
-const ELEMENT_DATA: Day[] = [
-  /**new Day('id1', new Date(2020, 2, 4), [
-    {
-      id: '10',
-      date: new Date(2020, 2, 4, 14, 30),
-      match: 'Sevilla v Barcelona',
-      selection: '',
-      stake: 100,
-      odds: 1.80,
-      bookie: Bookie.bet365,
-      outcome: Outcome.win,
-      valueReturn: 80,
-      botd: false,
-      betType: BetType.single
-    },
-    {
-      id: '11',
-      date: new Date(2020, 2, 4, 18, 30),
-      match: 'Real Madrid v Real Sociedad',
-      selection: 'BTTS',
-      stake: 100,
-      odds: 1.90,
-      bookie: Bookie.unibet,
-      outcome: Outcome.win,
-      valueReturn: 90,
-      botd: false,
-      betType: BetType.single
-    }
-  ], 170),
-  new Day('id2', new Date(2020, 2, 5), [
-    {
-      id: '13',
-      date: new Date(2020, 2, 5, 18, 30),
-      match: 'Leicester v Newcastle',
-      selection: 'BTTS',
-      stake: 100,
-      odds: 1.90,
-      bookie: Bookie.unibet,
-      outcome: Outcome.loss,
-      valueReturn: -100,
-      botd: false,
-      betType: BetType.single
-    }
-  ], -100
-  )**/
-];
+  public numberOfBets(day: Day) {
+    let bets = 0;
+    day.matches.map(m => bets += m.bets.length);
+    return bets;
+  }
+
+  updateValue(day: Day, bet: Bet, outcome: Outcome) {
+    console.log(day, bet, outcome);
+    bet.outcome = outcome;
+    bet.valueReturn = $enum.mapValue(outcome).with({
+      [Outcome.win]: (bet.stake * bet.odds) - bet.stake,
+      [Outcome.halfWin]: (bet.stake * bet.odds - bet.stake) / 2,
+      [Outcome.push]: 0,
+      [Outcome._void]: 0,
+      [Outcome.awaiting]: null,
+      [Outcome.halfLoss]: -bet.stake / 2,
+      [Outcome.loss]: -bet.stake
+    });
+    console.log('updating', bet);
+    day.matches.forEach(m => {
+      m.bets.forEach(b => {
+        if (!!b.valueReturn) {
+          day.result += b.valueReturn;
+        }
+      });
+    });
+    console.log(day.result);
+    this.dayService.update(day);
+  }
+}

@@ -30,7 +30,6 @@ export class NewDayDialogComponent implements OnInit {
               public dayService: DayService,
               private teamsService: TeamsService,
               private fb: FormBuilder) {
-    // this.createFormGroup();
   }
 
   ngOnInit() {
@@ -49,7 +48,7 @@ export class NewDayDialogComponent implements OnInit {
   }
 
   public removeBet(match: AbstractControl, index: number) {
-    (match.controls.bets as FormArray).removeAt(index);
+    (match['controls'].bets as FormArray).removeAt(index);
   }
 
   public onNoClick(): void {
@@ -84,45 +83,45 @@ export class NewDayDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  public onSubmit1() {
-    console.log(this.form.getRawValue());
-    this.dialogRef.close();
-    console.log(this.form.value);
-    const time: Date = this.form.value['date'];
-    console.log(time);
-    const day = time.getDay() < 10 ? `0${time.getDay()}` : time.getDay();
-    const month = time.getMonth() < 10 ? `0${time.getMonth()}` : time.getMonth();
-    const year = time.getFullYear();
-    const id = `${year}${month}${day}`;
-    const bets = this.form.value['arr'];
-    const newDay = new Day(id, time, []);
-    console.log('bets: ', bets, newDay);
-    bets.forEach(val => {
-      if (val.home !== '') {
-        const bet = {};
-        this.updateTeams(val.home, val.away);
-        bet['match'] = val.home + ' v ' + val.away;
-        bet['selection'] = val.selection;
-        bet['stake'] = val.stake;
-        bet['odds'] = val.odds;
-        bet['bookie'] = val.bookie;
+  // public onSubmit1() {
+  //   console.log(this.form.getRawValue());
+  //   this.dialogRef.close();
+  //   console.log(this.form.value);
+  //   const time: Date = this.form.value['date'];
+  //   console.log(time);
+  //   const day = time.getDay() < 10 ? `0${time.getDay()}` : time.getDay();
+  //   const month = time.getMonth() < 10 ? `0${time.getMonth()}` : time.getMonth();
+  //   const year = time.getFullYear();
+  //   const id = `${year}${month}${day}`;
+  //   const bets = this.form.value['arr'];
+  //   // const newDay = new Day(id, time, []);
+  //   console.log('bets: ', bets, newDay);
+  //   bets.forEach(val => {
+  //     if (val.home !== '') {
+  //       const bet = {};
+  //       // this.updateTeams(val.home, val.away);
+  //       bet['match'] = val.home + ' v ' + val.away;
+  //       bet['selection'] = val.selection;
+  //       bet['stake'] = val.stake;
+  //       bet['odds'] = val.odds;
+  //       bet['bookie'] = val.bookie;
+  //
+  //       const firstTime = val.time;
+  //       const splitTime = firstTime.split(':');
+  //       console.log(time, splitTime);
+  //       time.setHours(+splitTime[0], +splitTime[1]);
+  //       bet['date'] = time;
+  //       console.log(bet['date']);
+  //       bet['id'] = '' + Date.now();
+  //      // newDay.bets.push(bet as Bet);
+  //       this.betsService.addBet(bet);
+  //     }
+  //   });
+  //   this.dayService.save(newDay);
+  //   this.dialogRef.close();
+  // }
 
-        const firstTime = val.time;
-        const splitTime = firstTime.split(':');
-        console.log(time, splitTime);
-        time.setHours(+splitTime[0], +splitTime[1]);
-        bet['date'] = time;
-        console.log(bet['date']);
-        bet['id'] = '' + Date.now();
-       // newDay.bets.push(bet as Bet);
-        this.betsService.addBet(bet);
-      }
-    });
-    this.dayService.save(newDay);
-    this.dialogRef.close();
-  }
-
-  initMatch() {
+  public initMatch() {
     return this.fb.group({
       'time': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
       'home': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
@@ -133,7 +132,7 @@ export class NewDayDialogComponent implements OnInit {
     });
   }
 
-  initBet() {
+  public initBet() {
     return this.fb.group({
       bookie: [''],
       selection: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
@@ -142,30 +141,30 @@ export class NewDayDialogComponent implements OnInit {
     });
   }
 
-  addMatch() {
+  public addMatch() {
     const control = <FormArray>this.form.controls['matches'];
     control.push(this.initMatch());
   }
 
 
-  addBet(ix) {
+  public addBet(ix) {
     const control = (<FormArray>this.form.controls['matches']).at(ix).get('bets') as FormArray;
     control.push(this.initBet());
   }
 
-  formErrors = {
+  public formErrors = {
     matches: this.matchesErrors()
   };
 
 
-  matchesErrors() {
+  public matchesErrors() {
     return [{
       X: '',
       'bets': this.YsErrors()
     }];
   }
 
-  YsErrors() {
+  public YsErrors() {
     return [{
       Y1: '',
       Y2: ''

@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { dateComparator } from '../shared/comparators';
 import { map } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
+import { Match } from '../shared/model/match.model';
 
 @Injectable({providedIn: 'root'})
 export class DayService {
@@ -18,31 +19,17 @@ export class DayService {
   public save(day: Day) {
     const existingDay = this.days.find(p => p.id === day.id);
     if (existingDay) {
-      debugger;
-      console.log('updating existing day');
-      day.matches.forEach(match => {
-        const existingMatch = existingDay.matches.find(p => p.match === match.match);
-        if (existingMatch) {
-          console.log('updating match bets');
-          existingMatch.bets.push(...match.bets);
-        } else {
-          console.log('adding new match');
-          existingDay.matches.push(match);
-        }
+      day.matches.forEach((match: Match) => {
+        const existingMatch = existingDay.matches.find(p => p.home === match.home && p.away === match.away);
+        existingMatch
+          ? existingMatch.bets.push(...match.bets)
+          : existingDay.matches.push(match);
       });
-      this.db.collection('days').doc(existingDay.id).set(existingDay).then(result => {
-        console.log('Updated:', result);
-      });
-      // day.matches.push(...existingBets.matches);
-      // index.bets.push(...day.bets);
+      this.db.collection('days').doc(existingDay.id).set(existingDay).then(result => console.log('Updated:', result));
     } else {
-      console.log('Saving new day');
       this.days.push(day);
-      this.db.collection('days').doc(day.id).set(day).then(result => {
-        console.log('Saved:', result);
-      });
+      this.db.collection('days').doc(day.id).set(day).then(result => console.log('Saved:', result));
     }
-    console.log('saving in service: ', day.id, day);
     this.daysChanged.next(this.days);
   }
 
@@ -67,7 +54,7 @@ export class DayService {
   }
 
   public update(day: Day) {
-    this.db.collection('days').doc(day.id).update(day).then(val => {
+    this.db.collection('days').doc(day.id).set(day).then(val => {
       console.log(val);
     });
   }

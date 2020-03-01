@@ -1,3 +1,106 @@
 table {
-  width: 100%;
+  margin-top: 40px;
+  margin-left: 40px;
+  width: 80%;
+}
+
+th.mat-header-cell.mat-header-cell {
+  background-color: lightblue;
+}
+
+div.selection,
+div.odds,
+div.stake,
+div.outcome {
+  padding-right: 24px;
+}
+
+
+div.matchRow {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+div.matchContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+div.matchDetails,
+div.betDetails {
+  display: flex;
+  place-content: space-between;
+  flex-direction: row;
+}
+
+div.selection {
+  display: flex;
+  flex: 4;
+}
+
+div.odds,
+div.stake {
+  display: flex;
+  flex: 1;
+}
+
+div.outcome {
+  display: flex;
+  flex: 2;
+}
+
+
+td.mat-cell.cdk-column-expandedDetail {
+  background-color: lightblue;
+}
+
+
+//table {
+//  width: 100%;
+//}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  //font-weight: bold;
+  //font-size: 40px;
+  //line-height: normal;
+}
+
+.example-element-description {
+  //padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
 }

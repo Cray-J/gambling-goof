@@ -17,8 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { BetsModule } from './bets/bets.module';
 import { NewGoalDialogComponent } from './bets/new-goal-dialog/new-goal-dialog.component';
-import { NewDayDialogComponent } from "./bets/new-day-dialog/new-day-dialog.component";
-import { InventoryPageComponent } from "./bets/inventory-page/inventory-page.component";
+import { NewDayDialogComponent } from './bets/new-day-dialog/new-day-dialog.component';
+import { NewSeasonBetDialogComponent } from './bets/new-season-bet-dialog/new-season-bet-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,8 @@ import { InventoryPageComponent } from "./bets/inventory-page/inventory-page.com
   entryComponents: [
     NewBetDialogComponent,
     NewDayDialogComponent,
-    NewGoalDialogComponent
+    NewGoalDialogComponent,
+    NewSeasonBetDialogComponent
   ],
 })
 export class AppModule { }

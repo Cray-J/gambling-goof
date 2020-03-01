@@ -12,8 +12,9 @@ import {MaterialModule} from '../material.module';
 import {MultibetTableComponent} from './multibet-table/multibet-table.component';
 import { NewGoalDialogComponent } from './new-goal-dialog/new-goal-dialog.component';
 import { NewDayDialogComponent } from './new-day-dialog/new-day-dialog.component';
-import { InventoryPageComponent } from "./inventory-page/inventory-page.component";
+import { InventoryPageComponent } from './inventory-page/inventory-page.component';
 import { DayTableComponent } from './day-table/day-table.component';
+import { NewSeasonBetDialogComponent } from './new-season-bet-dialog/new-season-bet-dialog.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { DayTableComponent } from './day-table/day-table.component';
     BetsComponent,
     DayTableComponent,
     NewBetDialogComponent,
+    NewSeasonBetDialogComponent,
     MultibetTableComponent,
     NewGoalDialogComponent,
     NewDayDialogComponent,

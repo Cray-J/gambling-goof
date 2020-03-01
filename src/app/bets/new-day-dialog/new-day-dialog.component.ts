@@ -63,8 +63,7 @@ export class NewDayDialogComponent implements OnInit {
   public onSubmit() {
     console.log(this.form.getRawValue());
     const time: Date = this.form.value['date'];
-    const currDay = time.getUTCDate();
-    const day = time.getUTCDate();
+    const day = time.getUTCDate() < 10 ? `0${time.getUTCDate()}` : time.getUTCDate();
     const month = time.getMonth() < 10 ? `0${time.getMonth() + 1}` : time.getMonth() + 1;
     const year = time.getFullYear();
     const id = `${year}${month}${day}`;
@@ -115,7 +114,7 @@ export class NewDayDialogComponent implements OnInit {
         bet['date'] = time;
         console.log(bet['date']);
         bet['id'] = '' + Date.now();
-        newDay.bets.push(bet as Bet);
+       // newDay.bets.push(bet as Bet);
         this.betsService.addBet(bet);
       }
     });

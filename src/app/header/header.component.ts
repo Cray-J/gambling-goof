@@ -8,7 +8,8 @@ import { NewGoalDialogComponent } from '../bets/new-goal-dialog/new-goal-dialog.
 import { GoalService } from '../core/goal.service';
 import { NewDayDialogComponent } from '../bets/new-day-dialog/new-day-dialog.component';
 import { DayService } from '../core/day.service';
-import { Day } from "../shared/model/day.model";
+import { SeasonBetService } from '../core/season-bet.service';
+import { NewSeasonBetDialogComponent } from '../bets/new-season-bet-dialog/new-season-bet-dialog.component';
 
 @Component({
   selector: 'header',
@@ -22,11 +23,12 @@ export class HeaderComponent {
   constructor(public dialog: MatDialog,
               private betService: BetService,
               private daysService: DayService,
-              private goalService: GoalService) {
+              private goalService: GoalService,
+              private seasonBetService: SeasonBetService) {
   }
 
   openSingleDialog(): void {
-    const dialogRef = this.dialog.open(NewBetDialogComponent, {
+    this.dialog.open(NewBetDialogComponent, {
       data: {
         bet:
           {
@@ -36,9 +38,7 @@ export class HeaderComponent {
             betType: BetType.single
           },
       }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
+    }).afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result !== null) {
         this.bet = result;
@@ -51,13 +51,11 @@ export class HeaderComponent {
   }
 
   openDayDialog() {
-    const dialogRef = this.dialog.open(NewDayDialogComponent, {
+    this.dialog.open(NewDayDialogComponent, {
       disableClose: true,
       data: {
       }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
+    }).afterClosed().subscribe(result => {
       console.log('dialog closed');
       // this.goalService.addGoal(result);
     });
@@ -68,15 +66,22 @@ export class HeaderComponent {
   }
 
   openGoalDialog(): void {
-    const dialogRef = this.dialog.open(NewGoalDialogComponent, {
+    this.dialog.open(NewGoalDialogComponent, {
         data: {
 
         }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
+    }).afterClosed().subscribe(result => {
        console.log('dialog closed');
       this.goalService.addGoal(result);
+    });
+  }
+
+  openSeasonBetDialog(): void {
+    this.dialog
+      .open(NewSeasonBetDialogComponent)
+      .afterClosed().subscribe(result => {
+        console.log('dialog closed');
+        this.seasonBetService.addBet(result);
     });
   }
 }

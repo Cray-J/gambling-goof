@@ -1,0 +1,58 @@
+<h1 mat-dialog-title fxLayoutAlign="center center">Add a new season bet</h1>
+<mat-dialog-content>
+  <div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Selection</label>
+      </div>
+      <div>
+        <mat-form-field class="bet">
+          <input matInput [(ngModel)]="bet.selection" required>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Date</label>
+      </div>
+      <div>
+        <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="bet.settledDate">
+        <owl-date-time #dt1></owl-date-time>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Stake</label>
+      </div>
+      <div>
+        <mat-form-field class="bet">
+          <input matInput [(ngModel)]="bet.stake" required>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Odds</label>
+      </div>
+      <div>
+        <mat-form-field class="bet">
+          <input matInput [(ngModel)]="bet.odds" required>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Bookie</label>
+      </div>
+      <div>
+        <mat-form-field class="bet">
+          <input matInput [(ngModel)]="bet.bookie" required>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+    <button mat-button (click)="onNoClick()">CANCEL</button>
+    <button mat-button [mat-dialog-close]="bet" cdkFocusInitial>ADD</button>
+  </mat-dialog-actions>
+</mat-dialog-content>

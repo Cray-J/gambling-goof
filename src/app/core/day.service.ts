@@ -16,18 +16,33 @@ export class DayService {
   }
 
   public save(day: Day) {
-    const existingBets = this.days.find(p => p.id === day.id);
-    if (existingBets) {
-      day.matches.push(...existingBets.matches);
+    const existingDay = this.days.find(p => p.id === day.id);
+    if (existingDay) {
+      debugger;
+      console.log('updating existing day');
+      day.matches.forEach(match => {
+        const existingMatch = existingDay.matches.find(p => p.match === match.match);
+        if (existingMatch) {
+          console.log('updating match bets');
+          existingMatch.bets.push(...match.bets);
+        } else {
+          console.log('adding new match');
+          existingDay.matches.push(match);
+        }
+      });
+      this.db.collection('days').doc(existingDay.id).set(existingDay).then(result => {
+        console.log('Updated:', result);
+      });
+      // day.matches.push(...existingBets.matches);
       // index.bets.push(...day.bets);
     } else {
+      console.log('Saving new day');
       this.days.push(day);
+      this.db.collection('days').doc(day.id).set(day).then(result => {
+        console.log('Saved:', result);
+      });
     }
     console.log('saving in service: ', day.id, day);
-    this.db.collection('days').doc(day.id).set(day).then(result => {
-      console.log('Saved:', result);
-    });
-
     this.daysChanged.next(this.days);
   }
 

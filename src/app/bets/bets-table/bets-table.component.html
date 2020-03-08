@@ -29,44 +29,39 @@
   <mat-table #table [dataSource]="dataSource" matSort fxFlex="" class="primary">
     <ng-container matColumnDef="date">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.date.toDate() | date:'dd MMM HH:mm '}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.day.date.toDate() | date:'dd MMM HH:mm '}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="match">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Match</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{  element.match }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{element.match.home}} v {{element.match.away}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="selection">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.selection }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.bet.selection }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="stake">
       <mat-header-cell *matHeaderCellDef>Stake</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.stake }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="confidence">
-      <mat-header-cell *matHeaderCellDef>Confidence</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.confidence}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.bet.stake }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="bookie">
       <mat-header-cell *matHeaderCellDef>Bookie</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{toText.bookie(element.bookie)}} </mat-cell>
+      <mat-cell *matCellDef="let element">{{toText.bookie(element.bet.bookie)}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="odds">
       <mat-header-cell *matHeaderCellDef>Odds</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.odds | number : '1.2-2' }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.bet.odds | number : '1.2-2' }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="outcome">
       <mat-header-cell *matHeaderCellDef>Outcome</mat-header-cell>
       <mat-cell *matCellDef="let element" >
         <mat-form-field>
-          <mat-select [ngModel]="element.outcome"
+          <mat-select [ngModel]="element.bet.outcome"
                       (ngModelChange)="updateValue(element, $event)">
             <mat-option *ngFor="let outcome of outcomes"
                         [value]="outcome">
@@ -80,20 +75,20 @@
     <ng-container matColumnDef="return" >
       <mat-header-cell *matHeaderCellDef>Return</mat-header-cell>
       <mat-cell *matCellDef="let element"
-                [class.win]="element.outcome === outcome.win"
-                [class.loss]="element.outcome === outcome.loss"
-                [class.half-win]="element.outcome === outcome.halfWin"
-                [class.half-loss]="element.outcome === outcome.halfLoss"
-                [class.push-void]="element.outcome === outcome._void || element.outcome === outcomes.push"
-      >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
+                [class.win]="element.bet.outcome === outcome.win"
+                [class.loss]="element.bet.outcome === outcome.loss"
+                [class.half-win]="element.bet.outcome === outcome.halfWin"
+                [class.half-loss]="element.bet.outcome === outcome.halfLoss"
+                [class.push-void]="element.bet.outcome === outcome._void || element.bet.outcome === outcomes.push"
+      >{{ element.bet.valueReturn | number : '1.2-2'}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="events">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
         <mat-icon (click)="openDialog(element)" class="editIcon">border_color</mat-icon>
-        <mat-icon *ngIf="element.redCard" class="redCard" matTooltip="Red card">crop_square</mat-icon>
-        <mat-icon *ngIf="element.missedPen" class="missedPen" matTooltip="Missed penalty">error</mat-icon>
+        <mat-icon *ngIf="element.bet.redCard" class="redCard" matTooltip="Red card">crop_square</mat-icon>
+        <mat-icon *ngIf="element.bet.missedPen" class="missedPen" matTooltip="Missed penalty">error</mat-icon>
       </mat-cell>
     </ng-container>
 

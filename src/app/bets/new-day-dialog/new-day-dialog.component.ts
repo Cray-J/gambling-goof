@@ -42,7 +42,7 @@ export class NewDayDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      date: this.fb.control(new Date()),
+      date: this.fb.control(new Date(), [Validators.required]),
       matches: this.fb.array([this.initMatch()])
     });
     this.form.valueChanges.subscribe(data => this.validateForm());
@@ -76,14 +76,14 @@ export class NewDayDialogComponent implements OnInit {
     const matches = this.form.value['matches'];
     console.log(matches);
 
-    const newDay: Day = {
+    const newDay = new Day({
       id: id,
       date: time,
       matches: this.form.value['matches'],
       summary: '',
       result: 0,
       verified: false
-    };
+    });
 
     this.dayService.save(newDay);
     this.dialogRef.close();
@@ -129,19 +129,19 @@ export class NewDayDialogComponent implements OnInit {
 
   public initMatch() {
     return this.fb.group({
-      time: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
-      home: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
-      away: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      time: ['', [Validators.required]],
+      home: ['', [Validators.required]],
+      away: ['', [Validators.required]],
       bets: this.fb.array([this.initBet()])
     });
   }
 
   public initBet() {
     return this.fb.group({
-      bookie: [''],
-      selection: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
-      odds: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
-      stake: ['']
+      bookie: ['', Validators.required],
+      selection: ['', [Validators.required]],
+      odds: [0, [Validators.required]], // , Validators.pattern('^\\d+\\.\\d{2}$')
+      stake: ['100', [Validators.required, Validators.pattern('[0-9]{3}')]]
     });
   }
 

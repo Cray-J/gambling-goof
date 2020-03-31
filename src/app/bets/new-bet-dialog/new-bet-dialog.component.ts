@@ -4,6 +4,8 @@ import { Bet } from '../../shared/model/bet.model';
 import { Bookie } from '../../shared/model/bookie.enum';
 import { BetType } from '../../shared/model/bet-type.enum';
 import { $enum } from 'ts-enum-util';
+import { Match } from '../../shared/model/match.model';
+import { Day } from '../../shared/model/day.model';
 
 @Component({
   selector: 'new-bet-dialog',
@@ -18,10 +20,14 @@ export class NewBetDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<NewBetDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: [Day, Match, Bet]
   ) {}
 
   onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onSubmit() {
     this.dialogRef.close();
   }
 }

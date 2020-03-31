@@ -27,14 +27,14 @@ export class DayService {
       this.db
         .collection('days')
         .doc(existingDay.id)
-        .set(existingDay)
+        .set(existingDay.prepareSave())
         .then(result => console.log('Updated:', result));
     } else {
       this.days.push(day);
       this.db
         .collection('days')
         .doc(day.id)
-        .set(day)
+        .set(day.prepareSave())
         .then(result => console.log('Saved:', result));
     }
     this.daysChanged.next(this.days);
@@ -46,14 +46,7 @@ export class DayService {
       this.db
         .collection('days')
         .snapshotChanges()
-        .pipe(
-          map(docArray =>
-            docArray.map(doc => {
-              const day = doc.payload.doc.data() as Day;
-              return day;
-            })
-          )
-        )
+        .pipe(map(docArray => docArray.map(doc => new Day(doc.payload.doc.data()))))
         .subscribe((days: Day[]) => {
           console.log('response', days);
           days.sort(dateComparator());
@@ -67,7 +60,7 @@ export class DayService {
     this.db
       .collection('days')
       .doc(day.id)
-      .set(day)
+      .set(day.prepareSave())
       .then(val => {
         console.log(val);
       });

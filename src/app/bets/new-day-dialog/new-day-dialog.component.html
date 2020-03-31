@@ -54,7 +54,7 @@
 
   <button mat-raised-button color="secondary" type="button" (click)="onNoClick()" style="margin-right: 5px;">Cancel</button>
   <!--<button mat-raised-button type="button" (click)="addItem()" style="margin-right: 5px;">Add</button>-->
-  <button mat-raised-button color="primary" type="submit">Submit</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
   <form>
 
 <!--    <h5>Field Values</h5>-->

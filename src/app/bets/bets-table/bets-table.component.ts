@@ -1,15 +1,21 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { BetService } from '../../core/bet.service';
 import { Subscription } from 'rxjs';
 import { Outcome } from '../../shared/model/outcome.enum';
 import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { Bet } from '../../shared/model/bet.model';
 import { $enum } from 'ts-enum-util';
 import { ToText } from '../../shared/model/to-text';
+import { Day } from '../../shared/model/day.model';
+import { Match } from '../../shared/model/match.model';
+import { DayService } from '../../core/day.service';
+
+export class DataRow {
+  constructor(public day: Day, public match: Match, public bet: Bet) {}
+}
 
 @Component({
-  selector: 'bets-overview',
+  selector: 'app-bets-overview',
   templateUrl: './bets-table.component.html',
   styleUrls: ['./bets-table.component.scss']
 })
@@ -27,48 +33,60 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     'return',
     'events'
   ];
-  public dataSource = new MatTableDataSource<Bet>();
+  public dataSource = new MatTableDataSource<DataRow>();
   public outcomes = $enum(Outcome).getKeys();
   public outcome = Outcome;
   public toText = ToText;
-  public confidence = [1, 2, 3, 4, 5];
   private subscriptions: Subscription = new Subscription();
-  private startDate = new Date('January 1 2020 00:01');
+  private startDate = new Date('March 8 2020 00:01');
 
-  constructor(private betService: BetService, public dialog: MatDialog) {}
+  constructor(private dayService: DayService, public dialog: MatDialog) {}
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit() {
-    this.betService.betsChanged.subscribe((bets: Bet[]) => (this.dataSource.data = bets));
+    this.dayService.daysChanged.subscribe((days: Day[]) => {
+      const bets = [];
+      days.forEach(d =>
+        d.matches.forEach(m => m.bets.forEach(b => bets.push(new DataRow(d, m, b))))
+      );
+      this.dataSource.data = bets;
+    });
   }
 
-  updateValue(bet: Bet, outcome: Outcome) {
-    bet.outcome = outcome;
-    bet.valueReturn = $enum.mapValue(outcome).with({
-      [Outcome.win]: bet.stake * bet.odds - bet.stake,
-      [Outcome.halfWin]: (bet.stake * bet.odds - bet.stake) / 2,
+  updateValue(row: DataRow, outcome: Outcome) {
+    row.bet.outcome = outcome;
+    row.bet.valueReturn = $enum.mapValue(outcome).with({
+      [Outcome.win]: row.bet.stake * row.bet.odds - row.bet.stake,
+      [Outcome.halfWin]: (row.bet.stake * row.bet.odds - row.bet.stake) / 2,
       [Outcome.push]: 0,
       [Outcome._void]: 0,
       [Outcome.awaiting]: null,
-      [Outcome.halfLoss]: -bet.stake / 2,
-      [Outcome.loss]: -bet.stake
+      [Outcome.halfLoss]: -row.bet.stake / 2,
+      [Outcome.loss]: -row.bet.stake
     });
-    this.betService.updateBet(bet);
+    let val = 0;
+    row.day.matches.forEach(m => {
+      m.bets.forEach(b => (val += b.valueReturn));
+    });
+    row.day.result = val;
+    // row.day.calculateResult();
+    console.log('updating: ', row.day);
+    this.dayService.update(row.day);
   }
 
-  openDialog(element: Bet): void {
+  openDialog(row: DataRow): void {
     const dialogRef = this.dialog.open(NewBetDialogComponent, {
       width: '900',
-      data: { bet: element }
+      data: [row.day, row.match, row.bet]
     });
 
     dialogRef.afterClosed().subscribe((bet: Bet) => {
       console.log(bet);
-      this.updateValue(bet, bet.outcome);
-      this.betService.updateBet(bet);
+      this.updateValue(row, bet.outcome);
+      // this.betService.updateBet(bet);
     });
   }
 
@@ -78,7 +96,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
 
   public total(): number {
     let val = 0;
-    this.dataSource.data.forEach(bet => (val += bet.valueReturn));
+    this.dataSource.data.forEach(bet => (val += bet.bet.valueReturn));
     return val;
   }
 
@@ -90,9 +108,9 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   public calculateROI(): number {
     let invested = 0;
     let returned = 0;
-    this.dataSource.data.forEach(bet => {
-      invested += bet.stake;
-      returned += bet.valueReturn;
+    this.dataSource.data.forEach(row => {
+      invested += row.bet.stake;
+      returned += row.bet.valueReturn;
     });
     return invested / returned;
   }

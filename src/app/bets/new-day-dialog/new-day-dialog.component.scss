@@ -14,6 +14,8 @@ mat-form-field.stake {
 
 mat-dialog-container {
   width: calc(100vw);
+  height: fit-content;
+  min-height: fit-content;
 }
 
 div.cdk-overlay-container ::ng-deep #cdk-overlay-0 {
@@ -27,10 +29,6 @@ div.cdk-overlay-container ::ng-deep #cdk-overlay-0 {
   max-width: calc(100vw)!important;
 }
 
-//form {
-//  overflow: scroll;
-//}
-
 h1 {
   horiz-align: center;
 }
@@ -38,24 +36,84 @@ h1 {
 .Xs, .Ys, .Zs, p{
   margin: 10px;
 }
-//
-//input{
-//  margin: 10px;
-//}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+button.newMatchButton {
+  height: 36px;
+  max-height: 36px;
+  margin-left: 32px;
+}
+
+div.topRow {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 16px;
+}
+
+div.matchesContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+div.matchContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+div.matchInfoRow {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  justify-content: space-between;
+}
+
+div.matchInfoRow,
+div.betRow {
+  button mat-icon {
+    font-size: 16px;
+  }
+}
+
+div.betRow {
+  display: flex;
+  flex-direction: column;
+}
+
+div.bets {
+  display: flex;
+  flex-direction: row;
+}
+
+div.betRow button {
+  margin-left: -10px;
+}
+
+div.actions button {
+  float: right;
+}
 
 input[type="button"], p{
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 mat-form-field {
   padding-right: 10px;
-  font-size: 12px;
+  font-size: 13px;
+}
+
+div.actionRow {
+  margin-top: 16px;
 }
 
 #form1{
-  height: calc(90vh);
+  //height: calc(90vh);
+  min-height: 400px;
   overflow-y:auto;
-  width: calc(60vw);
+  width: calc(40vw);
 }
 
 .evenRow {
@@ -65,31 +123,3 @@ mat-form-field {
 .oddRow {
   background-color: #cce6ff;
 }
-
-.Xs{
-  border: red solid 1px;
-  background-color: #ff7f7f;
-}
-
-.Ys{
-  border: green solid 1px;
-  background-color: #7fbf7f;
-}
-
-.Zs{
-  border: blue solid 1px;
-  background-color: #7f7fff;
-}
-
-input[value="Add X"]{
-  background-color: #ff7f7f;
-}
-
-input[value="Add Y"]{
-  background-color: #7fbf7f;
-}
-
-input[value="Add Z"]{
-  background-color: #7f7fff;
-}
-

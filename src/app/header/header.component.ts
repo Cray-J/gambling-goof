@@ -34,7 +34,6 @@ export class HeaderComponent {
           bet: {
             date: new Date(),
             stake: 100,
-            confidence: 3,
             betType: BetType.single
           }
         }

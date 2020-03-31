@@ -25,7 +25,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     'date',
     'match',
     'selection',
-    'confidence',
     'bookie',
     'stake',
     'odds',
@@ -38,15 +37,16 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   public outcome = Outcome;
   public toText = ToText;
   private subscriptions: Subscription = new Subscription();
-  private startDate = new Date('March 8 2020 00:01');
+  private startDate = new Date('April 1 2020 00:01');
 
   constructor(private dayService: DayService, public dialog: MatDialog) {}
 
-  applyFilter(filterValue: string) {
+  public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(this.dataSource.filter);
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.dayService.daysChanged.subscribe((days: Day[]) => {
       const bets = [];
       days.forEach(d =>
@@ -56,7 +56,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateValue(row: DataRow, outcome: Outcome) {
+  public updateValue(row: DataRow, outcome: Outcome) {
     row.bet.outcome = outcome;
     row.bet.valueReturn = $enum.mapValue(outcome).with({
       [Outcome.win]: row.bet.stake * row.bet.odds - row.bet.stake,
@@ -68,36 +68,30 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
       [Outcome.loss]: -row.bet.stake
     });
     let val = 0;
-    row.day.matches.forEach(m => {
-      m.bets.forEach(b => (val += b.valueReturn));
-    });
+    row.day.matches.forEach(m => (val += m.bets.reduce((a, b) => a + b.valueReturn, 0)));
     row.day.result = val;
-    // row.day.calculateResult();
-    console.log('updating: ', row.day);
     this.dayService.update(row.day);
   }
 
-  openDialog(row: DataRow): void {
-    const dialogRef = this.dialog.open(NewBetDialogComponent, {
-      width: '900',
-      data: [row.day, row.match, row.bet]
-    });
-
-    dialogRef.afterClosed().subscribe((bet: Bet) => {
-      console.log(bet);
-      this.updateValue(row, bet.outcome);
-      // this.betService.updateBet(bet);
-    });
+  public openDialog(row: DataRow): void {
+    this.dialog
+      .open(NewBetDialogComponent, {
+        width: '900',
+        data: [row.day, row.match, row.bet]
+      })
+      .afterClosed()
+      .subscribe((bet: Bet) => this.updateValue(row, bet.outcome));
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
 
   public total(): number {
-    let val = 0;
-    this.dataSource.data.forEach(bet => (val += bet.bet.valueReturn));
-    return val;
+    return this.dataSource.data.reduce(
+      (value: number, row: DataRow) => value + row.bet.valueReturn,
+      0
+    );
   }
 
   public totalDays(): number {

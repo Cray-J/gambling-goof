@@ -53,6 +53,10 @@ export class NewDayDialogComponent implements OnInit {
     return this.form.get('date');
   }
 
+  public removeMatch(index: number) {
+    (this.form.controls['matches'] as FormArray).removeAt(index);
+  }
+
   public removeBet(match: AbstractControl, index: number) {
     (match['controls'].bets as FormArray).removeAt(index);
   }

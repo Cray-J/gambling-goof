@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import {
-  MatButtonModule, MatButtonToggleModule,
+  MatButtonModule,
+  MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
-  MatDatepickerModule, MatDialogModule, MatExpansionModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule, MatRippleModule,
+  MatProgressSpinnerModule,
+  MatRippleModule,
   MatSelectModule,
   MatSidenavModule,
   MatSnackBarModule,
@@ -18,7 +22,7 @@ import {
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule,
+  MatTooltipModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

@@ -7,7 +7,8 @@
     "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
-    "lint": "eslint ./src --fix",
+    "lint": "eslint src --ext .ts --format table",
+    "fix": "eslint --fix src --ext .ts",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -52,8 +53,10 @@
     "codelyzer": "^5.2.1",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^2.0.2",
     "ts-node": "~8.5.4",
-    "tslint": "~5.20.1",
     "typescript": "3.5.3"
   }
 }

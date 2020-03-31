@@ -4,12 +4,15 @@ import {
   MatDatepickerModule,
   MatDialogModule,
   MatFormFieldModule,
-  MatIconModule, MatInputModule,
-  MatSelectModule, MatSidenavModule,
+  MatIconModule,
+  MatInputModule,
+  MatSelectModule,
+  MatSidenavModule,
   MatSortModule,
-  MatTableModule, MatTabsModule
+  MatTableModule,
+  MatTabsModule
 } from '@angular/material';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const materialModules = [
@@ -28,10 +31,8 @@ const materialModules = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   declarations: [],
   exports: [materialModules]
 })
-export class SharedModule { }
+export class SharedModule {}

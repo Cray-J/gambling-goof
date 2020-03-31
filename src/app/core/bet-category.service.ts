@@ -4,14 +4,13 @@ import { Subject, Subscription } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class BetCategoryService {
   public betCategories: BetCategory[] = [];
   public betCategoriesChanged = new Subject<BetCategory[]>();
   private fbSubs: Subscription[] = [];
 
-  constructor(private db: AngularFirestore) {
-  }
+  constructor(private db: AngularFirestore) {}
 
   public addCategory(category: BetCategory) {
     this.db.collection('betCategories').add(category);
@@ -24,9 +23,7 @@ export class BetCategoryService {
       this.db
         .collection('betCategories')
         .snapshotChanges()
-        .pipe(
-          map(docArray => docArray.map(doc => doc.payload.doc.data() as BetCategory))
-        )
+        .pipe(map(docArray => docArray.map(doc => doc.payload.doc.data() as BetCategory)))
         .subscribe((categories: BetCategory[]) => {
           this.betCategories = categories;
           this.betCategoriesChanged.next([...this.betCategories]);

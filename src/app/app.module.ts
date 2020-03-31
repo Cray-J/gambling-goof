@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { MaterialModule } from './material.module';
@@ -21,10 +20,7 @@ import { NewDayDialogComponent } from './bets/new-day-dialog/new-day-dialog.comp
 import { NewSeasonBetDialogComponent } from './bets/new-season-bet-dialog/new-season-bet-dialog.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent
-  ],
+  declarations: [AppComponent, HeaderComponent],
   imports: [
     BrowserModule,
     MaterialModule,
@@ -44,6 +40,6 @@ import { NewSeasonBetDialogComponent } from './bets/new-season-bet-dialog/new-se
     NewDayDialogComponent,
     NewGoalDialogComponent,
     NewSeasonBetDialogComponent
-  ],
+  ]
 })
-export class AppModule { }
+export class AppModule {}

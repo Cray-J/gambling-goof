@@ -1,5 +1,12 @@
-import { Component, Inject, OnInit, } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BetService } from '../../core/bet.service';
 import { Day } from '../../shared/model/day.model';
@@ -15,7 +22,7 @@ import { TeamsService } from '../../core/teams.service';
   styleUrls: ['./new-day-dialog.component.scss']
 })
 export class NewDayDialogComponent implements OnInit {
- // https://stackblitz.com/edit/angular-dffny7?file=app/app.component.html
+  // https://stackblitz.com/edit/angular-dffny7?file=app/app.component.html
   // https://stackoverflow.com/questions/48436145/angular-reactive-forms-with-nested-form-arrays/48527939
   date = new FormControl(new Date());
   arr: FormArray;
@@ -24,20 +31,19 @@ export class NewDayDialogComponent implements OnInit {
   public days: Day[];
   form: FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<NewDayDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              private betsService: BetService,
-              public dayService: DayService,
-              private teamsService: TeamsService,
-              private fb: FormBuilder) {
-  }
+  constructor(
+    public dialogRef: MatDialogRef<NewDayDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private betsService: BetService,
+    public dayService: DayService,
+    private teamsService: TeamsService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
       date: this.fb.control(new Date()),
-      matches: this.fb.array([
-        this.initMatch()
-      ])
+      matches: this.fb.array([this.initMatch()])
     });
     this.form.valueChanges.subscribe(data => this.validateForm());
     this.validateForm();
@@ -123,12 +129,10 @@ export class NewDayDialogComponent implements OnInit {
 
   public initMatch() {
     return this.fb.group({
-      'time': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
-      'home': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
-      'away': ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
-      'bets': this.fb.array([
-        this.initBet()
-      ])
+      time: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      home: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      away: ['', [Validators.required, Validators.pattern('[0-9]{3}')]],
+      bets: this.fb.array([this.initBet()])
     });
   }
 
@@ -146,7 +150,6 @@ export class NewDayDialogComponent implements OnInit {
     control.push(this.initMatch());
   }
 
-
   public addBet(ix) {
     const control = (<FormArray>this.form.controls['matches']).at(ix).get('bets') as FormArray;
     control.push(this.initBet());
@@ -156,21 +159,23 @@ export class NewDayDialogComponent implements OnInit {
     matches: this.matchesErrors()
   };
 
-
   public matchesErrors() {
-    return [{
-      X: '',
-      'bets': this.YsErrors()
-    }];
+    return [
+      {
+        X: '',
+        bets: this.YsErrors()
+      }
+    ];
   }
 
   public YsErrors() {
-    return [{
-      Y1: '',
-      Y2: ''
-    }];
+    return [
+      {
+        Y1: '',
+        Y2: ''
+      }
+    ];
   }
-
 
   // validationMessages = {
   //   matches: {
@@ -264,4 +269,3 @@ export class NewDayDialogComponent implements OnInit {
   //   }
   // }
 }
-

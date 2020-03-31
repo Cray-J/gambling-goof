@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Bet} from '../../shared/model/bet.model';
-import {Bookie} from '../../shared/model/bookie.enum';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Bet } from '../../shared/model/bet.model';
+import { Bookie } from '../../shared/model/bookie.enum';
 import { BetType } from '../../shared/model/bet-type.enum';
 import { $enum } from 'ts-enum-util';
 
@@ -11,7 +11,6 @@ import { $enum } from 'ts-enum-util';
   styleUrls: ['./new-bet-dialog.component.scss']
 })
 export class NewBetDialogComponent {
-
   bet: Bet;
   public bookies = $enum(Bookie).getKeys();
   public betTypes = $enum(BetType).getKeys();
@@ -19,8 +18,8 @@ export class NewBetDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<NewBetDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

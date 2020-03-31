@@ -15,8 +15,8 @@ import { $enum } from 'ts-enum-util';
   styleUrls: ['./day-table.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
     ])
   ]
@@ -29,8 +29,7 @@ export class DayTableComponent implements OnInit {
   public toText = ToText;
   public outcomes = $enum(Outcome).getKeys();
 
-  constructor(private dayService: DayService) {
-  }
+  constructor(private dayService: DayService) {}
 
   public ngOnInit(): void {
     console.log('oninit');
@@ -42,7 +41,7 @@ export class DayTableComponent implements OnInit {
 
   public numberOfBets(day: Day) {
     let bets = 0;
-    day.matches.map(m => bets += m.bets.length);
+    day.matches.map(m => (bets += m.bets.length));
     return bets;
   }
 
@@ -50,7 +49,7 @@ export class DayTableComponent implements OnInit {
     console.log(day, bet, outcome);
     bet.outcome = outcome;
     bet.valueReturn = $enum.mapValue(outcome).with({
-      [Outcome.win]: (bet.stake * bet.odds) - bet.stake,
+      [Outcome.win]: bet.stake * bet.odds - bet.stake,
       [Outcome.halfWin]: (bet.stake * bet.odds - bet.stake) / 2,
       [Outcome.push]: 0,
       [Outcome._void]: 0,
@@ -61,7 +60,7 @@ export class DayTableComponent implements OnInit {
     console.log('updating', bet);
     day.matches.forEach(m => {
       m.bets.forEach(b => {
-        if (!!b.valueReturn) {
+        if (b.valueReturn) {
           day.result += b.valueReturn;
         }
       });

@@ -5,7 +5,6 @@ import { BetsComponent } from './bets/bets.component';
 const routes: Routes = [
   { path: '', redirectTo: 'bets', pathMatch: 'full' },
   { path: 'bets', component: BetsComponent }
-
 ];
 
 @NgModule({
@@ -14,4 +13,3 @@ const routes: Routes = [
   providers: []
 })
 export class AppRoutingModule {}
-

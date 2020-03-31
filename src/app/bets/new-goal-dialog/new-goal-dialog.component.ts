@@ -1,9 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl, FormGroup } from '@angular/forms';
-import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MatDatepicker} from '@angular/material/datepicker';
+import {
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS
+} from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
@@ -11,10 +14,10 @@ import {MatDatepicker} from '@angular/material/datepicker';
 // the `default as` syntax.
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
-import {default as _rollupMoment, Moment} from 'moment';
-import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
-import { ReactiveFormsModule } from '@angular/forms'
+import { default as _rollupMoment, Moment } from 'moment';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const moment = _rollupMoment || _moment;
 
@@ -22,14 +25,14 @@ const moment = _rollupMoment || _moment;
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'MM/YYYY',
+    dateInput: 'MM/YYYY'
   },
   display: {
     dateInput: 'MM/YYYY',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
+    monthYearA11yLabel: 'MMMM YYYY'
+  }
 };
 
 @Component({
@@ -46,8 +49,8 @@ export const MY_FORMATS = {
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     },
 
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-  ],
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+  ]
 })
 export class NewGoalDialogComponent {
   date = new FormControl(moment());
@@ -66,8 +69,10 @@ export class NewGoalDialogComponent {
     datepicker.close();
   }
 
-  constructor(public dialogRef: MatDialogRef<NewGoalDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    public dialogRef: MatDialogRef<NewGoalDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this.goalForm = this.createFormGroup();
   }
 
@@ -88,5 +93,4 @@ export class NewGoalDialogComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }

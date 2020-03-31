@@ -10,10 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./multibet-table.component.css']
 })
 export class MultibetTableComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

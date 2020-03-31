@@ -15,7 +15,18 @@ import { ToText } from '../../shared/model/to-text';
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, { static: false }) public sort: MatSort;
-  public displayedColumns = ['date', 'match', 'selection', 'confidence', 'bookie', 'stake', 'odds', 'outcome', 'return', 'events'];
+  public displayedColumns = [
+    'date',
+    'match',
+    'selection',
+    'confidence',
+    'bookie',
+    'stake',
+    'odds',
+    'outcome',
+    'return',
+    'events'
+  ];
   public dataSource = new MatTableDataSource<Bet>();
   public outcomes = $enum(Outcome).getKeys();
   public outcome = Outcome;
@@ -24,22 +35,20 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   private startDate = new Date('January 1 2020 00:01');
 
-  constructor(private betService: BetService,
-              public dialog: MatDialog) {
-  }
+  constructor(private betService: BetService, public dialog: MatDialog) {}
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit() {
-    this.betService.betsChanged.subscribe((bets: Bet[]) => this.dataSource.data = bets);
+    this.betService.betsChanged.subscribe((bets: Bet[]) => (this.dataSource.data = bets));
   }
 
   updateValue(bet: Bet, outcome: Outcome) {
     bet.outcome = outcome;
     bet.valueReturn = $enum.mapValue(outcome).with({
-      [Outcome.win]: (bet.stake * bet.odds) - bet.stake,
+      [Outcome.win]: bet.stake * bet.odds - bet.stake,
       [Outcome.halfWin]: (bet.stake * bet.odds - bet.stake) / 2,
       [Outcome.push]: 0,
       [Outcome._void]: 0,
@@ -53,7 +62,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   openDialog(element: Bet): void {
     const dialogRef = this.dialog.open(NewBetDialogComponent, {
       width: '900',
-      data: {bet: element}
+      data: { bet: element }
     });
 
     dialogRef.afterClosed().subscribe((bet: Bet) => {
@@ -69,13 +78,13 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
 
   public total(): number {
     let val = 0;
-    this.dataSource.data.forEach(bet => val += bet.valueReturn);
+    this.dataSource.data.forEach(bet => (val += bet.valueReturn));
     return val;
   }
 
   public totalDays(): number {
     const diff = +new Date() - +this.startDate;
-    return Math.ceil(diff  / 1000 / 60 / 60 / 24);
+    return Math.ceil(diff / 1000 / 60 / 60 / 24);
   }
 
   public calculateROI(): number {

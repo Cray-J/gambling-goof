@@ -10,11 +10,10 @@ import { Bookie } from '../../shared/model/bookie.enum';
   styleUrls: ['./new-season-bet-dialog.component.scss']
 })
 export class NewSeasonBetDialogComponent implements OnInit {
-
   public bet: SeasonBet;
   public bookies = $enum(Bookie).getKeys();
 
-  constructor(public dialogRef: MatDialogRef<NewSeasonBetDialogComponent>) { }
+  constructor(public dialogRef: MatDialogRef<NewSeasonBetDialogComponent>) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -31,5 +30,4 @@ export class NewSeasonBetDialogComponent implements OnInit {
       selection: ''
     };
   }
-
 }

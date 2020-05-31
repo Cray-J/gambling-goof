@@ -11,13 +11,9 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
-import { NewBetDialogComponent } from './bets/new-bet-dialog/new-bet-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { BetsModule } from './bets/bets.module';
-import { NewGoalDialogComponent } from './bets/new-goal-dialog/new-goal-dialog.component';
-import { NewDayDialogComponent } from './bets/new-day-dialog/new-day-dialog.component';
-import { NewSeasonBetDialogComponent } from './bets/new-season-bet-dialog/new-season-bet-dialog.component';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -35,11 +31,5 @@ import { NewSeasonBetDialogComponent } from './bets/new-season-bet-dialog/new-se
     BetsModule
   ],
   bootstrap: [AppComponent],
-  entryComponents: [
-    NewBetDialogComponent,
-    NewDayDialogComponent,
-    NewGoalDialogComponent,
-    NewSeasonBetDialogComponent
-  ]
 })
 export class AppModule {}

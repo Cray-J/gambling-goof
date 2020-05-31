@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NewBetDialogComponent } from '../bets/new-bet-dialog/new-bet-dialog.component';
 import { Bet } from '../shared/model/bet.model';
 import { BetService } from '../core/bet.service';

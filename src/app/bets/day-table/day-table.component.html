@@ -38,7 +38,7 @@
             <div class="betDetails" *ngFor="let bet of match.bets">
               <div class="selection">{{bet.selection}}</div>
               <div class="odds">
-                <ng-container matColumnDef="outcome">
+                <!--<ng-container matColumnDef="outcome">
                     <mat-form-field>
                       <mat-select [ngModel]="element.outcome"
                                   (ngModelChange)="updateValue(element, bet, $event)">
@@ -48,7 +48,7 @@
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
-                </ng-container>
+                </ng-container>-->
               </div>
               <div class="stake">{{bet.stake}}</div>
               <div class="outcome">{{bet.outcome}}</div>

@@ -43,7 +43,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
 
   constructor(private dayService: DayService, public dialog: MatDialog) {}
 
-  public applyFilter(filterValue: string) {
+  public applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     console.log(this.dataSource.filter);
   }

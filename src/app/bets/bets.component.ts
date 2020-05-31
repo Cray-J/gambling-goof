@@ -5,7 +5,7 @@ import { Component, ViewChild } from '@angular/core';
   templateUrl: './bets.component.html'
 })
 export class BetsComponent {
-  @ViewChild('tabGroup', { static: false }) tabGroup;
+  @ViewChild('tabGroup') tabGroup;
 
   constructor() {}
 }

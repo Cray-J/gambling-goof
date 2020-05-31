@@ -20,7 +20,7 @@ export class DataRow {
   styleUrls: ['./bets-table.component.scss']
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
-  @ViewChild(MatSort, { static: false }) public sort: MatSort;
+  @ViewChild(MatSort) public sort: MatSort;
   public displayedColumns = [
     'date',
     'match',

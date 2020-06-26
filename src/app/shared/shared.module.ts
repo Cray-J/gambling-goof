@@ -12,20 +12,26 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from "@angular/material/button";
 
 const materialModules = [
   MatAutocompleteModule,
   MatDialogModule,
-  MatSortModule,
-  MatTableModule,
   MatFormFieldModule,
   MatIconModule,
-  MatSelectModule,
   MatInputModule,
+  MatSelectModule,
+  MatSortModule,
+  MatTableModule,
   FormsModule,
-  MatTabsModule,
   MatDatepickerModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatCardModule,
+  MatTabsModule,
+  MatButtonModule,
+  MatToolbarModule
 ];
 
 @NgModule({

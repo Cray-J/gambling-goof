@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -14,12 +13,12 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { BetsModule } from './bets/bets.module';
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
   imports: [
     BrowserModule,
-    MaterialModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FlexLayoutModule,
@@ -28,8 +27,9 @@ import { BetsModule } from './bets/bets.module';
     AngularFireAuthModule,
     HttpClientModule,
     ChartsModule,
-    BetsModule
+    BetsModule,
+    SharedModule
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

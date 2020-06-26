@@ -1,14 +1,10 @@
 <form [formGroup]="form" id="form1" (ngSubmit)="onSubmit()">
   <h1 fxLayoutAlign="space-around center">Bets for a day</h1>
-
-  <div class="topRow">
-    <mat-form-field>
-      <input [formControl]="getDateField()" [matDatepicker]="picker" matInput placeholder="Choose a date">
-      <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <button (click)="addMatch()" color="primary" mat-raised-button type="button" class="newMatchButton">New Match</button>
-  </div>
+  <mat-form-field>
+    <input matInput [formControl]="getDateField()" [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
   <div formArrayName="matches">
     <div *ngFor="let match of form['controls'].matches['controls']; let ix=index" class="matchesContainer"
@@ -59,5 +55,5 @@
     <button mat-raised-button color="secondary" type="button" (click)="onNoClick()" style="margin-right: 5px;">Cancel</button>
     <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
   </div>
-  <form>
+  </form>
     <!--    <pre style="font-size:15px">{{ form.value | json }}</pre>-->

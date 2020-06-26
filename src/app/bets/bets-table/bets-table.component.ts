@@ -39,7 +39,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   public outcome = Outcome;
   public toText = ToText;
   private subscriptions: Subscription = new Subscription();
-  private startDate = new Date('May 30 2020 00:01');
+  private startDate = new Date('June 22 2020 00:01');
 
   constructor(private dayService: DayService, public dialog: MatDialog) {}
 

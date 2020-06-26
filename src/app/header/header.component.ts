@@ -12,7 +12,7 @@ import { SeasonBetService } from '../core/season-bet.service';
 import { NewSeasonBetDialogComponent } from '../bets/new-season-bet-dialog/new-season-bet-dialog.component';
 
 @Component({
-  selector: 'header',
+  selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

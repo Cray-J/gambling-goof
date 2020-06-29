@@ -9,12 +9,19 @@ export class Day {
   verified: boolean;
 
   constructor(json: {}) {
-    this.id = json['id'];
+    this.id = json['id'] ? json['id'] : Day.generateId(json['date']);
     this.date = json['date'];
     this.matches = json['matches'];
     this.summary = json['summary'];
     this.result = json['result'];
     this.verified = json['verified'];
+  }
+
+  public static generateId(time: Date) {
+    const day = time.getUTCDate() < 10 ? `0${time.getUTCDate()}` : time.getUTCDate();
+    const month = time.getMonth() < 10 ? `0${time.getMonth() + 1}` : time.getMonth() + 1;
+    const year = time.getFullYear();
+    const id = `${year}${month}${day}`;
   }
 
   public calculateResult() {

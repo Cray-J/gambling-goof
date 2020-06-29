@@ -13,13 +13,11 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { BetsModule } from './bets/bets.module';
-import { SharedModule } from "./shared/shared.module";
-import { MatNativeDateModule } from '@angular/material/core';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
   imports: [
-    MatNativeDateModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -31,9 +29,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     ChartsModule,
     BetsModule,
     SharedModule
-  ],
-  providers: [
-    MatNativeDateModule
   ],
   bootstrap: [AppComponent]
 })

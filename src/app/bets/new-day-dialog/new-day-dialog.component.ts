@@ -70,16 +70,10 @@ export class NewDayDialogComponent implements OnInit {
   public onSubmit() {
     console.log(this.form.getRawValue());
     const time: Date = this.form.value['date'];
-    const day = time.getUTCDate() < 10 ? `0${time.getUTCDate()}` : time.getUTCDate();
-    const month = time.getMonth() < 10 ? `0${time.getMonth() + 1}` : time.getMonth() + 1;
-    const year = time.getFullYear();
-    const id = `${year}${month}${day}`;
-
     const matches = this.form.value['matches'];
     console.log(matches);
 
     const newDay = new Day({
-      id: id,
       date: time,
       matches: this.form.value['matches'],
       summary: '',

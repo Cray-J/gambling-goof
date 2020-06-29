@@ -10,13 +10,18 @@ import { NewDayDialogComponent } from './new-day-dialog/new-day-dialog.component
 import { DayTableComponent } from './day-table/day-table.component';
 import { NewSeasonBetDialogComponent } from './new-season-bet-dialog/new-season-bet-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { BetDialogComponent } from './bet-dialog/bet-dialog.component';
 
 @NgModule({
   imports: [
     CoreModule,
     FlexModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: [
     BetsOverviewComponent,
@@ -25,7 +30,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     NewBetDialogComponent,
     NewSeasonBetDialogComponent,
     NewGoalDialogComponent,
-    NewDayDialogComponent
+    NewDayDialogComponent,
+    BetDialogComponent
+  ],
+  providers: [
+    MatDatepickerModule,
   ]
 })
 export class BetsModule {}

@@ -8,4 +8,7 @@ export class Match {
   date: Date;
   valueReturn: number;
   bets: Bet[];
+
+  constructor(json) {
+  }
 }

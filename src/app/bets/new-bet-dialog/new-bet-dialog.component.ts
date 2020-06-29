@@ -16,7 +16,6 @@ export class NewBetDialogComponent {
   bet: Bet;
   public bookies = $enum(Bookie).getKeys();
   public betTypes = $enum(BetType).getKeys();
-  public levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   constructor(
     public dialogRef: MatDialogRef<NewBetDialogComponent>,

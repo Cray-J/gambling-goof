@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NewBetDialogComponent } from '../bets/new-bet-dialog/new-bet-dialog.component';
 import { Bet } from '../shared/model/bet.model';
 import { BetService } from '../core/bet.service';
-import { BetType } from '../shared/model/bet-type.enum';
 import { NewGoalDialogComponent } from '../bets/new-goal-dialog/new-goal-dialog.component';
 import { GoalService } from '../core/goal.service';
 import { NewDayDialogComponent } from '../bets/new-day-dialog/new-day-dialog.component';
 import { DayService } from '../core/day.service';
 import { SeasonBetService } from '../core/season-bet.service';
 import { NewSeasonBetDialogComponent } from '../bets/new-season-bet-dialog/new-season-bet-dialog.component';
+import { BetDialogComponent } from '../bets/bet-dialog/bet-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -29,19 +28,13 @@ export class HeaderComponent {
 
   openSingleDialog(): void {
     this.dialog
-      .open(NewBetDialogComponent, {
-        data: {
-          bet: {
-            date: new Date(),
-            stake: 100,
-            betType: BetType.single
-          }
-        }
+      .open(BetDialogComponent, {
+        width: '800px'
       })
       .afterClosed()
       .subscribe(result => {
-        console.log('The dialog was closed');
-        if (result !== null) {
+        console.log('The dialog was closed', result, !!result);
+        if (!!result) {
           this.bet = result;
           this.bet.valueReturn = 0;
           this.bet.id = '' + Date.now();

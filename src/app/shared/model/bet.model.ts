@@ -10,6 +10,18 @@ export class Bet {
   bookie: Bookie;
   outcome: Outcome;
   valueReturn: number;
-  botd: boolean;
   betType: BetType;
+  league: string;
+
+  constructor(json) {
+    this.id = json.id;
+    this.selection = json.selection;
+    this.stake = json.stake;
+    this.odds = json.odds;
+    this.bookie = json.bookie;
+    this.outcome = json.outcome;
+    this.valueReturn = json.valueReturn;
+    this.betType = json.betType;
+    this.league = json.league;
+  }
 }

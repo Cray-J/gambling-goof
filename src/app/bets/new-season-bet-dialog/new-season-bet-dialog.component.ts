@@ -20,7 +20,7 @@ export class NewSeasonBetDialogComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.bet = {
+    this.bet = new SeasonBet({
       bookie: undefined,
       odds: 0,
       settledDate: undefined,
@@ -28,6 +28,6 @@ export class NewSeasonBetDialogComponent implements OnInit {
       valueReturn: 0,
       id: '',
       selection: ''
-    };
+    });
   }
 }

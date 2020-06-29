@@ -14,7 +14,6 @@ import { DayService } from '../../core/day.service';
 import { $enum } from 'ts-enum-util';
 import { Bookie } from '../../shared/model/bookie.enum';
 import { Observable } from 'rxjs';
-import { TeamsService } from '../../core/teams.service';
 
 @Component({
   selector: 'app-new-day-dialog',
@@ -36,7 +35,6 @@ export class NewDayDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private betsService: BetService,
     public dayService: DayService,
-    private teamsService: TeamsService,
     private fb: FormBuilder
   ) {}
 

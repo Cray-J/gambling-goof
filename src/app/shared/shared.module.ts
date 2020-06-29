@@ -15,6 +15,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from "@angular/material/button";
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
+import { OwlDateTimeModule } from 'ng-pick-datetime';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const materialModules = [
   MatAutocompleteModule,
@@ -31,12 +35,25 @@ const materialModules = [
   MatCardModule,
   MatTabsModule,
   MatButtonModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatMomentDateModule,
+  MatNativeDateModule,
 ];
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    OwlDateTimeModule
+  ],
   declarations: [],
-  exports: [materialModules]
+  exports: [
+    CommonModule,
+    materialModules,
+    OwlDateTimeModule
+  ],
+  providers: [
+    MatDatepickerModule,
+    MatNativeDateModule
+  ]
 })
 export class SharedModule {}

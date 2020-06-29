@@ -1,11 +1,13 @@
-import { Bookie } from './bookie.enum';
+import { Bet } from './bet.model';
+import { BetType } from './bet-type.enum';
 
-export interface SeasonBet {
-  id: string;
-  selection: string;
-  stake: number;
-  odds: number;
-  bookie: Bookie;
-  valueReturn: number;
+export class SeasonBet extends Bet {
   settledDate: Date;
+  betType = BetType.season;
+
+  constructor(json) {
+    super(json);
+    this.settledDate = json.settledDate;
+  }
+
 }

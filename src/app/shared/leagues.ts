@@ -5,14 +5,20 @@ export interface LeaguesGroup {
 
 export const leagues: LeaguesGroup[] = [
   {
+    country: "Iceland",
+    leagues: [
+      "Pepsideild (ISL - div. 1)"
+    ]
+  },
+  {
     country: "Norway",
     leagues: [
-      "Eliteserien (Nor)"
+      "Eliteserien (Nor - div. 1)"
     ]
   },
   {
     country: "Sweden",
     leagues: [
-      "Allsvenskan (Swe)"
+      "Allsvenskan (Swe - div. 1)"
     ]
   }];

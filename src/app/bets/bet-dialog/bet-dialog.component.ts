@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Day } from '../../shared/model/day.model';
 import { Match } from '../../shared/model/match.model';
 import { Bet } from '../../shared/model/bet.model';
@@ -8,11 +8,6 @@ import { Observable } from 'rxjs/internal/Observable';
 import { map, startWith } from 'rxjs/operators';
 import { leagues, LeaguesGroup } from '../../shared/leagues';
 import { bookies } from '../../shared/bookies';
-
-export interface StateGroup {
-  letter: string;
-  names: string[];
-}
 
 export const _filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -50,16 +45,10 @@ export class BetDialogComponent implements OnInit {
               private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    // this.day = new Day({});
-    // this.match = new Match({});
-    // this.bet = new Bet({});
-
     this.leagueGroupOptions = this.betForm.get('leagueGroup').valueChanges.pipe(
       startWith(''),
       map(value => this._filterGroup(value))
     );
-
-    // this.betForm.addControl('bookiesGroup', new FormControl());
 
     this.filteredBookies = this.betForm.controls['bookiesGroup'].valueChanges
       .pipe(
@@ -69,8 +58,6 @@ export class BetDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.match.bets.push(this.bet);
-    // this.day.matches.push(this.match);
     console.log(this.betForm, this.betForm.getRawValue());
     this.dialogRef.close();
     // this.dialogRef.close(this.day);

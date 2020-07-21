@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { map, startWith } from 'rxjs/operators';
 import { leagues, LeaguesGroup } from '../../shared/leagues';
 import { bookies } from '../../shared/bookies';
+//import * as teams from '../../shared/teams';
 
 export const _filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();

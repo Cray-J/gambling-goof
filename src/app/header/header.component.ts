@@ -78,7 +78,7 @@ export class HeaderComponent {
       .open(NewSeasonBetDialogComponent)
       .afterClosed()
       .subscribe(result => {
-        console.log('dialog closed');
+        console.log('dialog closed', result);
         this.seasonBetService.addBet(result);
       });
   }

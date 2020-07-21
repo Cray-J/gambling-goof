@@ -1,4 +1,5 @@
 import { Match } from './match.model';
+import moment from 'moment';
 
 export class Day {
   id: string;
@@ -18,10 +19,7 @@ export class Day {
   }
 
   public static generateId(time: Date) {
-    const day = time.getUTCDate() < 10 ? `0${time.getUTCDate()}` : time.getUTCDate();
-    const month = time.getMonth() < 10 ? `0${time.getMonth() + 1}` : time.getMonth() + 1;
-    const year = time.getFullYear();
-    const id = `${year}${month}${day}`;
+    return moment(time).format('YYYY-MM-HH-mm');
   }
 
   public calculateResult() {

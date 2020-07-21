@@ -12,6 +12,7 @@ export class Bet {
   valueReturn: number;
   betType: BetType;
   league: string;
+  verifiedResult: boolean;
 
   constructor(json) {
     this.id = json.id;
@@ -23,5 +24,6 @@ export class Bet {
     this.valueReturn = json.valueReturn;
     this.betType = json.betType;
     this.league = json.league;
+    this.verifiedResult = json.verifiedResult;
   }
 }

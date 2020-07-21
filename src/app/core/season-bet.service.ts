@@ -15,9 +15,11 @@ export class SeasonBetService {
   constructor(private db: AngularFirestore) {}
 
   public addBet(bet: SeasonBet) {
+    bet.id = SeasonBet.generateId(bet.placedDate);
     this.db
       .collection('seasonBets')
-      .add(bet)
+      .doc(bet.id)
+      .set(bet.prepareSave())
       .then(result => {
         this.seasonBets.push(bet);
         this.betsChanged.next(this.seasonBets);

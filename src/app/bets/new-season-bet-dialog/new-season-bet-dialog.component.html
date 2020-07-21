@@ -13,11 +13,34 @@
     </div>
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
       <div>
-        <label>Date</label>
+        <label>Type</label>
       </div>
       <div>
-        <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="bet.settledDate">
+        <mat-form-field>
+          <mat-select [(ngModel)]="bet.subtype" required>
+            <mat-option *ngFor="let type of subtypes" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Placed date</label>
+      </div>
+      <div>
+        <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="bet.placedDate">
         <owl-date-time #dt1></owl-date-time>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Settle date</label>
+      </div>
+      <div>
+        <input [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" [(ngModel)]="bet.settledDate">
+        <owl-date-time #dt2></owl-date-time>
       </div>
     </div>
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
@@ -45,8 +68,40 @@
         <label>Bookie</label>
       </div>
       <div>
-        <mat-form-field class="bet">
-          <input matInput [(ngModel)]="bet.bookie" required>
+        <mat-form-field class="example-full-width">
+          <input type="text"
+                 placeholder="Bookie"
+                 aria-label="Number"
+                 matInput
+                 required
+                 [(ngModel)]="bet.bookie"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of bookies" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>League</label>
+      </div>
+      <div>
+        <mat-form-field class="example-full-width">
+          <input type="text"
+                 placeholder="League"
+                 aria-label="Number"
+                 matInput
+                 required
+                 [(ngModel)]="bet.league"
+                 [matAutocomplete]="auto1">
+          <mat-autocomplete #auto1="matAutocomplete">
+            <mat-option *ngFor="let option of league" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </div>
     </div>

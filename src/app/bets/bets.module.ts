@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BetDialogComponent } from './bet-dialog/bet-dialog.component';
+import { SeasonBetTableComponent } from './season-bet-table/season-bet-table.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { BetDialogComponent } from './bet-dialog/bet-dialog.component';
     NewSeasonBetDialogComponent,
     NewGoalDialogComponent,
     NewDayDialogComponent,
-    BetDialogComponent
+    BetDialogComponent,
+    SeasonBetTableComponent
   ],
   providers: [
     MatDatepickerModule,

@@ -5,6 +5,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
 import { Bet } from '../shared/model/bet.model';
 import { dateComparator } from '../shared/comparators';
+import moment from 'moment';
 
 @Injectable({ providedIn: 'root' })
 export class SeasonBetService {
@@ -31,8 +32,12 @@ export class SeasonBetService {
       this.db
         .collection('seasonBets')
         .snapshotChanges()
-        .pipe(map(docArray => docArray.map(doc => doc.payload.doc.data() as SeasonBet)))
+        .pipe(map(docArray =>
+          docArray.map(doc => doc.payload.doc.data(),
+         )))
+        .pipe(SeasonBet.fromJsonArray)
         .subscribe((bets: SeasonBet[]) => {
+          console.log(bets);
           bets.sort(dateComparator());
           this.seasonBets = bets;
           this.betsChanged.next([...this.seasonBets]);

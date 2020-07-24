@@ -8,7 +8,6 @@ import {
   Validators
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { BetService } from '../../core/bet.service';
 import { Day } from '../../shared/model/day.model';
 import { DayService } from '../../core/day.service';
 import { $enum } from 'ts-enum-util';
@@ -33,7 +32,6 @@ export class NewDayDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<NewDayDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private betsService: BetService,
     public dayService: DayService,
     private fb: FormBuilder
   ) {}
@@ -68,14 +66,28 @@ export class NewDayDialogComponent implements OnInit {
   }
 
   public onSubmit() {
-    console.log(this.form.getRawValue());
+    console.log('new-day-dialog', this.form.getRawValue());
     const time: Date = this.form.value['date'];
     const matches = this.form.value['matches'];
+    let updatedMatches = [];
+    matches.forEach(match => {
+      console.log(match);
+      const date = match.time.split(':');
+      let newTime = new Date(time);
+      console.log('newTime', newTime);
+      let newDate = newTime.setHours(date[0], date[1]);
+      console.log(new Date(newDate));
+      match.date = new Date(newDate);
+      // newDate = newDate.setMinutes(date[1]);
+      console.log(newDate, match);
+      updatedMatches.push(match);
+      // match.date = time.setHours(date[0])
+    });
     console.log(matches);
 
     const newDay = new Day({
       date: time,
-      matches: this.form.value['matches'],
+      matches: updatedMatches,
       summary: '',
       result: 0,
       verified: false

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Bet } from '../shared/model/bet.model';
-import { BetService } from '../core/bet.service';
 import { NewGoalDialogComponent } from '../bets/new-goal-dialog/new-goal-dialog.component';
 import { GoalService } from '../core/goal.service';
 import { NewDayDialogComponent } from '../bets/new-day-dialog/new-day-dialog.component';
@@ -9,6 +8,7 @@ import { DayService } from '../core/day.service';
 import { SeasonBetService } from '../core/season-bet.service';
 import { NewSeasonBetDialogComponent } from '../bets/new-season-bet-dialog/new-season-bet-dialog.component';
 import { BetDialogComponent } from '../bets/bet-dialog/bet-dialog.component';
+import { Day } from '../shared/model/day.model';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +20,6 @@ export class HeaderComponent {
 
   constructor(
     public dialog: MatDialog,
-    private betService: BetService,
     private daysService: DayService,
     private goalService: GoalService,
     private seasonBetService: SeasonBetService
@@ -32,13 +31,10 @@ export class HeaderComponent {
         width: '800px'
       })
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((result: Day) => {
         console.log('The dialog was closed', result, !!result);
         if (!!result) {
-          this.bet = result;
-          this.bet.valueReturn = 0;
-          this.bet.id = '' + Date.now();
-          this.betService.addBet(this.bet);
+          this.daysService.save(result);
         }
         console.log(this.bet);
       });

@@ -13,7 +13,7 @@ import { Match } from '../../shared/model/match.model';
 import { DayService } from '../../core/day.service';
 
 export class DataRow {
-  constructor(public day: Day, public match: Match, public bet: Bet) {}
+  constructor(public day: Day, public match: Match, public bet: Bet, date: Date) {}
 }
 
 @Component({
@@ -51,8 +51,10 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.dayService.daysChanged.subscribe((days: Day[]) => {
       const bets = [];
-      days.forEach(d =>
-        d.matches.forEach(m => m.bets.forEach(b => bets.push(new DataRow(d, m, b))))
+      days.forEach((d: Day) =>
+        d.matches.forEach((m: Match) => m.bets.forEach((b: Bet) => {
+          bets.push(new DataRow(d, m, b, new Date(d.date)))
+        }))
       );
       this.dataSource.data = bets;
     });

@@ -4,19 +4,23 @@ import { SeasonBetType } from './season-bet-type.enum';
 import { Bookie } from './bookie.enum';
 import { Outcome } from './outcome.enum';
 import moment from 'moment';
+import { OperatorFunction } from 'rxjs/internal/types';
+import { Json } from '../json.model';
 
 export class SeasonBet extends Bet {
+  static fromJsonArray: OperatorFunction<object, SeasonBet[]> = Json.asOperatorFunctionArray(SeasonBet);
   settledDate: Date;
   placedDate: Date;
   betType = BetType.season;
   subtype: SeasonBetType;
+  league: string;
   progress: number;
   goal: number;
 
   constructor(json) {
     super(json);
-    this.settledDate = json.settledDate;
-    this.placedDate = json.placedDate;
+    this.settledDate = new Date(json.settledDate.seconds);
+    this.placedDate = new Date(json.placedDate.seconds);
     this.subtype = json.subtype;
     this.progress = json.progress || null;
     this.goal = json.goal || null;

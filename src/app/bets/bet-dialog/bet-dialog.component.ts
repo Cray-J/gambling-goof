@@ -7,7 +7,8 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { map, startWith } from 'rxjs/operators';
 import { leagues, LeaguesGroup } from '../../shared/leagues';
-import { bookies } from '../../shared/bookies';
+import { Bookie } from '../../shared/model/bookie.enum';
+import { $enum } from 'ts-enum-util';
 //import * as teams from '../../shared/teams';
 
 export const _filter = (opt: string[], value: string): string[] => {
@@ -26,18 +27,18 @@ export class BetDialogComponent implements OnInit {
   public match: Match;
   public bet: Bet;
   public leagueGroups = leagues;
-  public bookies = bookies;
+  public bookies = $enum(Bookie).getKeys();
   public filteredBookies: Observable<string[]>;
 
- betForm: FormGroup = this._formBuilder.group({
-   date: new FormControl(),
-   home: new FormControl(),
-   away: new FormControl(),
-   leagueGroup: new FormControl(),
-   bookiesGroup: new FormControl(),
-   selection: new FormControl(),
-   stake: new FormControl(),
-   odds: new FormControl('100')
+  betForm: FormGroup = this._formBuilder.group({
+    date: new FormControl(),
+    home: new FormControl(),
+    away: new FormControl(),
+    leagueGroup: new FormControl(),
+    bookiesGroup: new FormControl(),
+    selection: new FormControl(),
+    stake: new FormControl(100),
+    odds: new FormControl()
   });
 
   leagueGroupOptions: Observable<LeaguesGroup[]>;
@@ -59,9 +60,27 @@ export class BetDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.betForm, this.betForm.getRawValue());
-    this.dialogRef.close();
-    // this.dialogRef.close(this.day);
+    const formVal = this.betForm.getRawValue();
+    const day: Day = new Day(
+      {
+        date: formVal.date,
+        result: 0,
+        matches: [
+          {
+            date: formVal.date,
+            home: formVal.home,
+            away: formVal.away,
+            league: formVal.leagueGroup,
+            bets: [{
+              bookie: formVal.bookiesGroup,
+              selection: formVal.selection,
+              stake: formVal.stake,
+              odds: formVal.odds
+            }],
+          }
+        ]}
+    );
+    this.dialogRef.close(day);
   }
 
   onCancel() {

@@ -7,6 +7,7 @@ import { SeasonBetType } from '../../shared/model/season-bet-type.enum';
 import { leagues } from '../../shared/leagues';
 import { count } from 'rxjs/operators';
 import { Outcome } from '../../shared/model/outcome.enum';
+import * as _moment from 'moment';
 
 @Component({
   selector: 'app-new-season-bet-dialog',
@@ -30,8 +31,8 @@ export class NewSeasonBetDialogComponent implements OnInit {
     this.bet = new SeasonBet({
       bookie: undefined,
       odds: 0,
-      settledDate: undefined,
-      placedDate: undefined,
+      settledDate: _moment.now(),
+      placedDate: _moment.now(),
       outcome: Outcome.awaiting,
       stake: 0,
       valueReturn: 0,

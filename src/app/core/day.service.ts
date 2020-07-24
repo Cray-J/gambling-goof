@@ -15,21 +15,23 @@ export class DayService {
 
   constructor(private db: AngularFirestore) {}
 
-  public save(day: Day) {
+  public save(day) {
     const existingDay = this.days.find(p => p.id === day.id);
+    console.log(existingDay, day);
     if (existingDay) {
+      console.log('found day');
       day.matches.forEach((match: Match) => {
-        const existingMatch = existingDay.matches.find(
-          p => p.home === match.home && p.away === match.away
-        );
+        const existingMatch = existingDay.matches.find(p => p.home === match.home && p.away === match.away);
         existingMatch ? existingMatch.bets.push(...match.bets) : existingDay.matches.push(match);
       });
+      console.log('Trying to save', existingDay.prepareSave());
       this.db
         .collection('days')
         .doc(existingDay.id)
         .set(existingDay.prepareSave())
         .then(result => console.log('Updated:', result));
     } else {
+      console.log('did not find day, saving', day.prepareSave());
       this.days.push(day);
       this.db
         .collection('days')
@@ -47,6 +49,7 @@ export class DayService {
         .collection('days')
         .snapshotChanges()
         .pipe(map(docArray => docArray.map(doc => new Day(doc.payload.doc.data()))))
+        .pipe(Day.fromJsonArray)
         .subscribe((days: Day[]) => {
           console.log('response', days);
           days.sort(dateComparator());

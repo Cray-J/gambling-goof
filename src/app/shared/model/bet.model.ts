@@ -11,19 +11,17 @@ export class Bet {
   outcome: Outcome;
   valueReturn: number;
   betType: BetType;
-  league: string;
   verifiedResult: boolean;
 
   constructor(json) {
-    this.id = json.id;
+    this.id = json.id || '';
     this.selection = json.selection;
     this.stake = json.stake;
     this.odds = json.odds;
     this.bookie = json.bookie;
-    this.outcome = json.outcome;
-    this.valueReturn = json.valueReturn;
-    this.betType = json.betType;
-    this.league = json.league;
-    this.verifiedResult = json.verifiedResult;
+    this.outcome = json.outcome || Outcome.awaiting;
+    this.valueReturn = json.valueReturn || 0;
+    this.betType = json.betType || null;
+    this.verifiedResult = json.verifiedResult || false;
   }
 }

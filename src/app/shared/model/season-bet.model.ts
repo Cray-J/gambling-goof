@@ -10,12 +10,16 @@ export class SeasonBet extends Bet {
   placedDate: Date;
   betType = BetType.season;
   subtype: SeasonBetType;
+  progress: number;
+  goal: number;
 
   constructor(json) {
     super(json);
     this.settledDate = json.settledDate;
     this.placedDate = json.placedDate;
     this.subtype = json.subtype;
+    this.progress = json.progress || null;
+    this.goal = json.goal || null;
   }
 
   public prepareSave() {
@@ -24,7 +28,7 @@ export class SeasonBet extends Bet {
       settledDate: this.settledDate,
       placedDate: this.placedDate,
       betType: this.betType,
-      subType: this.subtype,
+      subtype: this.subtype,
       selection: this.selection,
       stake: this.stake,
       odds: this.odds,
@@ -32,7 +36,9 @@ export class SeasonBet extends Bet {
       outcome: this.outcome,
       valueReturn: this.valueReturn,
       league: this.league,
-      verifiedResult: this.verifiedResult || false
+      verifiedResult: this.verifiedResult || false,
+      progress: this.progress,
+       goal: this.goal,
     };
   }
 

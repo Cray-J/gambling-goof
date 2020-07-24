@@ -14,16 +14,18 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BetDialogComponent } from './bet-dialog/bet-dialog.component';
 import { SeasonBetTableComponent } from './season-bet-table/season-bet-table.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
-  imports: [
-    CoreModule,
-    FlexModule,
-    ReactiveFormsModule,
-    SharedModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
+    imports: [
+        CoreModule,
+        FlexModule,
+        ReactiveFormsModule,
+        SharedModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatExpansionModule
+    ],
   declarations: [
     BetsOverviewComponent,
     BetsComponent,

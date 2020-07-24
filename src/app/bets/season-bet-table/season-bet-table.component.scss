@@ -121,6 +121,11 @@ mat-cell.mat-cell.cdk-column-return {
   flex-direction: row-reverse;
 }
 
+mat-header-cell.mat-header-cell.cdk-column-progress,
+mat-cell.mat-cell.cdk-column-progress {
+  padding-left: 10px;
+}
+
 .mat-form-field {
   max-width: 100px;
 }

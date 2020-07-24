@@ -1,4 +1,4 @@
-<table mat-table
+<!--<table mat-table
        *ngIf="!!days"
        [dataSource]="days"
        multiTemplateDataRows
@@ -6,7 +6,7 @@
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef>Day</th>
     <td mat-cell *matCellDef="let element">{{element.date.toDate() | date:'dd MMM' }}</td>
-    <!--<mat-cell *matCellDef="let element">{{element.date.toDate() | date:'dd MMM HH:mm '}}</mat-cell>-->
+    &lt;!&ndash;<mat-cell *matCellDef="let element">{{element.date.toDate() | date:'dd MMM HH:mm '}}</mat-cell>&ndash;&gt;
   </ng-container>
   <ng-container matColumnDef="summary">
     <th mat-header-cell *matHeaderCellDef>Summary</th>
@@ -24,7 +24,7 @@
     <td mat-cell *matCellDef="let element">{{element.result || 0}}</td>
   </ng-container>
 
-  <!-- Expanded Content Column - Detail row -->
+  &lt;!&ndash; Expanded Content Column - Detail row &ndash;&gt;
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
       <div class="example-element-detail"
@@ -38,7 +38,7 @@
             <div class="betDetails" *ngFor="let bet of match.bets">
               <div class="selection">{{bet.selection}}</div>
               <div class="odds">
-                <!--<ng-container matColumnDef="outcome">
+                &lt;!&ndash;<ng-container matColumnDef="outcome">
                     <mat-form-field>
                       <mat-select [ngModel]="element.outcome"
                                   (ngModelChange)="updateValue(element, bet, $event)">
@@ -48,7 +48,7 @@
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
-                </ng-container>-->
+                </ng-container>&ndash;&gt;
               </div>
               <div class="stake">{{bet.stake}}</div>
               <div class="outcome">{{bet.outcome}}</div>
@@ -67,4 +67,57 @@
   >
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-</table>
+</table-->
+<mat-expansion-panel *ngFor="let day of allDays"
+                     [class.winningDay]="day.result > 0"
+                     [class.losingDay]="day.result < 0">
+  <mat-expansion-panel-header>
+    <div class="headerContent">
+      <div class="day">
+        <div>
+          <div class="label">Day</div>
+          <div class="valueRow">Monday 28/4</div>
+        </div>
+      </div>
+      <div class="games">
+        <div>
+          <div class="label">Games</div>
+          <div class="valueRow">Ranheim - Tromsø, Watford - Man City, Grindavik - Throttur</div>
+        </div>
+      </div>
+      <div class="winRatio">
+        <div>
+          <div class="label">Outcome</div>
+          <div class="valueRow">4/4</div>
+        </div>
+      </div>
+      <div class="result">
+        <div>
+          <div class="label">Result</div>
+          <div class="valueRow">{{day.result}}</div>
+        </div>
+      </div>
+      <div class="verified">
+        <div>
+          <div class="label">Verified</div>
+          <div>
+            <mat-icon *ngIf="day.verified" [ngStyle]="{'color': 'green'}">check_circle</mat-icon>
+            <mat-icon *ngIf="!day.verified">check_circle_outline</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel-header>
+  <div *ngFor="let bet of day.bets">
+    <div class="matchRow">
+      <div class="match">{{bet.match}}</div>
+      <div class="selection">{{bet.selection}}</div>
+      <div class="stake">{{bet.stake}} @ {{bet.odds}}</div>
+      <div class="outcome"></div>
+      <div class="verified">
+        <mat-icon *ngIf="bet.verified" [ngStyle]="{'color': 'green'}">check_circle</mat-icon>
+        <mat-icon *ngIf="!bet.verified">check_circle_outline</mat-icon>
+      </div>
+    </div>
+  </div>
+</mat-expansion-panel>

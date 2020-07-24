@@ -8,6 +8,25 @@ import { BetType } from '../../shared/model/bet-type.enum';
 import { ToText } from '../../shared/model/to-text';
 import { Bet } from '../../shared/model/bet.model';
 import { $enum } from 'ts-enum-util';
+import { SeasonBet } from '../../shared/model/season-bet.model';
+import moment from 'moment';
+
+interface MatchRow {
+  verified: boolean,
+  match: string,
+  selection: string,
+  stake: number,
+  odds: number,
+  bookie: Bookie
+}
+
+interface DayRow {
+  time: Date,
+  result: number,
+  verified: boolean,
+  bets: MatchRow[]
+}
+
 
 @Component({
   selector: 'day-table',
@@ -25,9 +44,57 @@ export class DayTableComponent implements OnInit {
   public displayedColumns = ['date', 'bets', 'result'];
   public subRows = ['time', 'match', 'selection', 'stake', 'odds', 'return'];
   expandedElement: Day | null;
-  public days: Day[];
+  //public days: Day[];
   public toText = ToText;
   public outcomes = $enum(Outcome).getKeys();
+  public allDays: DayRow[] = [
+    {
+      result: 200,
+      verified: true,
+      time: null,
+      bets: [
+        {
+          verified: true,
+          match: 'Watford v Man City',
+          selection: 'Over 4.5 goals',
+          stake: 100,
+          odds: 1.99,
+          bookie: Bookie.unibet
+        },
+        {
+          verified: false,
+          match: 'Ranheim v Tromsø',
+          selection: 'Over 3.5 goals',
+          stake: 100,
+          odds: 1.79,
+          bookie: Bookie.unibet
+        },
+        {
+          verified: true,
+          match: 'Grindavik v Afturelding',
+          selection: 'Over 4.75 goals',
+          stake: 100,
+          odds: 2.23,
+          bookie: Bookie.unibet
+        }
+      ]
+    },
+    {
+      result: -200,
+      time: null,
+      verified: true,
+      bets: [
+        {
+          verified: true,
+          match: 'Aston Villa v Arsenal',
+          selection: 'Over 3.5 goals',
+          stake: 100,
+          odds: 1.99,
+          bookie: Bookie.unibet
+        }
+      ]
+    }
+  ];
 
   constructor(private dayService: DayService) {}
 
@@ -35,7 +102,7 @@ export class DayTableComponent implements OnInit {
     console.log('oninit');
     this.dayService.daysChanged.subscribe(result => {
       console.log('got days: ', result);
-      this.days = result;
+      //this.days = result;
     });
   }
 

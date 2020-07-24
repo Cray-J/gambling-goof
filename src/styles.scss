@@ -23,6 +23,31 @@ body{
   color: red;
 }
 
+.mat-progress-bar-fill::after {
+  // background-color: purple;
+  background-color: #1E457C;
+}
+
+mat-progress-bar.mat-progress-bar.complete .mat-progress-bar-fill::after {
+  background-color: green;
+}
+
+mat-progress-bar.mat-progress-bar {
+  height: 8px;
+}
+
+.mat-progress-bar-buffer {
+  background: #E4E8EB;
+}
+
+.mat-progress-bar {
+  border-radius: 2px;
+}
+
+.mat-progress-linear .mat-container .mat-bar{
+  height: 20px;
+}
+
 
 .editIcon {
   font-size: 16px !important;

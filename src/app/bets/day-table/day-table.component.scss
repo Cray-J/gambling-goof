@@ -104,3 +104,72 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
   opacity: 0.5;
 }
+
+//
+mat-expansion-panel:first-of-type {
+  margin-top: 20px;
+}
+
+mat-expansion-panel {
+  margin-left: 40px;
+  width: 80%;
+  margin-bottom: 20px;
+
+  div.headerContent,
+  div.matchRow {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  div.label {
+    font-size: 11px;
+    opacity: 0.5;
+  }
+
+  div.day {
+    flex: 2;
+  }
+
+  div.games {
+    flex: 10;
+  }
+
+  div.winRatio {
+    flex: 2;
+  }
+
+  div.result {
+    flex: 2;
+  }
+
+  div.verified {
+    flex: 2;
+  }
+
+  div.valueRow {
+    line-height: 24px;
+  }
+
+  div.matchRow {
+    div.match {
+      flex: 4;
+    }
+
+    div.selection {
+      flex: 2;
+    }
+
+    div.stake {
+      flex: 2;
+    }
+  }
+}
+
+mat-expansion-panel.winningDay {
+  border-bottom: 2px solid green;
+}
+
+mat-expansion-panel.losingDay {
+  border-bottom: 2px solid red;
+}

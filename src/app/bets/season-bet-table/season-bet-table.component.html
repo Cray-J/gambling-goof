@@ -43,7 +43,6 @@
 
     <ng-container matColumnDef="return" >
       <mat-header-cell *matHeaderCellDef>Return</mat-header-cell>
-      <mat-cell></mat-cell>
       <mat-cell *matCellDef="let element"
                 [class.win]="element.outcome === outcome.win"
                 [class.loss]="element.outcome === outcome.loss"
@@ -51,6 +50,17 @@
                 [class.half-loss]="element.outcome === outcome.halfLoss"
                 [class.push-void]="element.outcome === outcome._void || element.outcome === outcomes.push"
       >{{ element.valueReturn | number : '1.2-2'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="progress">
+      <mat-header-cell *matHeaderCellDef>Progress</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-progress-bar [class.complete]="element.progress >= element.goal"
+                          *ngIf="element.subtype === 'player_goals'"
+                          mode="determinate"
+                          value="{{element.progress / element.goal * 100}}"
+                          color="'red'"></mat-progress-bar>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -13,6 +13,8 @@ import { DataRow } from '../bets-table/bets-table.component';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { SeasonBetService } from '../../core/season-bet.service';
 import { SeasonBet } from '../../shared/model/season-bet.model';
+import { BetType } from '../../shared/model/bet-type.enum';
+import { SeasonBetType } from '../../shared/model/season-bet-type.enum';
 
 @Component({
   selector: 'season-bet-table',
@@ -27,10 +29,12 @@ export class SeasonBetTableComponent implements OnInit, OnDestroy {
     'bookie',
     'stake',
     'outcome',
-    'return'
+    'return',
+    'progress'
   ];
   public dataSource = new MatTableDataSource<SeasonBet>();
   public outcomes = $enum(Outcome).getKeys();
+  public type = SeasonBetType;
   public outcome = Outcome;
   public toText = ToText;
   private subscriptions: Subscription = new Subscription();

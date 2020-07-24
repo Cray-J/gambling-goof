@@ -22,6 +22,7 @@ import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule
 } from 'ng-pick-datetime';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const materialModules = [
   MatAutocompleteModule,
@@ -41,6 +42,7 @@ const materialModules = [
   MatToolbarModule,
   MatMomentDateModule,
   MatNativeDateModule,
+  MatProgressBarModule,
 ];
 
 @NgModule({

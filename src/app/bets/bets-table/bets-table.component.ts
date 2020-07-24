@@ -13,7 +13,7 @@ import { Match } from '../../shared/model/match.model';
 import { DayService } from '../../core/day.service';
 
 export class DataRow {
-  constructor(public day: Day, public match: Match, public bet: Bet, date: Date) {}
+  constructor(public day: Day, public match: Match, public bet: Bet) {}
 }
 
 @Component({
@@ -53,7 +53,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
       const bets = [];
       days.forEach((d: Day) =>
         d.matches.forEach((m: Match) => m.bets.forEach((b: Bet) => {
-          bets.push(new DataRow(d, m, b, new Date(d.date)))
+          bets.push(new DataRow(d, m, b))
         }))
       );
       this.dataSource.data = bets;

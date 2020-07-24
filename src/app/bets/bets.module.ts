@@ -17,15 +17,15 @@ import { SeasonBetTableComponent } from './season-bet-table/season-bet-table.com
 import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
-    imports: [
-        CoreModule,
-        FlexModule,
-        ReactiveFormsModule,
-        SharedModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatExpansionModule
-    ],
+  imports: [
+    CoreModule,
+    FlexModule,
+    ReactiveFormsModule,
+    SharedModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatExpansionModule
+  ],
   declarations: [
     BetsOverviewComponent,
     BetsComponent,

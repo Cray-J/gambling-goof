@@ -5,30 +5,43 @@ export interface LeaguesGroup {
 
 export const leagues: LeaguesGroup[] = [
   {
+    country: "Australia",
+    leagues: [
+      "A-League (AUS #1)"
+    ]
+  },
+  {
     country: "Iceland",
     leagues: [
-      "Pepsideild / Úrvalsdeild (ISL - div.1)",
-      "Inkasso-deildin (ISL - div.2)"
+      "Pepsideild / Úrvalsdeild (ISL #1)",
+      "Inkasso-deildin (ISL #2)"
+    ]
+  },
+  {
+    country: "Italy",
+    leagues: [
+      "Serie A (ITA #1)"
     ]
   },
   {
     country: "Norway",
     leagues: [
-      "Eliteserien (Nor - div.1)",
-      "Obos-ligaen (Nor - div.2)"
+      "Eliteserien (Nor #1)",
+      "Obos-ligaen (Nor #2)",
+      "Postnordligaen (Nor #3)"
     ]
   },
   {
     country: "Sweden",
     leagues: [
-      "Allsvenskan (Swe - div.1)",
-      "Superettan (Swe - div.2)"
+      "Allsvenskan (Swe #1)",
+      "Superettan (Swe #2)"
     ]
   },
   {
     country: "USA",
     leagues: [
-      "MLS (USA - div.1)"
+      "MLS (USA #1)"
     ]
   }
 ];

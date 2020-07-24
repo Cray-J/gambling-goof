@@ -14,7 +14,7 @@ export class Match {
   constructor(json) {
     // this.id = json['id'];
     this.home = json['home'];
-    this.away = json['home'];
+    this.away = json['away'];
     this.date = json['date'] instanceof Date ? json['date'] : json['date'].toDate();
     this.valueReturn = json.valueReturn || 0;
     this.league = json['league'];

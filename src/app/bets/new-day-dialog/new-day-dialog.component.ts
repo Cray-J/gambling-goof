@@ -13,6 +13,9 @@ import { DayService } from '../../core/day.service';
 import { $enum } from 'ts-enum-util';
 import { Bookie } from '../../shared/model/bookie.enum';
 import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { leagues, LeaguesGroup } from '../../shared/leagues';
+import { _filter } from '../bet-dialog/bet-dialog.component';
 
 @Component({
   selector: 'app-new-day-dialog',
@@ -23,9 +26,7 @@ export class NewDayDialogComponent implements OnInit {
   // https://stackblitz.com/edit/angular-dffny7?file=app/app.component.html
   // https://stackoverflow.com/questions/48436145/angular-reactive-forms-with-nested-form-arrays/48527939
   date = new FormControl(new Date());
-  arr: FormArray;
   public bookies = $enum(Bookie).getKeys();
-  filteredOptions: Observable<string[]>[] = [];
   public days: Day[];
   form: FormGroup;
 
@@ -78,6 +79,7 @@ export class NewDayDialogComponent implements OnInit {
       let newDate = newTime.setHours(date[0], date[1]);
       console.log(new Date(newDate));
       match.date = new Date(newDate);
+      match.league = '';
       // newDate = newDate.setMinutes(date[1]);
       console.log(newDate, match);
       updatedMatches.push(match);
@@ -96,44 +98,6 @@ export class NewDayDialogComponent implements OnInit {
     this.dayService.save(newDay);
     this.dialogRef.close();
   }
-
-  // public onSubmit1() {
-  //   console.log(this.form.getRawValue());
-  //   this.dialogRef.close();
-  //   console.log(this.form.value);
-  //   const time: Date = this.form.value['date'];
-  //   console.log(time);
-  //   const day = time.getDay() < 10 ? `0${time.getDay()}` : time.getDay();
-  //   const month = time.getMonth() < 10 ? `0${time.getMonth()}` : time.getMonth();
-  //   const year = time.getFullYear();
-  //   const id = `${year}${month}${day}`;
-  //   const bets = this.form.value['arr'];
-  //   // const newDay = new Day(id, time, []);
-  //   console.log('bets: ', bets, newDay);
-  //   bets.forEach(val => {
-  //     if (val.home !== '') {
-  //       const bet = {};
-  //       // this.updateTeams(val.home, val.away);
-  //       bet['match'] = val.home + ' v ' + val.away;
-  //       bet['selection'] = val.selection;
-  //       bet['stake'] = val.stake;
-  //       bet['odds'] = val.odds;
-  //       bet['bookie'] = val.bookie;
-  //
-  //       const firstTime = val.time;
-  //       const splitTime = firstTime.split(':');
-  //       console.log(time, splitTime);
-  //       time.setHours(+splitTime[0], +splitTime[1]);
-  //       bet['date'] = time;
-  //       console.log(bet['date']);
-  //       bet['id'] = '' + Date.now();
-  //      // newDay.bets.push(bet as Bet);
-  //       this.betsService.addBet(bet);
-  //     }
-  //   });
-  //   this.dayService.save(newDay);
-  //   this.dialogRef.close();
-  // }
 
   public initMatch() {
     return this.fb.group({

@@ -55,6 +55,9 @@
     <ng-container matColumnDef="progress">
       <mat-header-cell *matHeaderCellDef>Progress</mat-header-cell>
       <mat-cell *matCellDef="let element">
+        <div class="progressText" *ngIf="element.subtype === 'player_goals'">
+          {{element.progress}}/{{element.goal}}
+        </div>
         <mat-progress-bar [class.complete]="element.progress >= element.goal"
                           *ngIf="element.subtype === 'player_goals'"
                           mode="determinate"

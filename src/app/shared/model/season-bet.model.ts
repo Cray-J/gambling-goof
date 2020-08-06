@@ -14,16 +14,12 @@ export class SeasonBet extends Bet {
   betType = BetType.season;
   subtype: SeasonBetType;
   league: string;
-  progress: number;
-  goal: number;
 
   constructor(json) {
     super(json);
-    this.settledDate = new Date(json.settledDate.seconds);
-    this.placedDate = new Date(json.placedDate.seconds);
+    this.settledDate = json['settledDate'] instanceof Date ? json['settledDate'] : json['settledDate'].toDate();
+    this.placedDate = json['placedDate'] instanceof Date ? json['placedDate'] : json['placedDate'].toDate();
     this.subtype = json.subtype;
-    this.progress = json.progress || null;
-    this.goal = json.goal || null;
   }
 
   public prepareSave() {
@@ -41,8 +37,6 @@ export class SeasonBet extends Bet {
       valueReturn: this.valueReturn,
       league: this.league,
       verifiedResult: this.verifiedResult || false,
-      progress: this.progress,
-       goal: this.goal,
     };
   }
 
@@ -50,6 +44,16 @@ export class SeasonBet extends Bet {
     const day = time.getUTCDate() < 10 ? `0${time.getUTCDate()}` : time.getUTCDate();
     const month = time.getMonth() < 10 ? `0${time.getMonth() + 1}` : time.getMonth() + 1;
     console.log(moment(time).format('YYYY-MM-DD:mm'));
-    return moment(time).format('YYYY-MM-DD-HH:mm');
+    return `${moment(time).format('YYYY-MM-DD-HH:mm')} - ${SeasonBet.getRandomArbitrary(0, 1000)}` ; // add random number
+  }
+
+  private static getRandomArbitrary(min, max): number {
+    return Math.random() * (max - min) + min;
+  }
+
+  private static getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
   }
 }

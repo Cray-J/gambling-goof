@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DayService } from '../../core/day.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Day } from '../../shared/model/day.model';
@@ -12,19 +12,18 @@ import { SeasonBet } from '../../shared/model/season-bet.model';
 import moment from 'moment';
 
 interface MatchRow {
-  verified: boolean,
   match: string,
-  selection: string,
-  stake: number,
-  odds: number,
-  bookie: Bookie
+  bets: Bet[];
 }
 
 interface DayRow {
   time: Date,
   result: number,
   verified: boolean,
-  bets: MatchRow[]
+  bets: MatchRow[],
+  outcome: number,
+  totalBets,
+  matchesInformation: string
 }
 
 
@@ -40,76 +39,51 @@ interface DayRow {
     ])
   ]
 })
-export class DayTableComponent implements OnInit {
-  public displayedColumns = ['date', 'bets', 'result'];
-  public subRows = ['time', 'match', 'selection', 'stake', 'odds', 'return'];
-  expandedElement: Day | null;
-  //public days: Day[];
-  public toText = ToText;
-  public outcomes = $enum(Outcome).getKeys();
-  public allDays: DayRow[] = [
-    {
-      result: 200,
-      verified: true,
-      time: null,
-      bets: [
-        {
-          verified: true,
-          match: 'Watford v Man City',
-          selection: 'Over 4.5 goals',
-          stake: 100,
-          odds: 1.99,
-          bookie: Bookie.unibet
-        },
-        {
-          verified: false,
-          match: 'Ranheim v Tromsø',
-          selection: 'Over 3.5 goals',
-          stake: 100,
-          odds: 1.79,
-          bookie: Bookie.unibet
-        },
-        {
-          verified: true,
-          match: 'Grindavik v Afturelding',
-          selection: 'Over 4.75 goals',
-          stake: 100,
-          odds: 2.23,
-          bookie: Bookie.unibet
-        }
-      ]
-    },
-    {
-      result: -200,
-      time: null,
-      verified: true,
-      bets: [
-        {
-          verified: true,
-          match: 'Aston Villa v Arsenal',
-          selection: 'Over 3.5 goals',
-          stake: 100,
-          odds: 1.99,
-          bookie: Bookie.unibet
-        }
-      ]
-    }
-  ];
+export class DayTableComponent implements OnInit, OnDestroy {
+  public subs;
+  public dayRows: DayRow[] = [];
 
   constructor(private dayService: DayService) {}
 
-  public ngOnInit(): void {
-    console.log('oninit');
-    this.dayService.daysChanged.subscribe(result => {
-      console.log('got days: ', result);
-      //this.days = result;
-    });
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
-  public numberOfBets(day: Day) {
-    let bets = 0;
-    day.matches.map(m => (bets += m.bets.length));
-    return bets;
+  public ngOnInit(): void {
+    console.log('oninit');
+
+    this.subs = this.dayService.daysChanged.subscribe(result => {
+      this.dayRows = [];
+      console.log('got days: ', result);
+      result.forEach(day => {
+        let bets = 0;
+        let outcome = 0;
+        day.matches.forEach(m => {
+          bets += m.bets.length;
+          outcome += m.bets.filter(b => b.valueReturn > 0).length;
+        });
+        let matchString = '';
+        day.matches.map((m, i) => matchString += `${m.home} v ${m.away}${i === day.matches.length -1 ? ' ' : ', '} `);
+
+        let matchRows: MatchRow[] = [];
+        day.matches.forEach(m => {
+           matchRows.push({
+             match: `${m.home} v ${m.away}`,
+             bets: m.bets
+           })
+        });
+
+        this.dayRows.push({
+          bets: matchRows,
+          result: day.result,
+          time: day.date,
+          verified: day.verified,
+          totalBets: bets,
+          outcome: outcome,
+          matchesInformation: matchString
+        });
+      });
+    });
   }
 
   updateValue(day: Day, bet: Bet, outcome: Outcome) {
@@ -135,4 +109,5 @@ export class DayTableComponent implements OnInit {
     console.log(day.result);
     this.dayService.update(day);
   }
+
 }

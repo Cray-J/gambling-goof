@@ -116,6 +116,12 @@ div.actionRow {
   width: calc(40vw);
 }
 
+hr {
+  width: 100%;
+  border: 1px solid red;
+}
+
+
 .evenRow {
   background-color: #ccffcc;
 }
@@ -123,3 +129,4 @@ div.actionRow {
 .oddRow {
   background-color: #cce6ff;
 }
+

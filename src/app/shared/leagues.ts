@@ -11,10 +11,18 @@ export const leagues: LeaguesGroup[] = [
     ]
   },
   {
+    country: "England",
+    leagues: [
+      "Premier League (ENG #1)",
+      "FA Cup (ENG)"
+    ]
+  },
+  {
     country: "Iceland",
     leagues: [
       "Pepsideild / Úrvalsdeild (ISL #1)",
-      "Inkasso-deildin (ISL #2)"
+      "Inkasso-deildin (ISL #2)",
+      "Cup (ISL)"
     ]
   },
   {

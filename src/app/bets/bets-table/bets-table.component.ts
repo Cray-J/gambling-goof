@@ -98,11 +98,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     );
   }
 
-  public totalDays(): number {
-    const diff = +new Date() - +this.startDate;
-    return Math.ceil(diff / 1000 / 60 / 60 / 24);
-  }
-
   public calculateROI(): number {
     let invested = 0;
     let returned = 0;

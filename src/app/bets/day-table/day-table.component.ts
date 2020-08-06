@@ -1,15 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DayService } from '../../core/day.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Day } from '../../shared/model/day.model';
-import { Bookie } from '../../shared/model/bookie.enum';
-import { Outcome } from '../../shared/model/outcome.enum';
-import { BetType } from '../../shared/model/bet-type.enum';
-import { ToText } from '../../shared/model/to-text';
 import { Bet } from '../../shared/model/bet.model';
-import { $enum } from 'ts-enum-util';
-import { SeasonBet } from '../../shared/model/season-bet.model';
-import moment from 'moment';
 
 interface MatchRow {
   match: string,
@@ -50,8 +42,6 @@ export class DayTableComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    console.log('oninit');
-
     this.subs = this.dayService.daysChanged.subscribe(result => {
       this.dayRows = [];
       console.log('got days: ', result);
@@ -85,29 +75,4 @@ export class DayTableComponent implements OnInit, OnDestroy {
       });
     });
   }
-
-  updateValue(day: Day, bet: Bet, outcome: Outcome) {
-    console.log(day, bet, outcome);
-    bet.outcome = outcome;
-    bet.valueReturn = $enum.mapValue(outcome).with({
-      [Outcome.win]: bet.stake * bet.odds - bet.stake,
-      [Outcome.halfWin]: (bet.stake * bet.odds - bet.stake) / 2,
-      [Outcome.push]: 0,
-      [Outcome._void]: 0,
-      [Outcome.awaiting]: null,
-      [Outcome.halfLoss]: -bet.stake / 2,
-      [Outcome.loss]: -bet.stake
-    });
-    console.log('updating', bet);
-    day.matches.forEach(m => {
-      m.bets.forEach(b => {
-        if (b.valueReturn) {
-          day.result += b.valueReturn;
-        }
-      });
-    });
-    console.log(day.result);
-    this.dayService.update(day);
-  }
-
 }

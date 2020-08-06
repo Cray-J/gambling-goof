@@ -6,12 +6,8 @@
       <div fxLayout="column" class="statsColumn">
         <div class="stats">Number of bets: {{dataSource.data.length}}</div>
         <div class="stats">Total: {{total() | number:'1.0-0'}}</div>
-        <div class="stats">Total + per day: {{total()/totalDays() | number:'1.0-0'}}</div>
       </div>
       <div fxLayout="column" class="statsColumn">
-        <div class="stats">Number of days: {{totalDays() | number:'1.0-0'}}</div>
-        <div class="stats">Expected total: +{{totalDays() * 100}}</div>
-        <div class="stats">Difference: {{total() - totalDays() * 100 | number:'1.0-0'}}</div>
       </div>
         <div fxLayout="column" class="statsColumn">
           <div class="stats">ROI: {{calculateROI() | number:'1.2-2'}}%</div>

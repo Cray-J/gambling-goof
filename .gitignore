@@ -5,6 +5,7 @@
 /dist-server
 /tmp
 /out-tsc
+.firebase/hosting*.cache
 
 # dependencies
 /node_modules

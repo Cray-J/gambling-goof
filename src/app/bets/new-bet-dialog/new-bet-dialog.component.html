@@ -1,23 +1,33 @@
 <h1 mat-dialog-title fxLayoutAlign="center center">Add a new Bet</h1>
-<mat-dialog-content >
+<mat-dialog-content>
   <div>
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
     <div>
-      <label>Match</label>
+      <label>Home</label>
     </div>
     <div>
       <mat-form-field class="match">
-        <input matInput [(ngModel)]="data.bet.match" required>
+        <input matInput [(ngModel)]="data[1].home" required>
       </mat-form-field>
     </div>
   </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div>
+        <label>Away</label>
+      </div>
+      <div>
+        <mat-form-field class="match">
+          <input matInput [(ngModel)]="data[1].away" required>
+        </mat-form-field>
+      </div>
+    </div>
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
     <div>
       <label>Selection</label>
     </div>
     <div>
       <mat-form-field>
-        <input matInput [(ngModel)]="data.bet.selection" required>
+        <input matInput [(ngModel)]="data[2].selection" required>
       </mat-form-field>
     </div>
   </div>
@@ -26,7 +36,7 @@
       <label>Date</label>
     </div>
     <div>
-      <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="data.bet.date">
+      <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="data[0].date">
       <owl-date-time #dt1></owl-date-time>
     </div>
   </div>
@@ -36,22 +46,8 @@
       </div>
       <div>
         <mat-form-field>
-          <mat-select [(ngModel)]="data.bet.betType" required>
+          <mat-select [(ngModel)]="data[2].betType" required>
             <mat-option *ngFor="let type of betTypes" [value]="type">
-              {{type}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-    <div fxLayoutAlign="space-between center" fxLayoutGap="20px">
-      <div>
-        <label>Confidence</label>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-select [(ngModel)]="data.bet.confidence" required>
-            <mat-option *ngFor="let type of levels" [value]="type">
               {{type}}
             </mat-option>
           </mat-select>
@@ -64,7 +60,7 @@
     </div>
     <div>
       <mat-form-field>
-        <mat-select [(ngModel)]="data.bet.bookie" required>
+        <mat-select [(ngModel)]="data[2].bookie" required>
           <mat-option *ngFor="let bookie of bookies" [value]="bookie">
             {{bookie}}
           </mat-option>
@@ -77,7 +73,7 @@
       <label>Stake</label>
     </div>
     <mat-form-field class="numberInput">
-      <input matInput type="number" [(ngModel)]="data.bet.stake" required>
+      <input matInput type="number" [(ngModel)]="data[2].stake" required>
     </mat-form-field>
   </div>
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
@@ -86,12 +82,12 @@
     </div>
     <div>
       <mat-form-field class="numberInput">
-        <input matInput type="number" [(ngModel)]="data.bet.odds" required>
+        <input matInput type="number" [(ngModel)]="data[2].odds" required>
       </mat-form-field>
     </div>
   </div>
  <!-- <div fxLayout="row">
-      <!--  <mat-form-field>
+      <mat-form-field>
           <mat-select placeholder="Outcome"  ngModel name="outcome">
             <mat-option *ngFor="let outcome of outcomes | appKeys" [value]="outcome.key">
               {{outcome.value}}
@@ -107,7 +103,7 @@
  <!-- </div> -->
   <mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
     <button mat-button (click)="onNoClick()">Cancel</button>
-    <button mat-button [mat-dialog-close]="data.bet" cdkFocusInitial>Submit</button>
+    <button mat-button [mat-dialog-close]="data[0]" cdkFocusInitial>Submit</button>
   </mat-dialog-actions>
   </div>
 </mat-dialog-content>

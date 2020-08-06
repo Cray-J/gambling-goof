@@ -1,0 +1,115 @@
+<h1 mat-dialog-title fxLayoutAlign="center center">Add a new Bet</h1>
+<mat-dialog-content>
+  <form [formGroup]="betForm" autocomplete="off">
+    <div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="40px">
+        <div>
+          <label>
+            Date
+          </label>
+        </div>
+        <div>
+          <input [owlDateTime]="dt1"
+                 [owlDateTimeTrigger]="dt1"
+                 formControlName="date">
+          <owl-date-time #dt1></owl-date-time>
+        </div>
+        <div>
+          <label>League</label>
+        </div>
+        <div>
+          <mat-form-field>
+            <input type="text"
+                   matInput
+                   placeholder="League"
+                   required
+                   formControlName="leagueGroup"
+                   [matAutocomplete]="autoGroup">
+            <mat-autocomplete #autoGroup=matAutocomplete>
+              <mat-optgroup *ngFor="let group of leagueGroupOptions | async" [label]="group.country">
+                <mat-option *ngFor="let name of group.leagues" [value]="name">
+                  {{name}}
+                </mat-option>
+              </mat-optgroup>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+        <div>
+          <label>Home</label>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput
+                   type="text"
+                   formControlName="home"
+                   placeholder="Home team"
+                   required>
+          </mat-form-field>
+        </div>
+        <div>
+          <label>Away</label>
+        </div>
+        <mat-form-field>
+          <input matInput
+                 type="text"
+                 formControlName="away"
+                 placeholder="Away team"
+                 required>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+        <div>
+          <label>Bookie</label>
+        </div>
+        <div>
+          <mat-form-field class="example-full-width">
+            <input type="text"
+                   placeholder="Bookie"
+                   aria-label="Number"
+                   matInput
+                   formControlName="bookiesGroup"
+                   required
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredBookies | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div>
+          <label>Selection</label>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput formControlName="selection" required>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+        <div>
+          <label>Stake</label>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput type="number" formControlName="stake" required>
+          </mat-form-field>
+        </div>
+        <div>
+          <label>Odds</label>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput type="number" formControlName="odds" required>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+  <button mat-button (click)="onCancel()" cdkFocusInitial>Cancel</button>
+  <button mat-button (click)="onSubmit()" [disabled]="!betForm.valid">Submit</button>
+</mat-dialog-actions>

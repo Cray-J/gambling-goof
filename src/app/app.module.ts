@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,15 +13,11 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { BetsModule } from './bets/bets.module';
-import { MatToolbarModule } from "@angular/material/toolbar";
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent
-  ],
+  declarations: [AppComponent, HeaderComponent],
   imports: [
-    MatToolbarModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -32,8 +27,9 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     AngularFireAuthModule,
     HttpClientModule,
     ChartsModule,
-    BetsModule
+    BetsModule,
+    SharedModule
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

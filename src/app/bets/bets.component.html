@@ -1,15 +1,14 @@
 <mat-tab-group #tabGroup>
   <mat-tab label="Singles">
-    <bets-overview></bets-overview>
+    <app-bets-overview></app-bets-overview>
   </mat-tab>
-  <mat-tab label="Doubles">
-    <multibet-table></multibet-table>
+  <mat-tab label="Days">
+    <day-table></day-table>
   </mat-tab>
-  <mat-tab label="Inventory">
-    <inventory-page></inventory-page>
+  <mat-tab label="Season bets">
+    <season-bet-table></season-bet-table>
   </mat-tab>
   <mat-tab label="Stats" [disabled]="true">
-
   </mat-tab>
   <mat-tab label="Terms" [disabled]="true"></mat-tab>
 </mat-tab-group>

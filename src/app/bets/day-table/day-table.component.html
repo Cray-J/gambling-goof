@@ -1,31 +1,54 @@
-<table mat-table
-       [dataSource]="dataSource"
-       multiTemplateDataRows
-       class="mat-elevation-z8">
-  <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
-    <th mat-header-cell *matHeaderCellDef>{{column}}</th>
-    <td mat-cell *matCellDef="let element">{{element[column]}}</td>
-  </ng-container>
-
-  <!-- Expanded Content Column - Detail row -->
-  <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-      <div class="example-element-detail"
-          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <div class="example-element-diagram" *ngFor="let bet of element['bets']">
-          <div class="example-element-position">{{bet.match}}</div>
-          <div class="example-element-symbol">{{bet.selection}}</div>
+<mat-expansion-panel *ngFor="let day of dayRows"
+                     [class.winningDay]="day.result > 0"
+                     [class.losingDay]="day.result < 0">
+  <mat-expansion-panel-header>
+    <div class="headerContent">
+      <div class="day">
+        <div>
+          <div class="label">Day</div>
+          <div class="valueRow">{{day.time | date:'dd MMM'}}</div>
         </div>
       </div>
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let element; columns: displayedColumns"
-  class="example-element-row"
-      [class.example-expanded-row]="expandedElement === element"
-      (click)="expandedElement = expandedElement === element ? null : element"
-  >
-
-  </tr>
-</table>
+      <div class="games">
+        <div>
+          <div class="label">Games</div>
+          <div class="valueRow">{{day.matchesInformation}}</div>
+        </div>
+      </div>
+      <div class="winRatio">
+        <div>
+          <div class="label">Outcome</div>
+          <div class="valueRow">{{day.outcome}}/{{day.totalBets}}</div>
+        </div>
+      </div>
+      <div class="result">
+        <div>
+          <div class="label">Result</div>
+          <div class="valueRow">{{day.result}}</div>
+        </div>
+      </div>
+      <div class="verified">
+        <div>
+          <div class="label">Verified</div>
+          <div>
+            <mat-icon *ngIf="day.verified" [ngStyle]="{'color': 'green'}">check_circle</mat-icon>
+            <mat-icon *ngIf="!day.verified">check_circle_outline</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel-header>
+  <hr/>
+  <div *ngFor="let match of day.bets">
+    <div class="matchRow" *ngFor="let bet of match.bets">
+      <div class="match">{{match.match}}</div>
+      <div class="selection">{{bet.selection}}</div>
+      <div class="stake">{{bet.stake}} @ {{bet.odds}}</div>
+      <div class="outcome">{{bet.valueReturn}}</div>
+      <div class="verified">
+        <mat-icon *ngIf="bet.verifiedResult" [ngStyle]="{'color': 'green'}">check_circle</mat-icon>
+        <mat-icon *ngIf="!bet.verifiedResult">check_circle_outline</mat-icon>
+      </div>
+    </div>
+  </div>
+</mat-expansion-panel>

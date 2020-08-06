@@ -96,23 +96,32 @@ mat-card-content, mat-list-option {
 }
 
 .mat-column-match {
-  flex: 3;
+  flex: 6;
 }
 
 .mat-column-selection {
-  flex: 2;
+  flex: 4;
 }
+
+.mat-column-progress {
+  padding-left: 20px;
+  flex: 2;
+
+  div.progressText {
+    padding-right: 5px;
+  }
+}
+
 
 .mat-column-bookie,
 .mat-column-stake,
 .mat-column-odds,
 .mat-column-outcome {
-  flex: 1;
+  flex: 2;
 }
 
-.mat-column-return,
-.mat-column-events {
-  flex: 0.5;
+.mat-column-return {
+  flex: 1;
 
 }
 
@@ -120,6 +129,11 @@ mat-cell.mat-cell.cdk-column-events,
 mat-cell.mat-cell.cdk-column-return {
   flex-direction: row-reverse;
 }
+
+/*mat-header-cell.mat-header-cell.cdk-column-progress,
+mat-cell.mat-cell.cdk-column-progress {
+  padding-left: 10px;
+}*/
 
 .mat-form-field {
   max-width: 100px;

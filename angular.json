@@ -130,10 +130,13 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "styleext": "css"
+      "style": "css"
     },
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "analytics": "e993807f-85f9-4158-b900-2ce64d83c025"
   }
 }

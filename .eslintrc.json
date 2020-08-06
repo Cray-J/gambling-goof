@@ -1,24 +1,50 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true,
-        "node": true
-    },
-    "extends": [
-        "google"
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "project": "./tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto",
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "none",
+        "printWidth": 100,
+        "tabWidth": 2,
+        "arrowParens": "avoid",
+        "jsxSingleQuote": false,
+        "jsxBracketSameLine": true
+      }
     ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "rules": {
-    }
+    "@typescript-eslint/no-unused-vars-experimental": "error",
+    "@typescript-eslint/no-unused-expressions": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "semi": "error",
+    "quotes": ["error", "single"],
+    "arrow-body-style": ["error", "as-needed"],
+    "no-unused-expressions": "error",
+    "no-param-reassign": "error"
+  }
 }

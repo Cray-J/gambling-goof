@@ -20,7 +20,7 @@
     "firebase": "^7.15.5",
     "firebase-tools": "^8.4.3",
     "global": "^4.4.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "ng-pick-datetime": "^7.0.0",
     "ng-pick-datetime-moment": "^1.0.7",
     "ng2-charts": "^2.3.2",

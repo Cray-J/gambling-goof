@@ -1,61 +1,68 @@
-<h1 mat-dialog-title fxLayoutAlign="center center">Add new Goal</h1>
-<form [formGroup]="goalForm" (ngSubmit)="onSubmit()" novalidate>
-  <div>
-    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-      <div>
-        <label>Month</label>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput [matDatepicker]="dp" placeholder="Month and Year"  formControlName="email"> <!--[formControl]="date"-->
-          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-          <mat-datepicker #dp
-                          startView="multi-year"
-                          (yearSelected)="chosenYearHandler($event)"
-                          (monthSelected)="chosenMonthHandler($event, dp)"
-                          panelClass="example-month-picker">
-          </mat-datepicker>
-        </mat-form-field>
-      </div>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-      <div>
-        <label>Income</label>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput type="number" formControlName="income">
-        </mat-form-field>
-      </div>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-      <div>
-        <label>Total bets</label>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput type="number" formControlName="totalBets">
-        </mat-form-field>
-      </div>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-      <div>
-        <label>ROI</label>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput type="number" formControlName="roi">
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
-  <button type="submit" [disabled]="goalForm.pristine">Save</button>
-  <button type="reset" (click)="onNoClick()" [disabled]="goalForm.pristine">
-    Revert
-  </button>
-  <!--<mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
-    <button mat-button (click)="onNoClick()">Cancel</button>
-    <button mat-button (click)="onClose()">Submit</button>
-  </mat-dialog-actions>
-</mat-dialog-content>-->
-</form>
+<!--<h1 mat-dialog-title fxLayoutAlign="center center">Add new Goal</h1>-->
+<!--<form [formGroup]="goalForm" (ngSubmit)="onSubmit()" novalidate>-->
+<!--  <div>-->
+<!--    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">-->
+<!--      <div>-->
+<!--        <label>Month</label>-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <mat-form-field>-->
+<!--          <mat-label>Choose a date</mat-label>-->
+<!--          <input matInput [matDatepicker]="picker">-->
+<!--          <mat-hint>MM/DD/YYYY</mat-hint>-->
+<!--          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>-->
+<!--          <mat-datepicker #picker></mat-datepicker>-->
+<!--        </mat-form-field>-->
+<!--&lt;!&ndash;        <mat-form-field>&ndash;&gt;-->
+<!--&lt;!&ndash;          <input matInput [matDatepicker]="dp" placeholder="Month and Year"  formControlName="email"> &lt;!&ndash;[formControl]="date"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>&ndash;&gt;-->
+<!--&lt;!&ndash;          <mat-datepicker #dp&ndash;&gt;-->
+<!--&lt;!&ndash;                          startView="multi-year"&ndash;&gt;-->
+<!--&lt;!&ndash;                          (yearSelected)="chosenYearHandler($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;                          (monthSelected)="chosenMonthHandler($event, dp)"&ndash;&gt;-->
+<!--&lt;!&ndash;                          panelClass="example-month-picker">&ndash;&gt;-->
+<!--&lt;!&ndash;          </mat-datepicker>&ndash;&gt;-->
+<!--&lt;!&ndash;        </mat-form-field>&ndash;&gt;-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">-->
+<!--      <div>-->
+<!--        <label>Income</label>-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <mat-form-field>-->
+<!--          <input matInput type="number" formControlName="income">-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">-->
+<!--      <div>-->
+<!--        <label>Total bets</label>-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <mat-form-field>-->
+<!--          <input matInput type="number" formControlName="totalBets">-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">-->
+<!--      <div>-->
+<!--        <label>ROI</label>-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <mat-form-field>-->
+<!--          <input matInput type="number" formControlName="roi">-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <button type="submit" [disabled]="goalForm.pristine">Save</button>-->
+<!--  <button type="reset" (click)="onNoClick()" [disabled]="goalForm.pristine">-->
+<!--    Revert-->
+<!--  </button>-->
+<!--  &lt;!&ndash;<mat-dialog-actions fxLayout="row" fxLayoutAlign="end">-->
+<!--    <button mat-button (click)="onNoClick()">Cancel</button>-->
+<!--    <button mat-button (click)="onClose()">Submit</button>-->
+<!--  </mat-dialog-actions>-->
+<!--</mat-dialog-content>&ndash;&gt;-->
+<!--</form>-->

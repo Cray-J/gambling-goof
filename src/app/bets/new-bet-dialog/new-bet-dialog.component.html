@@ -31,27 +31,27 @@
       </mat-form-field>
     </div>
   </div>
-  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-    <div>
-      <label>Date</label>
-    </div>
-    <div>
-      <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="data[0].date">
-      <owl-date-time #dt1></owl-date-time>
-    </div>
-  </div>
+<!--  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">-->
+<!--    <div>-->
+<!--      <label>Date</label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [(ngModel)]="data[0].date">-->
+<!--      <owl-date-time #dt1></owl-date-time>-->
+<!--    </div>-->
+<!--  </div>-->
     <div fxLayoutAlign="space-between center" fxLayoutGap="20px">
       <div>
         <label>Type</label>
       </div>
       <div>
-        <mat-form-field>
-          <mat-select [(ngModel)]="data[2].betType" required>
-            <mat-option *ngFor="let type of betTypes" [value]="type">
-              {{type}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+<!--        <mat-form-field>-->
+<!--          <mat-select [(ngModel)]="data[2].betType" required>-->
+<!--            <mat-option *ngFor="let type of betTypes" [value]="type">-->
+<!--              {{type}}-->
+<!--            </mat-option>-->
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
       </div>
     </div>
   <div fxLayoutAlign="space-between center" fxLayoutGap="20px">

@@ -7,7 +7,3 @@ export enum Bookie {
   paddyPower = 'paddyPower',
   pinnacle = 'pinnacle'
 }
-
-export enum Bank {
-  bank = 'bank'
-}

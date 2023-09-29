@@ -16,6 +16,10 @@ body{
   margin: 0;
 }
 
+$spacing-one: 16px;
+$spacing-half: 8px;
+$spacing-one-and-half: 24px;
+
 .redCard, .missedPen {
   font-size: 16px !important;
   height: 16px;
@@ -69,4 +73,24 @@ input[type=number]::-webkit-outer-spin-button {
 mat-dialog-container,
 .mat-dialog-container {
   min-width: 400px!important;
+}
+
+.new-betSlip-dialog {
+  background-color: red;
+  padding: 24px;
+}
+
+@mixin flex(
+  $direction: row,
+  $flexSize: 1,
+  $gap: null,
+  $justifyContent: null,
+  $alignItems: null
+) {
+  display: flex;
+  flex-direction: $direction;
+  flex: $flexSize;
+  gap: $gap;
+  justify-content: $justifyContent;
+  align-items: $alignItems;
 }

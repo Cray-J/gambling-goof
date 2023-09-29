@@ -1,0 +1,32 @@
+@import 'styles';
+
+h1 {
+  align-self: center;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+.row {
+  display: flex;
+  max-width: 400px;
+  //padding-bottom: $spacing-one-and-half;
+  gap: 16px;
+  height: 102px;
+}
+
+mat-form-field ::ng-deep div {
+  max-height: 56px;
+}
+
+.partBetRow {
+  display: flex;
+  flex: 1;
+  //spac: space-between;
+}
+
+

@@ -5,10 +5,9 @@ import { NewGoalDialogComponent } from '../bets/new-goal-dialog/new-goal-dialog.
 import { GoalService } from '../core/goal.service';
 import { NewDayDialogComponent } from '../bets/new-day-dialog/new-day-dialog.component';
 import { DayService } from '../core/day.service';
-import { SeasonBetService } from '../core/season-bet.service';
-import { NewSeasonBetDialogComponent } from '../bets/new-season-bet-dialog/new-season-bet-dialog.component';
 import { BetDialogComponent } from '../bets/bet-dialog/bet-dialog.component';
 import { Day } from '../shared/model/day.model';
+import { NewBetSlipDialogComponent } from "../bets/new-betSlip-dialog/new-betSlip-dialog.component";
 
 @Component({
   selector: 'app-header',
@@ -21,9 +20,25 @@ export class HeaderComponent {
   constructor(
     public dialog: MatDialog,
     private daysService: DayService,
-    private goalService: GoalService,
-    private seasonBetService: SeasonBetService
+    private goalService: GoalService
   ) {}
+
+  openBetslipDialog(): void {
+    this.dialog
+      .open(NewBetSlipDialogComponent, {
+        width: 'calc(80vw)',
+        height: '1200px',
+        panelClass: 'new-betSlip-dialog'
+      })
+      .afterClosed()
+      .subscribe((result: Day) => {
+        console.log('The dialog was closed', result, !!result);
+        if (!!result) {
+          // this.daysService.save(result);
+        }
+        console.log(this.bet);
+      });
+  }
 
   openSingleDialog(): void {
     this.dialog
@@ -70,12 +85,5 @@ export class HeaderComponent {
   }
 
   openSeasonBetDialog(): void {
-    this.dialog
-      .open(NewSeasonBetDialogComponent)
-      .afterClosed()
-      .subscribe(result => {
-        console.log('dialog closed', result);
-        this.seasonBetService.addBet(result);
-      });
   }
 }

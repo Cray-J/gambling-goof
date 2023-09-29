@@ -16,13 +16,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from "@angular/material/button";
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 
 import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule
 } from 'ng-pick-datetime';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from "@angular/material/divider";
 
 const materialModules = [
   MatAutocompleteModule,
@@ -35,6 +36,7 @@ const materialModules = [
   MatTableModule,
   FormsModule,
   MatDatepickerModule,
+  MatDividerModule,
   MatSidenavModule,
   MatCardModule,
   MatTabsModule,
@@ -48,19 +50,24 @@ const materialModules = [
 @NgModule({
   imports: [
     CommonModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    ...materialModules
+    // OwlDateTimeModule,
+    // OwlNativeDateTimeModule
   ],
   declarations: [],
   exports: [
     CommonModule,
-    materialModules,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    ...materialModules,
+    // OwlDateTimeModule,
+    // OwlNativeDateTimeModule
   ],
   providers: [
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'en-GB'
+    },
   ]
 })
 export class SharedModule {}

@@ -6,11 +6,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyBh6LcLLwKN1q60uk7PMZ2vnWF0o6vQ6BU',
-    authDomain: 'gambling-goof.firebaseapp.com',
-    databaseURL: 'https://gambling-goof.firebaseio.com',
-    projectId: 'gambling-goof',
-    storageBucket: 'gambling-goof.appspot.com',
-    messagingSenderId: '762455269995'
+    apiKey: "AIzaSyBh6LcLLwKN1q60uk7PMZ2vnWF0o6vQ6BU",
+    authDomain: "gambling-goof.firebaseapp.com",
+    databaseURL: "https://gambling-goof.firebaseio.com",
+    projectId: "gambling-goof",
+    storageBucket: "gambling-goof.appspot.com",
+    messagingSenderId: "762455269995",
+    appId: "1:762455269995:web:e5631357aa84a703aec72e"
   }
 };

@@ -4,32 +4,46 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { BetsModule } from './bets/bets.module';
 import { SharedModule } from './shared/shared.module';
+import { RouterModule, Routes } from "@angular/router";
+import { BetsComponent } from "./bets/bets.component";
+import { AngularFireModule } from "@angular/fire/compat";
+// import firebase from "firebase/compat";
+// import Firestore = firebase.firestore.Firestore;
+
+const routes: Routes = [
+  { path: '', redirectTo: 'bets', pathMatch: 'full' },
+  { path: 'bets', component: BetsComponent }
+];
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     FlexLayoutModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
+    // AngularFireModule.initializeApp(environment.firebase),
+    // AngularFirestoreModule,
+    // AngularFireAuthModule,
     HttpClientModule,
-    ChartsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    // ChartsModule,
     BetsModule,
-    SharedModule
+    SharedModule,
+    RouterModule.forRoot(routes)
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+
+
+// Your web app's Firebase configuration
+
+
+// Initialize Firebase

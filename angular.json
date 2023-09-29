@@ -10,10 +10,12 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "defaultConfiguration": "development",
           "options": {
             "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
+            "sourceMap": false,
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
@@ -49,6 +51,14 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           }
         },

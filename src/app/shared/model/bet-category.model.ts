@@ -1,5 +1,5 @@
-export class BetCategory {
-  type: string;
-  prefix: string;
-  suffix: string;
+export enum BetCategory {
+  botd = 'BOTD',
+  daily = 'daily',
+  over1Asian = 'over1Asian'
 }

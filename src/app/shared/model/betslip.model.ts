@@ -13,7 +13,7 @@ export interface PartBet {
 
 export interface BetSlip {
   id?: string;
-  date: number;
+  date: string;
   stake: number;
   bookie: Bookie;
   odds: number;

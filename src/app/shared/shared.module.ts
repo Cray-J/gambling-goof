@@ -19,6 +19,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from "@angular/material/divider";
+import { AgGridModule } from "ag-grid-angular";
 
 const materialModules = [
   MatAutocompleteModule,
@@ -45,7 +46,8 @@ const materialModules = [
 @NgModule({
   imports: [
     CommonModule,
-    ...materialModules
+    ...materialModules,
+    AgGridModule
     // OwlDateTimeModule,
     // OwlNativeDateTimeModule
   ],
@@ -53,6 +55,7 @@ const materialModules = [
   exports: [
     CommonModule,
     ...materialModules,
+    AgGridModule
     // OwlDateTimeModule,
     // OwlNativeDateTimeModule
   ],

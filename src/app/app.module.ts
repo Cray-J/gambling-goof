@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { RouterModule, Routes } from "@angular/router";
 import { BetsComponent } from "./bets/bets.component";
 import { AngularFireModule } from "@angular/fire/compat";
+import { NewBetsTableComponent } from './bets/new-bets-table/new-bets-table.component';
 // import firebase from "firebase/compat";
 // import Firestore = firebase.firestore.Firestore;
 

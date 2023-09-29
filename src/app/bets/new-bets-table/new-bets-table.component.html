@@ -1,0 +1,18 @@
+<div class="stats">
+
+</div>
+
+<ag-grid-angular
+  style="width: 100%"
+  class="ag-theme-material"
+  [getRowId]="getRowId"
+  [animateRows]="true"
+  [rowData]="sequenceDataSource$ | async"
+  [singleClickEdit]="true"
+  [enableCellTextSelection]="true"
+  rowSelection="single"
+  [suppressMenuHide]="true"
+  [suppressMovableColumns]="true"
+  domLayout="autoHeight"
+  [gridOptions]="options"
+></ag-grid-angular>

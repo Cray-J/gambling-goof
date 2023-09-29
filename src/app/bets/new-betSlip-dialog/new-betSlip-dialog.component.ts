@@ -48,7 +48,7 @@ export class NewBetSlipDialogComponent implements OnInit {
     const betSlip: BetSlip = {
       bookie: this.betForm.controls['bookie'].value,
       balanceChange: this.betForm.controls['balanceChange'].value,
-      date: this.betForm.controls['date'].value,
+      date: this.betForm.controls['date'].value.toISOString(),
       odds: this.betForm.controls['odds'].value,
       outcome: this.betForm.controls['outcome'].value,
       selections: [
@@ -56,10 +56,12 @@ export class NewBetSlipDialogComponent implements OnInit {
       ],
       stake: this.betForm.controls['stake'].value
     };
-    console.log('SAVING: ', betSlip);
+    console.log('SAVING: ', moment(this.betForm.controls['date'].value).format("DD/MM/YYYY"));
+    console.log(this.betForm.controls['date'].value.toISOString());
+    console.log(moment(betSlip.date).format("DD/MM/YYYY"))
     this.firebaseService.addNewBet(betSlip);
     console.log(this.betForm);
-    this.dialogRef.close();
+    // this.dialogRef.close();
   }
 
   buildSelections(): PartBet[] {

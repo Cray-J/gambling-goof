@@ -18,7 +18,7 @@ export class FirebaseService {
         console.log('2', users)
         const us = resolve(users);
         console.log(us);
-        this.updateBet(users[0] as BetSlip)
+        // this.updateBet(users[0] as BetSlip)
         return us;
       });
     })

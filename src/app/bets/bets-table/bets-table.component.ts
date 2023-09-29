@@ -4,16 +4,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Outcome } from '../../shared/model/outcome.enum';
-import { NewBetDialogComponent } from '../new-bet-dialog/new-bet-dialog.component';
 import { Bet } from '../../shared/model/bet.model';
 import { $enum } from 'ts-enum-util';
 import { ToText } from '../../shared/model/to-text';
 import { Day } from '../../shared/model/day.model';
-import { Match } from '../../shared/model/match.model';
 import { DayService } from '../../core/day.service';
 
 export class DataRow {
-  constructor(public day: Day, public match: Match, public bet: Bet) {}
+  constructor(public day: Day, public match: any, public bet: Bet) {}
 }
 
 @Component({
@@ -52,7 +50,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     this.dayService.daysChanged.subscribe((days: Day[]) => {
       const bets = [];
       days.forEach((d: Day) =>
-        d.matches.forEach((m: Match) => m.bets.forEach((b: Bet) => {
+        d.matches.forEach((m: any) => m.bets.forEach((b: Bet) => {
           bets.push(new DataRow(d, m, b))
         }))
       );
@@ -78,13 +76,13 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public openDialog(row: DataRow): void {
-    this.dialog
-      .open(NewBetDialogComponent, {
-        width: '900',
-        data: [row.day, row.match, row.bet]
-      })
-      .afterClosed()
-      .subscribe((bet: Bet) => this.updateValue(row, bet.outcome));
+    // this.dialog
+    //   .open(NewBetDialogComponent, {
+    //     width: '900',
+    //     data: [row.day, row.match, row.bet]
+    //   })
+    //   .afterClosed()
+    //   .subscribe((bet: Bet) => this.updateValue(row, bet.outcome));
   }
 
   public ngOnDestroy() {

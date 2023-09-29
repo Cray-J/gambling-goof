@@ -16,12 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from "@angular/material/button";
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-
-import {
-  OwlDateTimeModule,
-  OwlNativeDateTimeModule
-} from 'ng-pick-datetime';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from "@angular/material/divider";
 

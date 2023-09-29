@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { $enum } from "ts-enum-util";
 import { Bookie } from "../../shared/model/bookie.enum";
-import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { Outcome } from "../../shared/model/outcome.enum";
 import { BetCategory } from "../../shared/model/bet-category.model";
@@ -23,8 +23,8 @@ export class NewBetSlipDialogComponent implements OnInit {
 
   betForm: FormGroup = this._formBuilder.group({
     date: new FormControl<Date>(moment().toDate()),
-    stake: new FormControl<number>(100),
-    bookie: new FormControl<Bookie>(Bookie.coolbet),
+    stake: ['100', [Validators.required, Validators.pattern('[0-9]{3}')]],
+    bookie: ['', Validators.required],
     category: new FormControl<BetCategory>(BetCategory.daily),
     odds: new FormControl<number>({ value: 1, disabled: true }),
     balanceChange: new FormControl<number>({ value: 0, disabled: true }),
@@ -85,10 +85,10 @@ export class NewBetSlipDialogComponent implements OnInit {
 
   createSelection(): FormGroup {
     return this._formBuilder.group({
-      match: [''],
-      selection:[''],
-      odds: [],
-      outcome: [Outcome.awaiting]
+      match: ['', [Validators.required]],
+      selection: ['', [Validators.required]],
+      odds: ['', [Validators.required]],
+      outcome: [Outcome.awaiting, [Validators.required]]
     })
   }
 

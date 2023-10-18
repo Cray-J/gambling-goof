@@ -9,6 +9,7 @@ import { $enum } from 'ts-enum-util';
 import { ToText } from '../../shared/model/to-text';
 import { Day } from '../../shared/model/day.model';
 import { DayService } from '../../core/day.service';
+import { NewBetSlipDialogComponent } from "../new-betSlip-dialog/new-betSlip-dialog.component";
 
 export class DataRow {
   constructor(public day: Day, public match: any, public bet: Bet) {}
@@ -76,13 +77,13 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public openDialog(row: DataRow): void {
-    // this.dialog
-    //   .open(NewBetDialogComponent, {
-    //     width: '900',
-    //     data: [row.day, row.match, row.bet]
-    //   })
-    //   .afterClosed()
-    //   .subscribe((bet: Bet) => this.updateValue(row, bet.outcome));
+    this.dialog
+      .open(NewBetSlipDialogComponent, {
+        width: '900',
+        data: [row.day, row.match, row.bet]
+      })
+      .afterClosed()
+      .subscribe((bet: Bet) => this.updateValue(row, bet.outcome));
   }
 
   public ngOnDestroy() {

@@ -1,47 +1,67 @@
-<h1>New bet</h1>
+<h1>{{data?.bookie ? 'Edit bet' : 'New bet'}}</h1>
 <mat-dialog-content>
   <form [formGroup]="betForm">
     <div class="column">
       <div class="row">
-        <mat-form-field label="Date">
-          <input matInput [matDatepicker]="picker" formControlName="date">
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field label="Category" class="row">
-          <mat-label>Bet category</mat-label>
-          <mat-select formControlName="category">
-            <mat-option *ngFor="let option of betCategory" [value]="option">{{option}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field label="Bookie" class="row">
-          <mat-label>Bookie</mat-label>
-          <mat-select formControlName="bookie">
-            <mat-option *ngFor="let bookie of bookies" [value]="bookie">{{bookie}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="dense-2">
+          <mat-form-field label="Date">
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="dense-3">
+          <mat-form-field label="Category" class="row">
+            <mat-label>Bet category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option *ngFor="let option of betCategory" [value]="option">{{option}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="dense-3">
+          <mat-form-field label="Bookie" class="row">
+            <mat-label>Bookie</mat-label>
+            <mat-select formControlName="bookie">
+              <mat-option *ngFor="let bookie of bookies" [value]="bookie">{{bookie}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
       </div>
       <div class="row">
-        <mat-form-field label="Stake" class="stakeForm">
-          <mat-label>Stake</mat-label>
-          <input matInput formControlName="stake">
-        </mat-form-field>
+        <div class="dense-3">
+          <mat-form-field label="Stake" class="stakeForm">
+            <mat-label>Stake</mat-label>
+            <input matInput formControlName="stake">
+          </mat-form-field>
+        </div>
 
-        <mat-form-field label="Odds" class="oddsForm">
-          <mat-label>Odds</mat-label>
-          <input matInput formControlName="odds">
-        </mat-form-field>
-        <mat-form-field label="Balance change" class="balanceChangeForm">
-          <mat-label>Balance change</mat-label>
-          <input matInput formControlName="balanceChange">
-        </mat-form-field>
-        <mat-form-field label="Outcome" class="row">
-          <mat-label>Outcome</mat-label>
-          <mat-select formControlName="outcome">
-            <mat-option *ngFor="let outcome1 of outcomes" [value]="outcome1">{{outcome1}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="dense-1">
+          <mat-form-field label="Odds" class="oddsForm">
+            <mat-label>Odds</mat-label>
+            <input matInput formControlName="odds">
+          </mat-form-field>
+        </div>
+
+<!--        <div class="dense-2">-->
+          <mat-form-field label="Balance change" class="balanceChangeForm">
+            <mat-label>Balance change</mat-label>
+            <input matInput formControlName="balanceChange">
+          </mat-form-field>
+<!--        </div>-->
+
+<!--        <div class="dense-1">-->
+          <mat-form-field label="Outcome" class="row">
+            <mat-label>Outcome</mat-label>
+            <mat-select formControlName="outcome">
+              <mat-option *ngFor="let outcome1 of outcomes" [value]="outcome1">{{outcome1}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+<!--        </div>-->
+
       </div>
       <div>
         <mat-divider></mat-divider>
@@ -54,29 +74,33 @@
 
         <div formArrayName="selections" class="selectionsContainer">
           <div *ngFor="let selection of betForm.controls.selections['controls']; let index=index"
-               class="partBetRow"
+               class="partBetRow dense-1"
                [class.evenRow]="isEvenNumber(index)"
                [class.oddRow]="!isEvenNumber(index)">
             <div formGroupName="{{index}}" class="groupForm">
               <div class="row selectionRow">
-                <mat-form-field label="match" class="flexFive">
-                  <mat-label>Match</mat-label>
-                  <input matInput formControlName="match">
-                </mat-form-field>
-                <mat-form-field label="selection" class="flexFour">
-                  <mat-label>Selection</mat-label>
-                  <input matInput formControlName="selection">
-                </mat-form-field>
-                <mat-form-field label="odds" (change)="recalculateOdds()" class="flexTwo">
-                  <mat-label>Odds</mat-label>
-                  <input matInput formControlName="odds">
-                </mat-form-field>
-                <mat-form-field label="Outcome" class="outcomeForm" class="flexTwo">
-                  <mat-label>Outcome</mat-label>
-                  <mat-select formControlName="outcome" (valueChange)="calculateOutcome()">
-                    <mat-option *ngFor="let outcome1 of outcomes" [value]="outcome1">{{outcome1}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
+                  <mat-form-field label="match" class="flexFive">
+                    <mat-label>Match</mat-label>
+                    <input matInput formControlName="match">
+                  </mat-form-field>
+
+                  <mat-form-field label="selection" class="flexFour">
+                    <mat-label>Selection</mat-label>
+                    <input matInput formControlName="selection">
+                  </mat-form-field>
+
+                  <mat-form-field label="odds" (change)="recalculateOdds()" class="flexTwo">
+                    <mat-label>Odds</mat-label>
+                    <input matInput formControlName="odds">
+                  </mat-form-field>
+
+                  <mat-form-field label="Outcome" class="outcomeForm flexTwo">
+                    <mat-label>Outcome</mat-label>
+                    <mat-select formControlName="outcome" (valueChange)="updateOutcome()">
+                      <mat-option *ngFor="let outcome1 of outcomes" [value]="outcome1">{{outcome1}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
                 <div class="flexOne">
                   <button mat-icon-button matTooltip="Basic" aria-label="Remove selection" (click)="removeSelection(index)">
                     <mat-icon>remove</mat-icon>

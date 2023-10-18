@@ -44,6 +44,6 @@ export class BtnCellRendererComponent implements ICellRendererAngularComp {
 
     // eslint-disable-next-line unused-imports/no-unused-vars
     refresh(params: ICellRendererParams): boolean {
-        return false;
+        return true;
     }
 }

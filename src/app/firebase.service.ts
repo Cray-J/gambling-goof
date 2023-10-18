@@ -1,44 +1,80 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { AngularFirestore, QuerySnapshot } from "@angular/fire/compat/firestore";
 import { BetSlip } from "./shared/model/betslip.model";
 import { cloneDeep } from "lodash";
 import { Outcome } from "./shared/model/outcome.enum";
-import { take } from "rxjs";
+import { BehaviorSubject, of, take } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-  constructor(private db: AngularFirestore) { }
+  allValues: BehaviorSubject<BetSlip[]> = new BehaviorSubject<BetSlip[]>([]);
+  allValues$ = of(this.allValues);
+  constructor(private db: AngularFirestore) {
+    // this.db.collection('Bets').get().subscribe((docs: QuerySnapshot<BetSlip>) => {
+    //   console.log('bets first', docs)
+    //   const data: BetSlip[] = [];
+    //   docs.forEach(doc => {
+    //     // console.log(doc.id, doc.data())
+    //     const currentBet: BetSlip =  doc.data() as BetSlip;
+    //     currentBet.id = doc.id;
+    //     // console.log('TEST', currentBet)
+    //     data.push(currentBet);
+    //     // data.push()
+    //   });
+    //   console.log('--FETCHED DATA: ', data);
+    //   this.allValues.next(data);
+    //   // this.allValues = v.docs as unknown as BetSlip[];
+    // });
+    // this.db.collection('Bets').valueChanges().subscribe((users: BetSlip[]) => {
+    this.db.collection('Bets').snapshotChanges().subscribe((users) => {
+      // console.log('2', users)
+      const data: BetSlip[] = [];
+      users.forEach(doc => {
+        // console.log(doc.id, doc.data())
+        const currentBet: BetSlip =  doc.payload.doc.data() as BetSlip;
+        currentBet.id = doc.payload.doc.id;
+        // console.log('TEST', currentBet)
+        data.push(currentBet);
+        // console.log(doc.payload.doc.data())
+      })
+      console.log('--GOT NEW DATA: ', data)
+      this.allValues.next(data);
+      // this.allValues.next(users as unknown as BetSlip[]);
+      // this.allValues = users;
+      // const us = resolve(users);
+      // console.log(us);
+      // this.updateBet(users[0] as BetSlip)
+      // return us;
+    });
+  }
 
   getAllUsers() {
-    return new Promise<any>((resolve)=> {
-      this.db.collection('Bets').get().subscribe(v => console.log('bets first', v));
-      this.db.collection('Bets').valueChanges({ idField: 'id' }).pipe((take(1))).subscribe(users => {
-        console.log('2', users)
-        const us = resolve(users);
-        console.log(us);
-        // this.updateBet(users[0] as BetSlip)
-        return us;
-      });
-    })
+    // return new Promise<any>((resolve)=> {
+    //   this.db.collection('Bets').get().subscribe(v => console.log('bets first', v));
+    //   this.db.collection('Bets').valueChanges({ idField: 'id' }).subscribe(users => {
+    //     console.log('2', users)
+    //     const us = resolve(users);
+    //     console.log(us);
+    //     // this.updateBet(users[0] as BetSlip)
+    //     return us;
+    //   });
+    // })
   }
 
   addNewBet(betslip: BetSlip) {
-    this.db.collection("Bets").doc().set(betslip);
+    console.log('--ADDING NEW BET', betslip);
+    this.db.collection("Bets").doc().set(betslip).then(v => {
+      console.log(v);
+    });
   }
 
   updateBet(betslip: BetSlip) {
-    const betRaw = cloneDeep(betslip);
-    betRaw.locked = true;
-    betRaw.balanceChange = 0;
-    betRaw.outcome = Outcome.loss;
+    console.log('--UPDATE BET:', betslip)
+    let betRaw = cloneDeep(betslip);
     delete betRaw.id;
-    // const newBet = delete betslip.id;
-    // const newBet2 = Omit<ConstructionNodeDto, 'name'> & {
-    //   title: string;
-    // }
-    // console.log(betslip, newBet);
+    console.log('Trying to save', betRaw, ' with id: ', betslip.id);
     this.db.collection("Bets").doc(`${betslip.id}`).set(betRaw)
   }
 }

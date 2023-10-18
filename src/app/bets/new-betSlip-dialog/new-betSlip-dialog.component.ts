@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { $enum } from "ts-enum-util";
 import { Bookie } from "../../shared/model/bookie.enum";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Outcome } from "../../shared/model/outcome.enum";
 import { BetCategory } from "../../shared/model/bet-category.model";
 import { BetSlip, PartBet } from "../../shared/model/betslip.model";
@@ -10,6 +10,7 @@ import { FirebaseService } from "../../firebase.service";
 import moment from "moment";
 import { ToText } from "../../shared/model/to-text";
 import outcome = ToText.outcome;
+import { calculateOutcome } from "../../core/calculations";
 
 @Component({
   selector: 'app-new-betSlip-dialog',
@@ -21,20 +22,23 @@ export class NewBetSlipDialogComponent implements OnInit {
   public betCategory = $enum(BetCategory).getKeys();
   public outcomes = $enum(Outcome).getKeys();
 
-  betForm: FormGroup = this._formBuilder.group({
-    date: new FormControl<Date>(moment().toDate()),
-    stake: ['100', [Validators.required, Validators.pattern('[0-9]{3}')]],
-    bookie: ['', Validators.required],
-    category: new FormControl<BetCategory>(BetCategory.daily),
-    odds: new FormControl<number>({ value: 1, disabled: true }),
-    balanceChange: new FormControl<number>({ value: 0, disabled: true }),
-    outcome: new FormControl<Outcome>({ value: Outcome.awaiting, disabled: true }),
-    selections: this._formBuilder.array<FormGroup>([])
-  });
+  betForm: FormGroup;
 
   constructor(public dialogRef: MatDialogRef<NewBetSlipDialogComponent>,
               public firebaseService: FirebaseService,
+              @Inject(MAT_DIALOG_DATA) public data: BetSlip,
               private _formBuilder: FormBuilder) {
+    console.log('in dialog: ', data, data?.bookie);
+    this.betForm = this._formBuilder.group({
+      date: new FormControl<Date>(moment().toDate()),
+      stake: new FormControl(data?.stake ?? '100', [Validators.required, Validators.pattern('[0-9]{3}')]),
+      bookie: new FormControl(data?.bookie ?? '', Validators.required),
+      category: new FormControl<BetCategory>(BetCategory.daily),
+      odds: new FormControl<number>({ value: data?.odds ?? 1, disabled: true }),
+      balanceChange: new FormControl<number>({ value: data?.balanceChange ?? 0, disabled: true }),
+      outcome: new FormControl<Outcome>({ value: data?.outcome ?? Outcome.awaiting, disabled: true }),
+      selections: this._formBuilder.array<FormGroup>(data?.selections  ? this.buildFormArray() : [])
+    });
   }
 
   ngOnInit(): void {
@@ -54,14 +58,21 @@ export class NewBetSlipDialogComponent implements OnInit {
       selections: [
         ...this.buildSelections()
       ],
+      id: this.data?.id,
       stake: this.betForm.controls['stake'].value
     };
-    console.log('SAVING: ', moment(this.betForm.controls['date'].value).format("DD/MM/YYYY"));
-    console.log(this.betForm.controls['date'].value.toISOString());
-    console.log(moment(betSlip.date).format("DD/MM/YYYY"))
-    this.firebaseService.addNewBet(betSlip);
-    console.log(this.betForm);
-    // this.dialogRef.close();
+    console.log('VALUE', this.betForm.controls['balanceChange'].value)
+    // console.log('SAVING: ', moment(this.betForm.controls['date'].value).format("DD/MM/YYYY"));
+    // console.log(this.betForm.controls['date'].value.toISOString());
+    // console.log(moment(betSlip.date).format("DD/MM/YYYY"))
+    // console.log(this.betForm);
+    this.dialogRef.close(betSlip);
+  }
+
+  buildFormArray() {
+    return this.data.selections.map(selection => {
+      return this.createSelection(selection);
+    })
   }
 
   buildSelections(): PartBet[] {
@@ -85,12 +96,12 @@ export class NewBetSlipDialogComponent implements OnInit {
     (this.betForm.controls['selections'] as FormArray).removeAt(index);
   }
 
-  createSelection(): FormGroup {
+  createSelection(selection?: PartBet): FormGroup {
     return this._formBuilder.group({
-      match: ['', [Validators.required]],
-      selection: ['', [Validators.required]],
-      odds: ['', [Validators.required]],
-      outcome: [Outcome.awaiting, [Validators.required]]
+      match: [selection?.match ?? '', [Validators.required]],
+      selection: [selection?.selection ?? '', [Validators.required]],
+      odds: [selection?.odds ?? '', [Validators.required]],
+      outcome: [selection?.outcome ?? Outcome.awaiting, [Validators.required]]
     })
   }
 
@@ -107,47 +118,14 @@ export class NewBetSlipDialogComponent implements OnInit {
     this.betForm.controls['odds'].setValue(odds);
   }
 
-  public calculateOutcome() {
-    setTimeout(() => {
-      console.log('INSIDE')
-      console.log(this.getSelections());
-      let isLoss = false;
-      let isWin = true;
-      let hasAwaiting = false;
-      let givenOdds = this.betForm.controls['odds'].value;
-      this.getSelections().controls.forEach((group: FormGroup) => {
-        console.log(group.controls['outcome'].value);
-        isWin = isWin && group.controls['outcome'].value === Outcome.win;
-        isLoss = isLoss || group.controls['outcome'].value === Outcome.loss;
-        hasAwaiting = hasAwaiting || group.controls['outcome'].value === Outcome.awaiting;
-      });
-      let newOutcome: Outcome;
-      if (hasAwaiting) {
-        newOutcome = Outcome.awaiting;
-      } else if (isLoss) {
-        newOutcome = Outcome.loss;
-      } else if (isWin) {
-        newOutcome = Outcome.win;
-      }
-      console.log(isLoss, isWin, newOutcome);
-      this.betForm.controls['outcome'].setValue(newOutcome);
-      this.updateBalance();
-      // const isLoss = this.getSelections().some(value => value.outcome === Outcome.loss);
-      // const isWin = this.buildSelections().every(value => value.outcome === Outcome.win);
-      // console.log(isLoss, isWin);
-    }, 0);
-  }
-
   public updateBalance() {
     let newValue: number = 0;
     const stake = this.betForm.controls['stake'].value;
     const odds = this.betForm.controls['odds'].value;
     switch (this.betForm.controls['outcome'].value) {
       case Outcome.win:
-        newValue = odds * stake - stake;
-        break;
       case Outcome.halfWin:
-        newValue = (odds * stake - stake) / 2;
+        newValue = this.calculateValue();
         break;
       case Outcome.halfLoss:
         newValue -= stake / 2;
@@ -164,8 +142,37 @@ export class NewBetSlipDialogComponent implements OnInit {
       this.betForm.controls['balanceChange'].setValue(newValue);
   }
 
+  private calculateValue() {
+    let result;
+    // @ts-ignore
+    const totalOdds = this.getSelections().controls.reduce((result, current) => {
+      console.log('CURR', current);
+      // result = current.value;
+      // console.log((current as FormGroup).controls['outcome'].value, (current as FormGroup).controls['odds'].value)
+      if ((current as FormGroup).controls['outcome'].value === Outcome.win) {
+        result *= (current as FormGroup).controls['odds'].value;
+      } else if ((current as FormGroup).controls['outcome'].value === Outcome.halfWin) {
+        result *= ((current as FormGroup).controls['odds'].value -1) / 2 + 1 ;
+      }
+      console.log(result)
+      return result;
+      // this.betForm.controls['selections'].value
+    }, 1);
+    console.log('TOTAL ODDS', totalOdds);
+    return this.betForm.controls['stake'].value * totalOdds - this.betForm.controls['stake'].value;
+  }
+
+  public updateOutcome() {
+    setTimeout(() => {
+      const newOutcome = calculateOutcome(this.getSelections());
+      console.log('OUTCOME: ', newOutcome)
+      this.betForm.controls['outcome'].setValue(newOutcome);
+      this.updateBalance();
+    }, 0)
+
+  }
+
   private getSelections(): FormArray {
     return (this.betForm.controls['selections'] as FormArray);
   }
-
 }

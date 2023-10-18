@@ -4,6 +4,7 @@ import { Bet } from '../shared/model/bet.model';
 import { NewBetSlipDialogComponent } from "../bets/new-betSlip-dialog/new-betSlip-dialog.component";
 import { BetSlip } from "../shared/model/betslip.model";
 import { FirebaseService } from "../firebase.service";
+import { filter, take } from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -26,11 +27,11 @@ export class HeaderComponent {
         panelClass: 'new-betSlip-dialog'
       })
       .afterClosed()
+      .pipe(take(1), filter(v => !!v))
       .subscribe((result: BetSlip) => {
         console.log('The dialog was closed', result, !!result);
-        if (!!result) {
-          this.firebaseService.addNewBet(result)
-        }
+        delete result.id;
+        this.firebaseService.addNewBet(result);
         console.log(this.bet);
       });
   }

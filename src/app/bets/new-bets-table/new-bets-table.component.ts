@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { BehaviorSubject, of } from "rxjs";
+import { BehaviorSubject, filter, Observable, of, take } from "rxjs";
 import { BetSlip, PartBet } from "../../shared/model/betslip.model";
 import { GetRowIdParams, GridOptions, ICellRendererParams, ValueFormatterParams } from "ag-grid-community";
 import { DatePipe } from "@angular/common";
@@ -7,6 +7,8 @@ import { AgGridAngular } from "ag-grid-angular";
 import { FirebaseService } from "../../firebase.service";
 import moment from "moment";
 import { BtnCellRendererComponent, BtnCellRendererParams } from "./BtnCellRendererComponent.component";
+import { MatDialog } from "@angular/material/dialog";
+import { NewBetSlipDialogComponent } from "../new-betSlip-dialog/new-betSlip-dialog.component";
 
 const ignoreCaseComparator = (valueA: string, valueB: string): number => {
   return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
@@ -19,6 +21,7 @@ const ignoreCaseComparator = (valueA: string, valueB: string): number => {
 })
 export class NewBetsTableComponent implements OnInit {
   sequenceDataSource$ = new BehaviorSubject<BetSlip[]>([]);
+
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
 
   options: GridOptions = {
@@ -28,6 +31,11 @@ export class NewBetsTableComponent implements OnInit {
     defaultColDef: {
       resizable: false,
       cellStyle: { padding: '10px 23px' }
+    },
+    getRowClass: params => {
+      if (params.data === undefined) {
+        return 'ag-empty-row';
+      }
     },
     // isExternalFilterPresent: () => this.isExternalFilterPresent(),
     // doesExternalFilterPass: node => this.doesExternalFilterPass(node),
@@ -131,23 +139,33 @@ export class NewBetsTableComponent implements OnInit {
           ({
             clicked: ($evt: MouseEvent) => {
               // this.onDelete(params.data);
+              this.editBet(params.data);
               $evt.stopPropagation();
             }
           } as BtnCellRendererParams)
       }
     ]
   };
-  constructor(private datePipe: DatePipe, private firebaseService: FirebaseService) {
+  constructor(private datePipe: DatePipe, private firebaseService: FirebaseService, public dialog: MatDialog) {
+
   }
 
   ngOnInit(): void {
-    this.firebaseService.getAllUsers().then((bets: BetSlip[]) => {
-      this.sequenceDataSource$.next(bets);
-    });
+    // this.firebaseService.getAllUsers().then((bets: BetSlip[]) => {
+    //   this.sequenceDataSource$.next(bets);
+    // });
 
     // of(this.firebaseService.getAllUsers()).subscribe((bets: BetSlip[]) => {
     //   this.sequenceDataSource$.next(bets);
     // }).subscribe(this.filterField.valueChanges, () => this.triggerChange());
+    this.firebaseService.allValues.subscribe(v => {
+      // if (v.length > 0) {
+        console.log('GOT values in table', v);
+        this.sequenceDataSource$.next(v);
+        this.agGrid?.api?.refreshCells();
+        this.agGrid?.api?.redrawRows();
+      // }
+    })
   }
 
   private getDate(params: ValueFormatterParams): string {
@@ -155,8 +173,26 @@ export class NewBetsTableComponent implements OnInit {
     return momentDate.format("DD/MM/YYYY");
   }
 
+  private editBet(betSlip: BetSlip) {
+    this.dialog.open(NewBetSlipDialogComponent, {
+     width: '900',
+     data: betSlip
+    })
+      .afterClosed()
+      .pipe(take(1), filter(v => !!v))
+      .subscribe((changedBetslip: BetSlip) => this.updateValue(changedBetslip));
+    // console.log(betSlip);
+  }
+
+  private updateValue(newBetslip: BetSlip) {
+    this.firebaseService.updateBet(newBetslip);
+  }
+
   private getSelections(params: ValueFormatterParams<any, PartBet[]>): string {
-    console.log(params)
+    // console.log(params)
+    if (!params.value) {
+      return 'N/A';
+    }
     return params.value.map(val => {
       return `${val.match}: ${val.selection}`;
     }).join(', ');

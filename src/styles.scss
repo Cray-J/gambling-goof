@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 @import 'ag-grid-community/styles/ag-grid.css';
@@ -95,4 +97,16 @@ mat-dialog-container,
   gap: $gap;
   justify-content: $justifyContent;
   align-items: $alignItems;
+}
+
+.dense-1 {
+  @include mat.all-component-densities(-1);
+}
+
+.dense-2 {
+  @include mat.all-component-densities(-2);
+}
+
+.dense-3 {
+  @include mat.all-component-densities(-3);
 }

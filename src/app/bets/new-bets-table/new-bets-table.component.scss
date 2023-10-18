@@ -3,3 +3,30 @@
   min-height: 200px;
   padding-bottom: 24px;
 }
+
+
+.ag-empty-row {
+  position: relative;
+}
+
+.ag-empty-row:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-color: white;
+  z-index: 1;
+}
+
+.ag-empty-row:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  //background: url('../images/loader.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 2;
+}

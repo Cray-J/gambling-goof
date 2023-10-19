@@ -8,9 +8,10 @@ export interface BtnCellRendererParams {
 @Component({
     selector: 'app-btn-cell-renderer',
     template: `
-    <div class="sequence-list-delete-col__content">
+    <div class="editButtonContainer">
         <button mat-icon-button
                 matTooltip="Basic"
+                class="editButton"
                 aria-label="Edit selection"
                 (click)="btnClickedHandler($event)">
             <mat-icon>edit</mat-icon>
@@ -19,12 +20,12 @@ export interface BtnCellRendererParams {
   `,
     styles: [
         `
-            ::ng-deep .mat-icon{
+            .editButton ::ng-deep  .mat-icon{
                 height:16px !important;
                 width:16px !important;
                 font-size:16px !important;
             }
-      div.sequence-list-delete-col__content {
+      div.editButtonContainer {
         display: flex;
         justify-content: center;
       }

@@ -61,11 +61,6 @@ export class NewBetSlipDialogComponent implements OnInit {
       id: this.data?.id,
       stake: this.betForm.controls['stake'].value
     };
-    console.log('VALUE', this.betForm.controls['balanceChange'].value)
-    // console.log('SAVING: ', moment(this.betForm.controls['date'].value).format("DD/MM/YYYY"));
-    // console.log(this.betForm.controls['date'].value.toISOString());
-    // console.log(moment(betSlip.date).format("DD/MM/YYYY"))
-    // console.log(this.betForm);
     this.dialogRef.close(betSlip);
   }
 
@@ -89,7 +84,6 @@ export class NewBetSlipDialogComponent implements OnInit {
 
   addSelection() {
     (this.betForm.controls['selections'] as FormArray).push(this.createSelection());
-    console.log(this.betForm);
   }
 
   removeSelection(index: number) {
@@ -111,17 +105,14 @@ export class NewBetSlipDialogComponent implements OnInit {
 
   public recalculateOdds() {
     const odds = this.betForm.value['selections'].reduce((odds, current) => {
-      console.log(odds, current)
       return odds * current.odds
     }, 1);
-    console.log(odds);
     this.betForm.controls['odds'].setValue(odds);
   }
 
   public updateBalance() {
     let newValue: number = 0;
     const stake = this.betForm.controls['stake'].value;
-    const odds = this.betForm.controls['odds'].value;
     switch (this.betForm.controls['outcome'].value) {
       case Outcome.win:
       case Outcome.halfWin:
@@ -138,34 +129,25 @@ export class NewBetSlipDialogComponent implements OnInit {
       case Outcome.awaiting:
         newValue = 0;
     }
-    console.log(newValue);
-      this.betForm.controls['balanceChange'].setValue(newValue);
+    this.betForm.controls['balanceChange'].setValue(newValue);
   }
 
   private calculateValue() {
-    let result;
     // @ts-ignore
     const totalOdds = this.getSelections().controls.reduce((result, current) => {
-      console.log('CURR', current);
-      // result = current.value;
-      // console.log((current as FormGroup).controls['outcome'].value, (current as FormGroup).controls['odds'].value)
       if ((current as FormGroup).controls['outcome'].value === Outcome.win) {
         result *= (current as FormGroup).controls['odds'].value;
       } else if ((current as FormGroup).controls['outcome'].value === Outcome.halfWin) {
         result *= ((current as FormGroup).controls['odds'].value -1) / 2 + 1 ;
       }
-      console.log(result)
       return result;
-      // this.betForm.controls['selections'].value
     }, 1);
-    console.log('TOTAL ODDS', totalOdds);
     return this.betForm.controls['stake'].value * totalOdds - this.betForm.controls['stake'].value;
   }
 
   public updateOutcome() {
     setTimeout(() => {
       const newOutcome = calculateOutcome(this.getSelections());
-      console.log('OUTCOME: ', newOutcome)
       this.betForm.controls['outcome'].setValue(newOutcome);
       this.updateBalance();
     }, 0)

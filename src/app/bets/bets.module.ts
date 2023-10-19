@@ -12,6 +12,9 @@ import { NewBetSlipDialogComponent } from "./new-betSlip-dialog/new-betSlip-dial
 import { NewBetsTableComponent } from "./new-bets-table/new-bets-table.component";
 import { DatePipe } from "@angular/common";
 import { BtnCellRendererComponent } from "./new-bets-table/BtnCellRendererComponent.component";
+import { AppModule } from "../app.module";
+import { StatsPanelComponent } from "./stats-panel/stats-panel.component";
+import { IconCellRendererComponent } from "./new-bets-table/IconCellRenderer.component";
 
 @NgModule({
   imports: [
@@ -26,9 +29,11 @@ import { BtnCellRendererComponent } from "./new-bets-table/BtnCellRendererCompon
   declarations: [
     BtnCellRendererComponent,
     BetsOverviewComponent,
+    IconCellRendererComponent,
     NewBetsTableComponent,
     BetsComponent,
-    NewBetSlipDialogComponent
+    NewBetSlipDialogComponent,
+    StatsPanelComponent
   ],
   providers: [
     MatDatepickerModule,

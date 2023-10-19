@@ -1,7 +1,8 @@
 .stats {
   min-height: 200px;
-  min-height: 200px;
   padding-bottom: 24px;
+  display: flex;
+  justify-content: center;
 }
 
 
@@ -29,4 +30,21 @@
   background-repeat: no-repeat;
   background-position: center;
   z-index: 2;
+}
+
+::ng-deep div.ag-cell[col-id = 'balanceChange'] {
+  //color: red;
+}
+
+.cell-fail {
+  text-align: center;
+  font-weight: bold;
+  background-color: #f44336;
+  color: red;
+}
+
+.cell-pass {
+  text-align: center;
+  font-weight: bold;
+  background-color: #4caf50;
 }

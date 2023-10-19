@@ -13,7 +13,9 @@
 html, body {
   font-family: 'Roboto', sans-serif;
   height: 100%;
-  background-color: #e6f2ff;
+  //background-color: #e6f2ff;
+  background-color: rgba(74, 74, 74, 0.04)
+  //background-color: rgba(255, 255, 255, 0.33)
 }
 
 body{
@@ -109,4 +111,22 @@ mat-dialog-container,
 
 .dense-3 {
   @include mat.all-component-densities(-3);
+}
+
+
+.cell-fail {
+  text-align: center;
+  font-weight: bold;
+  //background-color: #f44336;
+  //background-color: hsla(0, 100%, 50%, 0.3);
+  //background-color: rgb(255, 0, 0);opacity:0.2;
+  color: black;
+  //color: red;
+}
+
+.cell-pass {
+  text-align: center;
+  font-weight: bold;
+  //background-color: #4caf50;
+  //background-color:hsla(120,100%,75%,0.3);
 }

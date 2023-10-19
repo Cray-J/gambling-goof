@@ -7,13 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
-import { ChartsModule } from 'ng2-charts';
 import { BetsModule } from './bets/bets.module';
 import { SharedModule } from './shared/shared.module';
 import { RouterModule, Routes } from "@angular/router";
 import { BetsComponent } from "./bets/bets.component";
 import { AngularFireModule } from "@angular/fire/compat";
-import { NewBetsTableComponent } from './bets/new-bets-table/new-bets-table.component';
 // import firebase from "firebase/compat";
 // import Firestore = firebase.firestore.Firestore;
 

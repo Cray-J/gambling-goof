@@ -50,19 +50,6 @@ export class FirebaseService {
     });
   }
 
-  getAllUsers() {
-    // return new Promise<any>((resolve)=> {
-    //   this.db.collection('Bets').get().subscribe(v => console.log('bets first', v));
-    //   this.db.collection('Bets').valueChanges({ idField: 'id' }).subscribe(users => {
-    //     console.log('2', users)
-    //     const us = resolve(users);
-    //     console.log(us);
-    //     // this.updateBet(users[0] as BetSlip)
-    //     return us;
-    //   });
-    // })
-  }
-
   addNewBet(betslip: BetSlip) {
     console.log('--ADDING NEW BET', betslip);
     this.db.collection("Bets").doc().set(betslip).then(v => {

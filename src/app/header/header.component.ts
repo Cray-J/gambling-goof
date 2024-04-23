@@ -1,25 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Bet } from '../shared/model/bet.model';
 import { NewBetSlipDialogComponent } from "../bets/new-betSlip-dialog/new-betSlip-dialog.component";
 import { BetSlip } from "../shared/model/betslip.model";
 import { FirebaseService } from "../firebase.service";
 import { filter, take } from "rxjs";
+import { ButtonModule } from 'primeng/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  imports: [
+    ButtonModule,
+    MatToolbarModule
+  ],
+  standalone: true
 })
 export class HeaderComponent {
+  private readonly dialog = inject(MatDialog);
+  private readonly firebaseService = inject(FirebaseService);
   bet: Bet;
 
-  constructor(
-    public dialog: MatDialog,
-    private firebaseService: FirebaseService
-  ) {}
-
-  openBetslipDialog(): void {
+  openBetSlipDialog(): void {
     this.dialog
       .open(NewBetSlipDialogComponent, {
         width: 'calc(80vw)',

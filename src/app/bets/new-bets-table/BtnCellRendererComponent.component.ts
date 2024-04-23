@@ -1,30 +1,34 @@
 import { Component } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { ButtonModule } from 'primeng/button';
 
 export interface BtnCellRendererParams {
     clicked: ($event: MouseEvent) => void;
 }
 @Component({
     selector: 'app-btn-cell-renderer',
+  imports: [
+    ButtonModule,
+    MatIconModule,
+    MatTooltip
+  ],
+  standalone: true,
     template: `
     <div class="editButtonContainer">
-        <button mat-icon-button
-                matTooltip="Basic"
-                class="editButton"
-                aria-label="Edit selection"
-                (click)="btnClickedHandler($event)">
-            <mat-icon>edit</mat-icon>
-        </button>
+        <p-button
+          icon="pi pi-file-edit"
+          class="editButton"
+          [text]="true"
+          aria-label="Edit selection"
+          (click)="btnClickedHandler($event)">
+        </p-button>
     </div>
   `,
     styles: [
         `
-            .editButton ::ng-deep  .mat-icon{
-                height:16px !important;
-                width:16px !important;
-                font-size:16px !important;
-            }
       div.editButtonContainer {
         display: flex;
         justify-content: center;

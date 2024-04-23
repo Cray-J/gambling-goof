@@ -1,25 +1,55 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { $enum } from "ts-enum-util";
-import { Bookie } from "../../shared/model/bookie.enum";
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { allBookies } from "../../shared/model/bookie.enum";
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { Outcome } from "../../shared/model/outcome.enum";
-import { BetCategory } from "../../shared/model/bet-category.model";
+import { betCategories, BetCategory } from "../../shared/model/bet-category.model";
 import { BetSlip, PartBet } from "../../shared/model/betslip.model";
 import { FirebaseService } from "../../firebase.service";
 import moment from "moment";
-import { ToText } from "../../shared/model/to-text";
-import outcome = ToText.outcome;
 import { calculateOutcome } from "../../core/calculations";
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { CommonModule } from '@angular/common';
+import { FlexModule } from '@angular/flex-layout';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-new-betSlip-dialog',
   templateUrl: './new-betSlip-dialog.component.html',
-  styleUrls: ['./new-betSlip-dialog.component.scss']
+  styleUrls: ['./new-betSlip-dialog.component.scss'],
+  imports: [
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatLabel,
+    ButtonModule,
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatDividerModule,
+    CommonModule,
+    FlexModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatExpansionModule
+  ],
+  standalone: true
 })
-export class NewBetSlipDialogComponent implements OnInit {
-  public bookies = $enum(Bookie).getKeys();
-  public betCategory = $enum(BetCategory).getKeys();
+export class NewBetSlipDialogComponent {
+  public bookies = allBookies;
+  public betCategory = betCategories;
   public outcomes = $enum(Outcome).getKeys();
 
   betForm: FormGroup;
@@ -33,21 +63,16 @@ export class NewBetSlipDialogComponent implements OnInit {
       date: new FormControl<Date>(moment().toDate()),
       stake: new FormControl(data?.stake ?? '100', [Validators.required, Validators.pattern('[0-9]{3}')]),
       bookie: new FormControl(data?.bookie ?? '', Validators.required),
-      category: new FormControl<BetCategory>(BetCategory.daily),
+      category: new FormControl<BetCategory>('Daily'),
       odds: new FormControl<number>({ value: data?.odds ?? 1, disabled: true }),
       balanceChange: new FormControl<number>({ value: data?.balanceChange ?? 0, disabled: true }),
       outcome: new FormControl<Outcome>({ value: data?.outcome ?? Outcome.awaiting, disabled: true }),
       selections: this._formBuilder.array<FormGroup>(data?.selections  ? this.buildFormArray() : [])
     });
   }
-
-  ngOnInit(): void {
-  }
-
   onCancel() {
     this.dialogRef.close();
   }
-
   onSubmit() {
     const betSlip: BetSlip = {
       bookie: this.betForm.controls['bookie'].value,
@@ -98,18 +123,15 @@ export class NewBetSlipDialogComponent implements OnInit {
       outcome: [selection?.outcome ?? Outcome.awaiting, [Validators.required]]
     })
   }
-
   public isEvenNumber(index: number): boolean {
     return index % 2 === 0;
   }
-
   public recalculateOdds() {
     const odds = this.betForm.value['selections'].reduce((odds, current) => {
       return odds * current.odds
     }, 1);
     this.betForm.controls['odds'].setValue(odds);
   }
-
   public updateBalance() {
     let newValue: number = 0;
     const stake = this.betForm.controls['stake'].value;
@@ -131,7 +153,6 @@ export class NewBetSlipDialogComponent implements OnInit {
     }
     this.betForm.controls['balanceChange'].setValue(newValue);
   }
-
   private calculateValue() {
     // @ts-ignore
     const totalOdds = this.getSelections().controls.reduce((result, current) => {

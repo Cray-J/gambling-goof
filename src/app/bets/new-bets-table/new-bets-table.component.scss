@@ -1,10 +1,9 @@
 .stats {
-  min-height: 200px;
-  padding-bottom: 24px;
   display: flex;
-  justify-content: center;
+  flex: 1;
+  width: 100%;
+  justify-content: space-evenly;
 }
-
 
 .ag-empty-row {
   position: relative;

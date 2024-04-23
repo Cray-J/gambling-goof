@@ -67,9 +67,7 @@
         <mat-divider></mat-divider>
         <div class="row">
           <h3>Selections</h3>
-          <button mat-icon-button matTooltip="Basic" aria-label="Add selection" (click)="addSelection()">
-            <mat-icon>add</mat-icon>
-          </button>
+          <p-button icon="pi pi-plus" aria-label="Add selection" (click)="addSelection()" size="small"></p-button>
         </div>
 
         <div formArrayName="selections" class="selectionsContainer">
@@ -102,9 +100,8 @@
                   </mat-form-field>
 
                 <div class="flexOne">
-                  <button mat-icon-button matTooltip="Basic" aria-label="Remove selection" (click)="removeSelection(index)">
-                    <mat-icon>remove</mat-icon>
-                  </button>
+                  <p-button icon="pi pi-minus" [text]="true" aria-label="Remove selection" (click)="removeSelection(index)">
+                  </p-button>
                 </div>
               </div>
             </div>
@@ -116,6 +113,6 @@
 
 </mat-dialog-content>
 <mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
-  <button mat-button color="accent" (click)="onCancel()" cdkFocusInitial>Cancel</button>
-  <button mat-button color="primary" (click)="onSubmit()" [disabled]="!betForm.valid">Submit</button>
+  <p-button severity="secondary" (click)="onCancel()" cdkFocusInitial>Cancel</p-button>
+  <p-button severity="success" (click)="onSubmit()" [disabled]="!betForm.valid">Submit</p-button>
 </mat-dialog-actions>

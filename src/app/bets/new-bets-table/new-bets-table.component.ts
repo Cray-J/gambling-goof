@@ -8,8 +8,10 @@ import moment from "moment";
 import { BtnCellRendererComponent, BtnCellRendererParams } from "./BtnCellRendererComponent.component";
 import { MatDialog } from "@angular/material/dialog";
 import { NewBetSlipDialogComponent } from "../new-betSlip-dialog/new-betSlip-dialog.component";
-import { transformBookie, transformOutcome } from "../../core/transformations";
+import { transformOutcome } from "../../core/transformations";
 import { IconCellRendererComponent } from "./IconCellRenderer.component";
+import { AsyncPipe } from '@angular/common';
+import { StatsSummaryComponent } from '../stats-summary/stats-summary.component';
 
 const ignoreCaseComparator = (valueA: string, valueB: string): number => {
   return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
@@ -18,7 +20,13 @@ const ignoreCaseComparator = (valueA: string, valueB: string): number => {
 @Component({
   selector: 'app-new-bets-table',
   templateUrl: './new-bets-table.component.html',
-  styleUrls: ['./new-bets-table.component.scss']
+  styleUrls: ['./new-bets-table.component.scss'],
+  imports: [
+    AgGridAngular,
+    AsyncPipe,
+    StatsSummaryComponent
+  ],
+    standalone: true
 })
 export class NewBetsTableComponent implements OnInit {
   sequenceDataSource$ = new BehaviorSubject<BetSlip[]>([]);
@@ -100,8 +108,7 @@ export class NewBetsTableComponent implements OnInit {
       {
         field: 'bookie',
         filter: 'agDateColumnFilter',
-        flex: 2,
-        valueFormatter: params => transformBookie(params.data.bookie)
+        flex: 2
       },
       {
         field: 'outcome',

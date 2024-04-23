@@ -1,15 +1,19 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Outcome } from '../../shared/model/outcome.enum';
 import { Bet } from '../../shared/model/bet.model';
 import { $enum } from 'ts-enum-util';
 import { ToText } from '../../shared/model/to-text';
 import { Day } from '../../shared/model/day.model';
-import { DayService } from '../../core/day.service';
 import { NewBetSlipDialogComponent } from "../new-betSlip-dialog/new-betSlip-dialog.component";
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CommonModule, DatePipe } from '@angular/common';
+import { NumberFixedLenPipe } from 'ng-pick-datetime/date-time/numberedFixLen.pipe';
 
 export class DataRow {
   constructor(public day: Day, public match: any, public bet: Bet) {}
@@ -18,7 +22,18 @@ export class DataRow {
 @Component({
   selector: 'app-bets-overview',
   templateUrl: './bets-table.component.html',
-  styleUrls: ['./bets-table.component.scss']
+  styleUrls: ['./bets-table.component.scss'],
+  imports: [
+    MatIconModule,
+    MatTableModule,
+    MatCardModule,
+    CommonModule
+  ],
+  providers: [
+    MatDatepickerModule,
+    DatePipe
+  ],
+  standalone: true
 })
 export class BetsOverviewComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) public sort: MatSort;
@@ -40,7 +55,7 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   private startDate = new Date('June 22 2020 00:01');
 
-  constructor(private dayService: DayService, public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {}
 
   public applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -48,15 +63,15 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit() {
-    this.dayService.daysChanged.subscribe((days: Day[]) => {
-      const bets = [];
-      days.forEach((d: Day) =>
-        d.matches.forEach((m: any) => m.bets.forEach((b: Bet) => {
-          bets.push(new DataRow(d, m, b))
-        }))
-      );
-      this.dataSource.data = bets;
-    });
+    // this.dayService.daysChanged.subscribe((days: Day[]) => {
+    //   const bets = [];
+    //   days.forEach((d: Day) =>
+    //     d.matches.forEach((m: any) => m.bets.forEach((b: Bet) => {
+    //       bets.push(new DataRow(d, m, b))
+    //     }))
+    //   );
+    //   this.dataSource.data = bets;
+    // });
   }
 
   public updateValue(row: DataRow, outcome: Outcome) {
@@ -73,7 +88,6 @@ export class BetsOverviewComponent implements OnInit, OnDestroy {
     let val = 0;
     row.day.matches.forEach(m => (val += m.bets.reduce((a, b) => a + b.valueReturn, 0)));
     row.day.result = val;
-    this.dayService.update(row.day);
   }
 
   public openDialog(row: DataRow): void {

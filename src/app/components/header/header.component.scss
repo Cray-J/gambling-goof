@@ -1,0 +1,41 @@
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover,
+a:active {
+  color: lightgray;
+}
+
+
+.navigation-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-caption {
+  display: inline-block;
+  padding-left: 6px;
+}
+
+.recalculate-button {
+  padding-left:200px;
+}
+
+.mat-dialog-container {
+  background-color: #000;
+  width: 900px;
+  height: 250px
+}
+
+div.cdk-overlay-container mat-dialog-container.mat-dialog-container {
+  background-color: red;
+  height: 250px;
+  width: 1200px!important;
+  min-width: 2000px!important;
+}
+
+

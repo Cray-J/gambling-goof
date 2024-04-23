@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, viewChild } from '@angular/core';
 import { BehaviorSubject, filter, take } from "rxjs";
 import { BetSlip, PartBet } from "../../shared/model/betslip.model";
 import { GetRowIdParams, GridOptions, ICellRendererParams, ValueFormatterParams } from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
-import { FirebaseService } from "../../firebase.service";
 import moment from "moment";
 import { BtnCellRendererComponent, BtnCellRendererParams } from "./BtnCellRendererComponent.component";
 import { MatDialog } from "@angular/material/dialog";
-import { NewBetSlipDialogComponent } from "../new-betSlip-dialog/new-betSlip-dialog.component";
+import { BetDialogComponent } from "../bet-dialog/bet-dialog.component";
 import { transformOutcome } from "../../core/transformations";
 import { IconCellRendererComponent } from "./IconCellRenderer.component";
 import { AsyncPipe } from '@angular/common';
 import { StatsSummaryComponent } from '../stats-summary/stats-summary.component';
+import { FirebaseService } from '../../core/firebase.service';
 
 const ignoreCaseComparator = (valueA: string, valueB: string): number => {
   return valueA.toLowerCase().localeCompare(valueB.toLowerCase());
@@ -29,6 +29,8 @@ const ignoreCaseComparator = (valueA: string, valueB: string): number => {
     standalone: true
 })
 export class NewBetsTableComponent implements OnInit {
+  private readonly firebaseService = inject(FirebaseService);
+  private readonly dialog = inject(MatDialog);
   sequenceDataSource$ = new BehaviorSubject<BetSlip[]>([]);
 
   cellClassRules = {
@@ -146,9 +148,6 @@ export class NewBetsTableComponent implements OnInit {
       }
     ]
   };
-  constructor(private firebaseService: FirebaseService, public dialog: MatDialog) {
-
-  }
 
   ngOnInit(): void {
     this.firebaseService.allValues.subscribe(v => {
@@ -164,7 +163,7 @@ export class NewBetsTableComponent implements OnInit {
   }
 
   private editBet(betSlip: BetSlip) {
-    this.dialog.open(NewBetSlipDialogComponent, {
+    this.dialog.open(BetDialogComponent, {
      width: '900',
      data: betSlip
     })

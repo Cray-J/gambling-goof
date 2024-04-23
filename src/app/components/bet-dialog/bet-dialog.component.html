@@ -13,15 +13,6 @@
         </div>
 
         <div class="dense-3">
-          <mat-form-field label="Category" class="row">
-            <mat-label>Bet category</mat-label>
-            <mat-select formControlName="category">
-              <mat-option *ngFor="let option of betCategory" [value]="option">{{option}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div class="dense-3">
           <mat-form-field label="Bookie" class="row">
             <mat-label>Bookie</mat-label>
             <mat-select formControlName="bookie">
@@ -112,7 +103,7 @@
   </form>
 
 </mat-dialog-content>
-<mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <p-button severity="secondary" (click)="onCancel()" cdkFocusInitial>Cancel</p-button>
   <p-button severity="success" (click)="onSubmit()" [disabled]="!betForm.valid">Submit</p-button>
 </mat-dialog-actions>

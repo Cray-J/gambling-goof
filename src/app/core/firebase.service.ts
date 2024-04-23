@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QuerySnapshot } from "@angular/fire/compat/firestore";
-import { BetSlip } from "./shared/model/betslip.model";
 import { cloneDeep } from "lodash";
-import { Outcome } from "./shared/model/outcome.enum";
 import { BehaviorSubject, of, take } from "rxjs";
+import { BetSlip } from '../shared/model/betslip.model';
 
 @Injectable({
   providedIn: 'root'

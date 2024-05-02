@@ -1,3 +1,41 @@
 :host {
   height: 400px;
+
+  width: calc(80vw)
 }
+
+.wrapper {
+  display: flex;
+  gap: 32px;
+}
+
+.stats,
+.chart {
+  width: 400px;
+  //height: 360px;
+  background-color: white;
+  display: flex;
+}
+
+.stats {
+  flex-direction: column;
+  //padding: 16px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+
+  div {
+    display: flex;
+    flex: 1;
+  }
+}
+
+::ng-deep p-card.chart {
+  div.p-component {
+    width: 100%;
+  }
+}
+

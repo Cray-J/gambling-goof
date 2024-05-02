@@ -4,12 +4,10 @@
     <div class="column">
       <div class="row">
         <div class="dense-2">
-          <mat-form-field label="Date">
-            <input matInput [matDatepicker]="picker" formControlName="date">
-            <mat-hint>DD/MM/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+          <span class="p-float-label">
+            <p-calendar formControlName="date" [iconDisplay]="'input'" [showIcon]="true" id="bet_date" dateFormat="dd.mm.yy"></p-calendar>
+            <label for="bet_date">Date</label>
+          </span>
         </div>
 
         <div class="dense-3">

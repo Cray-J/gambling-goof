@@ -19,12 +19,14 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-bet-dialog',
   templateUrl: './bet-dialog.component.html',
   styleUrls: ['./bet-dialog.component.scss'],
   imports: [
+    CalendarModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
@@ -157,7 +159,7 @@ export class BetDialogComponent {
   }
   private calculateValue() {
     // @ts-ignore
-    const totalOdds = this.getSelections().controls.reduce((result, current) => {
+    const totalOdds = this.selectionsControl.controls.reduce((result, current) => {
       if ((current as FormGroup).controls['outcome'].value === Outcome.win) {
         result *= (current as FormGroup).controls['odds'].value;
       } else if ((current as FormGroup).controls['outcome'].value === Outcome.halfWin) {
@@ -165,12 +167,14 @@ export class BetDialogComponent {
       }
       return result;
     }, 1);
+    console.info(this.betForm.controls['stake'].value, totalOdds, this.betForm.controls['stake'].value * totalOdds)
     return this.betForm.controls['stake'].value * totalOdds - this.betForm.controls['stake'].value;
   }
 
   public updateOutcome() {
     setTimeout(() => {
       const newOutcome = calculateOutcome(this.selectionsControl);
+      console.log(newOutcome)
       this.betForm.controls['outcome'].setValue(newOutcome);
       this.updateBalance();
     }, 0)

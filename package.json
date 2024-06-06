@@ -6,7 +6,6 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "ci": "",
     "deploy": "firebase deploy",
     "test": "ng test",
     "lint": "eslint src --ext .ts --format table",

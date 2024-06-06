@@ -1,28 +1,36 @@
 <div class="wrapper">
   <p-card header="Key numbers" class="stats">
-    @for (value of values$$(); track value) {
+
       <div class="row">
         <div>Outcome</div>
+        @for (value of values$$(); track value) {
         <div>{{ value.outcome }}</div>
+        }
       </div>
       <div class="row">
-        <div>Number of bets</div>
+        <div># of bets</div>
+        @for (value of values$$(); track value) {
         <div>{{ value.numberOfBets }}</div>
+        }
       </div>
       <div class="row">
         <div>Percentage</div>
+        @for (value of values$$(); track value) {
         <div>{{ value.winPercentage }}</div>
+        }
       </div>
       <div class="row">
         <div>+/-</div>
+        @for (value of values$$(); track value) {
         <div>{{ value.standing }}</div>
+        }
       </div>
       <div class="row">
         <div>ROI</div>
+        @for (value of values$$(); track value) {
         <div>{{ value.roi }}</div>
+        }
       </div>
-
-    }
   </p-card>
   <p-card header="Chart" class="chart">
 <!--    <div class="card">-->

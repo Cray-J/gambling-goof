@@ -9,6 +9,7 @@
     "deploy": "firebase deploy",
     "test": "ng test",
     "lint": "eslint src --ext .ts --format table",
+    "ci": "npm install -g @angular/cli@latest",
     "fix": "eslint --fix src --ext .ts",
     "e2e": "ng e2e"
   },

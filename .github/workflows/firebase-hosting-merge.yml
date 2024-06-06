@@ -10,11 +10,13 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3, actions/
       - name: Setup Node.js environment
         uses: actions/setup-node@v4.0.2
-      - run: yarn install
-      - run: yarn run build
+      - name: Add angular cli
+        run: yarn run ci
+      - name: Install and build
+        run: yarn install && yarn run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

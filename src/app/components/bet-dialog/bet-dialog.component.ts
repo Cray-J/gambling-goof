@@ -52,6 +52,13 @@ export class BetDialogComponent {
   protected outcomes = $enum(Outcome).getKeys();
   protected betForm: FormGroup;
 
+  protected readonly tags = [
+    'red card',
+    'live',
+    'extra',
+    'BOTD'
+  ];
+
   constructor(public dialogRef: MatDialogRef<BetDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: BetSlip,
               private _formBuilder: FormBuilder) {
@@ -98,7 +105,8 @@ export class BetDialogComponent {
         match: formgroup.controls['match'].value,
         odds: formgroup.controls['odds'].value,
         outcome: formgroup.controls['outcome'].value,
-        selection: formgroup.controls['selection'].value
+        selection: formgroup.controls['selection'].value,
+        tags: []
       }
     })
   }
@@ -124,7 +132,8 @@ export class BetDialogComponent {
       match: [selection?.match ?? '', [Validators.required]],
       selection: [selection?.selection ?? '', [Validators.required]],
       odds: [selection?.odds ?? '', [Validators.required]],
-      outcome: [selection?.outcome ?? Outcome.awaiting, [Validators.required]]
+      outcome: [selection?.outcome ?? Outcome.awaiting, [Validators.required]],
+      tags: [selection?.tags ?? []],
     })
   }
   public isEvenNumber(index: number): boolean {

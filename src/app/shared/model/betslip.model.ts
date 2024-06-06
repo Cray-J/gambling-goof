@@ -7,8 +7,7 @@ export interface PartBet {
   league?: string;
   odds: number;
   outcome: Outcome;
-  redCard?: boolean;
-  missedPenalty?: boolean;
+  tags?: string[];
 }
 
 export interface BetSlip {
